@@ -14,7 +14,7 @@ export default function Home() {
       <p className="mb-5 text-blue-500 text-xl">News list by SSG</p>
       {data?.map((news) => (
         <p className="font-bold" key={news.id}>
-          a{news.content}
+          {news.content}
         </p>
       ))}
       <Auth />
