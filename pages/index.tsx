@@ -2,29 +2,30 @@ import { Auth } from '../components/Auth'
 import { Layout } from '../components/Layout'
 import { GetStaticProps } from 'next'
 import { dehydrate } from 'react-query/hydration'
-import { fetchNews } from '../hooks/useQueryNews'
-import { News } from '../types/types'
+import { fetchPosts } from '../hooks/useQueryPosts'
+import { Post } from '../types/types'
 import { QueryClient, useQueryClient } from 'react-query'
 
 export default function Home() {
   const queryClient = useQueryClient()
-  const data = queryClient.getQueryData<News[]>('news')
+  const data = queryClient.getQueryData<Post[]>('posts')
+
   return (
     <Layout title="Home">
-      <p className="mb-5 text-blue-500 text-xl">News list by SSG</p>
-      {data?.map((news) => (
-        <p className="font-bold" key={news.id}>
-          {news.content}
+      <p className="mb-5 text-blue-500 text-xl">Post</p>
+      {data?.map((post) => (
+        <p className="font-bold" key={post.id}>
+          {post.title} / {post.user.name}
         </p>
       ))}
-      <Auth />
+      {/* <Auth /> */}
     </Layout>
   )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient()
-  await queryClient.prefetchQuery('news', fetchNews)
+  await queryClient.prefetchQuery('posts', fetchPosts)
   return {
     props: {
       dehydratedState: dehydrate(queryClient),

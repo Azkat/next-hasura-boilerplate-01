@@ -1,19 +1,15 @@
-export interface News {
-  id: string
-  content: string
-  created_at: string
-}
-export interface EditNews {
-  id: string
-  content: string
-}
-export interface Task {
-  id: string
+export interface Post {
   title: string
-  created_at: string
-  user_id: string
-}
-export interface EditTask {
   id: string
-  title: string
+  description: string
+  created_at: string
+  user: {
+    name: string
+    id: string
+  }
+}
+
+export interface User {
+  name: string
+  id: string
 }
