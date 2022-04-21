@@ -3,15 +3,23 @@ import { Layout } from '../../components/Layout'
 import { fetchUserById } from '../../hooks/useQueryUserById'
 import { QueryClient, useQueryClient } from 'react-query'
 import { User } from '../../types/types'
+import Link from 'next/link'
 import { dehydrate } from 'react-query/hydration'
 
 export default function UserList(props) {
   const queryClient = useQueryClient()
-  const data = queryClient.getQueryData<User[]>('users')
+  const data = queryClient.getQueryData<User>('user')
 
-  console.log(data)
-
-  return <Layout title="User">user</Layout>
+  return (
+    <Layout title={data.name}>
+      <>
+        <h1>{data.name}</h1>
+        {data.posts?.map((post) => (
+          <Link href={'/post/' + post.id}>{post.title}</Link>
+        ))}
+      </>
+    </Layout>
+  )
 }
 export async function getServerSideProps(context) {
   const user_id = await context.params.slug
@@ -20,7 +28,6 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      user_id: user_id,
       dehydratedState: dehydrate(queryClient),
     },
   }

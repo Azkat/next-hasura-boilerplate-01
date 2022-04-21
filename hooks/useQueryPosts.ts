@@ -11,7 +11,6 @@ export const fetchPosts = async () => {
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
     GET_POSTS
   )
-
   return data
 }
 export const useQueryPosts = () => {
