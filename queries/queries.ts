@@ -14,16 +14,16 @@ export const GET_POSTS = gql`
     }
   }
 `
-export const GET_POST_BY_ID = gql`
-  query GetPostById($id: uuid!) {
+export const GET_POST_BY_ID_PK = gql`
+  query GetPostByIdPk($id: uuid!) {
     posts_by_pk(id: $id) {
       title
-      created_at
       id
       description
+      created_at
       user {
-        user_id
         name
+        id
       }
     }
   }
