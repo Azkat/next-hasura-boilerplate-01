@@ -60,6 +60,14 @@ export const GET_USERBY_ID_PK = gql`
   }
 `
 
+export const CREATE_USER = gql`
+  mutation CreateUser($firebase_id: String!, $email: String!) {
+    insert_users_one(object: { firebase_id: $firebase_id, email: $email }) {
+      id
+    }
+  }
+`
+
 export const GET_ROCKET = gql`
   query GetRocket($id: ID!) {
     rocket(id: $id) {

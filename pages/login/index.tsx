@@ -12,7 +12,6 @@ export default function UserList(props) {
   return (
     <Layout title="Login">
       <>
-        <h1>Login</h1>
         <Auth></Auth>
       </>
     </Layout>

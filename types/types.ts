@@ -18,6 +18,10 @@ export interface User {
     description: string
   }>
 }
+export interface CreateUser {
+  firebase_id: string
+  email: string
+}
 export interface Rocket {
   company: string
   country: string

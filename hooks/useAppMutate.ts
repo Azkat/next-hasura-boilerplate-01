@@ -9,8 +9,9 @@ import {
   CREATE_NEWS,
   DELETE_NEWS,
   UPDATE_NEWS,
+  CREATE_USER,
 } from '../queries/queries'
-import { Task, EditTask, News, EditNews } from '../types/types'
+import { Task, EditTask, News, EditNews, CreateUser } from '../types/types'
 import { useDispatch } from 'react-redux'
 import { resetEditedTask, resetEditedNews } from '../slices/uiSlice'
 
@@ -29,6 +30,19 @@ export const useAppMutate = () => {
       },
     })
   }, [cookie.get('token')])
+
+  const createUserMutation = useMutation(
+    (createUser: CreateUser) => graphQLClient.request(CREATE_USER, createUser),
+    {
+      onSuccess: (res) => {
+        console.log(res)
+      },
+      onError: () => {
+        dispatch(resetEditedTask())
+      },
+    }
+  )
+
   const createTaskMutation = useMutation(
     (title: string) => graphQLClient.request(CREATE_TASK, { title: title }),
     {
@@ -47,6 +61,7 @@ export const useAppMutate = () => {
       },
     }
   )
+
   const updateTaskMutation = useMutation(
     (task: EditTask) => graphQLClient.request(UPDATE_TASK, task),
     {
@@ -67,6 +82,7 @@ export const useAppMutate = () => {
       },
     }
   )
+
   const deleteTaskMutation = useMutation(
     (id: string) => graphQLClient.request(DELETE_TASK, { id: id }),
     {
@@ -82,6 +98,7 @@ export const useAppMutate = () => {
       },
     }
   )
+
   const createNewsMutation = useMutation(
     (content: string) =>
       graphQLClient.request(CREATE_NEWS, { content: content }),
@@ -101,6 +118,7 @@ export const useAppMutate = () => {
       },
     }
   )
+
   const updateNewsMutation = useMutation(
     (news: EditNews) => graphQLClient.request(UPDATE_NEWS, news),
     {
@@ -136,7 +154,9 @@ export const useAppMutate = () => {
       },
     }
   )
+
   return {
+    createUserMutation,
     createTaskMutation,
     updateTaskMutation,
     deleteTaskMutation,
