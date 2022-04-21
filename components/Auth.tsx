@@ -1,4 +1,3 @@
-import { VFC } from 'react'
 import Link from 'next/link'
 import {
   ChevronDoubleRightIcon,
@@ -7,7 +6,7 @@ import {
 import { useFirebaseAuth } from '../hooks/useFirebaseAuth'
 import firebase from '../firebaseConfig'
 
-export const Auth: VFC = () => {
+export const Auth = () => {
   const user = firebase.auth().currentUser
   const {
     isLogin,
