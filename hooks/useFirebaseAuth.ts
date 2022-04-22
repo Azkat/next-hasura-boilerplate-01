@@ -1,7 +1,5 @@
 import { useState, useCallback, ChangeEvent, FormEvent } from 'react'
-import { useAppMutate } from '../hooks/useAppMutate'
 import firebase from '../firebaseConfig'
-import { QueryClient, useQueryClient } from 'react-query'
 
 export const useFirebaseAuth = () => {
   //const { createUserMutation } = useAppMutate()
@@ -35,13 +33,6 @@ export const useFirebaseAuth = () => {
       } else {
         try {
           await firebase.auth().createUserWithEmailAndPassword(email, password)
-          /* .then((userCredential) => {
-              const param = {
-                firebase_id: userCredential.user.uid,
-                email: userCredential.user.email,
-              }
-              createUserMutation.mutate(param)
-            }) */
         } catch (e) {
           alert(e.message)
         }

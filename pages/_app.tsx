@@ -2,7 +2,6 @@ import '../styles/globals.css'
 import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { useUserChanged } from '../hooks/useUserChanged'
 import { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
 import { store } from '../app/store'
@@ -10,7 +9,6 @@ import { Hydrate } from 'react-query/hydration'
 import UserChanged from '../components/UserChanged'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  //const {} = useUserChanged()
   const [queryClient] = useState(
     () =>
       new QueryClient({

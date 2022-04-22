@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useUser } from '../hooks/useUser'
 
 interface Props {
   children: ReactNode
@@ -9,14 +10,22 @@ interface Props {
 }
 
 export const Layout = ({ children, title = 'Welcome to Nextjs' }) => {
+  const { uid } = useUser()
+
   return (
     <div className="flex flex-col justify-center items-center min-h-screen text-gray-600 text-sm font-mono">
       <Head>
         <title>{title}</title>
       </Head>
-      <header>
+      <header className="flex justify-around w-full">
         <Link href="/">Home</Link>
+        {uid ? (
+          <Link href="/account">Account</Link>
+        ) : (
+          <Link href="/login">Login</Link>
+        )}
       </header>
+      {uid ? 'ログイン済み' : '未ログイン'}
       <main className="flex flex-1 flex-col justify-center items-center w-screen">
         {children}
       </main>

@@ -30,9 +30,10 @@ export const useUserChanged = () => {
         const token = await user.getIdToken(true)
         const idTokenResult = await user.getIdTokenResult()
         const hasuraClaims = idTokenResult.claims[HASURA_TOKEN_KEY]
+
         if (hasuraClaims) {
           cookie.set('token', token, { path: '/' })
-          //router.push('/tasks')
+          router.push('/account')
         } else {
           const userRef = firebase
             .firestore()
@@ -44,14 +45,13 @@ export const useUserChanged = () => {
             const hasuraClaimsSnap = idTokenResultSnap.claims[HASURA_TOKEN_KEY]
             if (hasuraClaimsSnap) {
               cookie.set('token', tokenSnap, { path: '/' })
-              //router.push('/tasks')
+              router.push('/account')
             }
           })
           const param = {
             firebase_id: user.uid,
             email: user.email,
           }
-          console.log(user.uid)
           createUserMutation.mutate(param)
         }
       }
