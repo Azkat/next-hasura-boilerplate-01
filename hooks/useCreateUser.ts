@@ -1,0 +1,34 @@
+import { useEffect } from 'react'
+import { useQueryClient, useMutation } from 'react-query'
+import { GraphQLClient } from 'graphql-request'
+import Cookie from 'universal-cookie'
+import { CREATE_USER } from '../queries/queries'
+import { CreateUser } from '../types/types'
+
+const cookie = new Cookie()
+const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT
+let graphQLClient: GraphQLClient
+
+export const useCreateUser = () => {
+  useEffect(() => {
+    graphQLClient = new GraphQLClient(endpoint, {
+      headers: {
+        Authorization: `Bearer ${cookie.get('token')}`,
+      },
+    })
+  }, [cookie.get('token')])
+
+  const createUserMutation = useMutation(
+    (createUser: CreateUser) => graphQLClient.request(CREATE_USER, createUser),
+    {
+      onSuccess: (res) => {
+        console.log(res)
+      },
+      onError: () => {},
+    }
+  )
+
+  return {
+    createUserMutation,
+  }
+}

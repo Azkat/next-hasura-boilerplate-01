@@ -62,7 +62,12 @@ export const GET_USERBY_ID_PK = gql`
 
 export const CREATE_USER = gql`
   mutation CreateUser($firebase_id: String!, $email: String!) {
-    insert_users_one(object: { firebase_id: $firebase_id, email: $email }) {
+    insert_users_one(
+      object: {
+        firebase_id: $firebase_id
+        user_profile: { data: { email: $email } }
+      }
+    ) {
       id
     }
   }

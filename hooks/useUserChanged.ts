@@ -2,6 +2,9 @@ import { useEffect } from 'react'
 import firebase from '../firebaseConfig'
 import { useRouter } from 'next/router'
 import Cookie from 'universal-cookie'
+import { useCreateUser } from '../hooks/useCreateUser'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { useState } from 'react'
 
 export let unSubMeta: () => void
 
@@ -9,6 +12,18 @@ export const useUserChanged = () => {
   const cookie = new Cookie()
   const router = useRouter()
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
+  const { createUserMutation } = useCreateUser()
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: false,
+            refetchOnWindowFocus: false,
+          },
+        },
+      })
+  )
   useEffect(() => {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
@@ -32,6 +47,12 @@ export const useUserChanged = () => {
               //router.push('/tasks')
             }
           })
+          const param = {
+            firebase_id: user.uid,
+            email: user.email,
+          }
+          console.log(user.uid)
+          createUserMutation.mutate(param)
         }
       }
     })

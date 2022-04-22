@@ -3,15 +3,17 @@ import { useQueryClient, useMutation } from 'react-query'
 import { GraphQLClient } from 'graphql-request'
 import Cookie from 'universal-cookie'
 import {
-  CREATE_TASK,
-  DELETE_TASK,
-  UPDATE_TASK,
-  CREATE_NEWS,
-  DELETE_NEWS,
-  UPDATE_NEWS,
+  // CREATE_TASK,
+  // DELETE_TASK,
+  // UPDATE_TASK,
+  // CREATE_NEWS,
+  // DELETE_NEWS,
+  // UPDATE_NEWS,
   CREATE_USER,
 } from '../queries/queries'
-import { Task, EditTask, News, EditNews, CreateUser } from '../types/types'
+import {
+  /* Task, EditTask, News, EditNews,  */ CreateUser,
+} from '../types/types'
 import { useDispatch } from 'react-redux'
 import { resetEditedTask, resetEditedNews } from '../slices/uiSlice'
 
@@ -31,7 +33,7 @@ export const useAppMutate = () => {
     })
   }, [cookie.get('token')])
 
-  const createUserMutation = useMutation(
+  /* const createUserMutation = useMutation(
     (createUser: CreateUser) => graphQLClient.request(CREATE_USER, createUser),
     {
       onSuccess: (res) => {
@@ -41,9 +43,9 @@ export const useAppMutate = () => {
         dispatch(resetEditedTask())
       },
     }
-  )
+  ) */
 
-  const createTaskMutation = useMutation(
+  /* const createTaskMutation = useMutation(
     (title: string) => graphQLClient.request(CREATE_TASK, { title: title }),
     {
       onSuccess: (res) => {
@@ -153,15 +155,15 @@ export const useAppMutate = () => {
         dispatch(resetEditedNews())
       },
     }
-  )
+  ) */
 
   return {
-    createUserMutation,
-    createTaskMutation,
-    updateTaskMutation,
-    deleteTaskMutation,
-    createNewsMutation,
-    updateNewsMutation,
-    deleteNewsMutation,
+    //createUserMutation,
+    // createTaskMutation,
+    // updateTaskMutation,
+    // deleteTaskMutation,
+    // createNewsMutation,
+    // updateNewsMutation,
+    // deleteNewsMutation,
   }
 }
