@@ -34,16 +34,14 @@ export const useFirebaseAuth = () => {
         resetInput()
       } else {
         try {
-          await firebase
-            .auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
+          await firebase.auth().createUserWithEmailAndPassword(email, password)
+          /* .then( (userCredential) => {
               const param = {
                 firebase_id: userCredential.user.uid,
                 email: userCredential.user.email,
               }
               createUserMutation.mutate(param)
-            })
+            }) */
         } catch (e) {
           alert(e.message)
         }

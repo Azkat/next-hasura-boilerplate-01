@@ -10,12 +10,13 @@ interface Props {
 
 export const Layout = ({ children, title = 'Welcome to Nextjs' }) => {
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen text-gray-600 text-sm font-mono">
+    <div className="flex flex-col justify-center items-center min-h-screen text-gray-600 text-sm font-mono ">
       <Head>
         <title>{title}</title>
       </Head>
-      <header>
+      <header className="flex justify-around w-full">
         <Link href="/">Home</Link>
+        <Link href="/login">Login</Link>
       </header>
       <main className="flex flex-1 flex-col justify-center items-center w-screen">
         {children}

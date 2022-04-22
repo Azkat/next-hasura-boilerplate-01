@@ -19,7 +19,7 @@ export interface User {
   }>
 }
 export interface CreateUser {
-  firebase_id: string
+  //firebase_id: string
   email: string
 }
 export interface Rocket {

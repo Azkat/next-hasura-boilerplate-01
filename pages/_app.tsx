@@ -23,14 +23,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   )
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <Provider store={store}>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
           <Component {...pageProps} />
-        </Provider>
-        <ReactQueryDevtools />
-      </Hydrate>
-    </QueryClientProvider>
+          <ReactQueryDevtools />
+        </Hydrate>
+      </QueryClientProvider>
+    </Provider>
   )
 }
 
