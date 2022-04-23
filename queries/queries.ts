@@ -73,6 +73,16 @@ export const CREATE_USER = gql`
   }
 `
 
+export const CREATE_POST = gql`
+  mutation CreatePost($title: String!, $description: String, $user_id: uuid!) {
+    insert_posts_one(
+      object: { title: $title, description: $description, user_id: $user_id }
+    ) {
+      id
+    }
+  }
+`
+
 export const GET_ROCKET = gql`
   query GetRocket($id: ID!) {
     rocket(id: $id) {

@@ -22,6 +22,11 @@ export interface CreateUser {
   firebase_id: string
   email: string
 }
+export interface CreatePost {
+  title: string
+  description: string
+  user_id: string
+}
 export interface Rocket {
   company: string
   country: string
