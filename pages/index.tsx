@@ -18,7 +18,9 @@ export default function Home() {
       {data?.map((post) => (
         <p className="font-bold" key={post.id}>
           <Link href={'/post/' + post.id}>{post.title}</Link>/
-          <Link href={'/user/' + post.user.id}>{post.user.name}</Link>
+          <Link href={'/user/' + post.user.id}>
+            {post.user.name ? post.user.name : ''}
+          </Link>
         </p>
       ))}
       {/* <Auth /> */}

@@ -2,7 +2,6 @@ import { useState, useCallback, ChangeEvent, FormEvent } from 'react'
 import firebase from '../firebaseConfig'
 
 export const useFirebaseAuth = () => {
-  //const { createUserMutation } = useAppMutate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLogin, setIsLogin] = useState(true)

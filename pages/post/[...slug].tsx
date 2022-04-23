@@ -15,7 +15,9 @@ export default function UserList(props) {
       <>
         <h1>{data.title}</h1>
         {data.title} /{' '}
-        <Link href={'/user/' + data.user.id}>{data.user.name}</Link>
+        <Link href={'/user/' + data.user.id}>
+          {data.user.name ? data.user.name : ''}
+        </Link>
       </>
     </Layout>
   )

@@ -44,7 +44,6 @@ export const GET_USERBY_ID = gql`
     }
   }
 `
-
 export const GET_USERBY_ID_PK = gql`
   query MyQuery($id: uuid!) {
     users_by_pk(id: $id) {
@@ -59,7 +58,6 @@ export const GET_USERBY_ID_PK = gql`
     }
   }
 `
-
 export const CREATE_USER = gql`
   mutation CreateUser($firebase_id: String!, $email: String!) {
     insert_users_one(
@@ -72,7 +70,6 @@ export const CREATE_USER = gql`
     }
   }
 `
-
 export const CREATE_POST = gql`
   mutation CreatePost($title: String!, $description: String, $user_id: uuid!) {
     insert_posts_one(
@@ -82,7 +79,13 @@ export const CREATE_POST = gql`
     }
   }
 `
-
+export const UPDATE_USER_NAME = gql`
+  mutation UpdateUserName($id: uuid!, $name: String!) {
+    update_users_by_pk(pk_columns: { id: $id }, _set: { name: $name }) {
+      id
+    }
+  }
+`
 export const GET_ROCKET = gql`
   query GetRocket($id: ID!) {
     rocket(id: $id) {

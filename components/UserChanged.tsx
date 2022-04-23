@@ -1,6 +1,6 @@
 import { useUserChanged } from '../hooks/useUserChanged'
 
-function UserChanged() {
+function UserChanged(props) {
   const {} = useUserChanged()
   return <></>
 }

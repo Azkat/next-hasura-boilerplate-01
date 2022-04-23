@@ -35,10 +35,10 @@ export default function UserList(props) {
       unSubMeta()
     }
     await firebase.auth().signOut()
-    cookie.remove('token')
-    cookie.remove('id')
-    cookie.remove('user_id')
-    router.push('/login')
+    await cookie.remove('token')
+    await cookie.remove('id')
+    await cookie.remove('user_id')
+    await router.push('/login')
   }
 
   if (!isUser) {

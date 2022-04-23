@@ -3,6 +3,7 @@ import firebase from '../firebaseConfig'
 import { useRouter } from 'next/router'
 import Cookie from 'universal-cookie'
 import { useCreateUser } from '../hooks/useCreateUser'
+import { useAppMutate } from '../hooks/useAppMutate'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { useState } from 'react'
 
@@ -13,6 +14,7 @@ export const useUserChanged = () => {
   const router = useRouter()
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
   const { createUserMutation } = useCreateUser()
+  const { updateUserName } = useAppMutate()
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -50,9 +52,11 @@ export const useUserChanged = () => {
           unSubMeta = userRef.onSnapshot(async () => {
             const tokenSnap = await user.getIdToken(true)
             const idTokenResultSnap = await user.getIdTokenResult()
-            const hasuraClaimsSnap = idTokenResultSnap.claims[HASURA_TOKEN_KEY]
+            const hasuraClaimsSnap = await idTokenResultSnap.claims[
+              HASURA_TOKEN_KEY
+            ]
             if (hasuraClaimsSnap) {
-              cookie.set('token', tokenSnap, { path: '/' })
+              await cookie.set('token', tokenSnap, { path: '/' })
               router.push('/account')
             }
           })
