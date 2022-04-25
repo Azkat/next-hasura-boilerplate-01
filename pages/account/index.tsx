@@ -14,7 +14,7 @@ const cookie = new Cookie()
 
 export default function UserList(props) {
   const router = useRouter()
-  const { uid } = useUser()
+  const { uid, providerId } = useUser()
   const [isUser, setIsUser] = useState(false)
   useEffect(() => {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {

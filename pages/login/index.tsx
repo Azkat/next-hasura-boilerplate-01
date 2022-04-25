@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useState } from 'react'
 import { Layout } from '../../components/Layout'
 import { Auth } from '../../components/Auth'
+import { AuthGoogle } from '../../components/AuthGoogle'
 import { QueryClient, useQueryClient } from 'react-query'
 import { Post } from '../../types/types'
 import { useRouter } from 'next/router'
@@ -32,6 +33,7 @@ export default function UserList(props) {
       <Layout title="Login">
         <>
           <Auth></Auth>
+          <AuthGoogle></AuthGoogle>
         </>
       </Layout>
     )

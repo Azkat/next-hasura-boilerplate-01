@@ -1,11 +1,16 @@
 import { useState, useCallback, ChangeEvent, FormEvent } from 'react'
-import firebase from '../firebaseConfig'
+import firebase, { auth } from '../firebaseConfig'
 
 export const useFirebaseAuth = () => {
   //const { createUserMutation } = useAppMutate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLogin, setIsLogin] = useState(true)
+
+  const googleLogin = () => {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    return auth.signInWithRedirect(provider)
+  }
 
   const emailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
@@ -43,6 +48,7 @@ export const useFirebaseAuth = () => {
   )
 
   return {
+    googleLogin,
     email,
     password,
     emailChange,

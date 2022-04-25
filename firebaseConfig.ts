@@ -13,4 +13,5 @@ import 'firebase/firestore'
     })
   : firebase.app()
 
+export const auth = firebase.auth()
 export default firebase

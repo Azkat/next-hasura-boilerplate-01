@@ -47,7 +47,6 @@ export const useCreateUser = () => {
     {
       onSuccess: (res) => {
         updateUserName(res)
-        console.log(res)
         cookie.set('user_id', res.insert_users_one.id, {
           path: '/',
         })
@@ -60,9 +59,7 @@ export const useCreateUser = () => {
     (updateParam: UpdateUserName) =>
       graphQLClient.request(UPDATE_USER_NAME, updateParam),
     {
-      onSuccess: (res) => {
-        console.log(res)
-      },
+      onSuccess: (res) => {},
       onError: () => {},
     }
   )
