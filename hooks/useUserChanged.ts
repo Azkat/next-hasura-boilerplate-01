@@ -12,7 +12,7 @@ export const useUserChanged = () => {
   const cookie = new Cookie()
   const router = useRouter()
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
-  const { createUserMutation } = useCreateUser()
+  const { createUserMutation, createUser } = useCreateUser()
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -53,14 +53,13 @@ export const useUserChanged = () => {
             const hasuraClaimsSnap = idTokenResultSnap.claims[HASURA_TOKEN_KEY]
             if (hasuraClaimsSnap) {
               cookie.set('token', tokenSnap, { path: '/' })
-              router.push('/account')
+              const param = {
+                firebase_id: user.uid,
+                email: user.email,
+              }
+              createUser(param)
             }
           })
-          const param = {
-            firebase_id: user.uid,
-            email: user.email,
-          }
-          createUserMutation.mutate(param)
         }
       }
     })

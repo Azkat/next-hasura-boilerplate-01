@@ -49,6 +49,7 @@ export default function UserList(props) {
         <div className="cursor-pointer" onClick={logout}>
           Logout
         </div>
+        <div></div>
       </Layout>
     )
   }

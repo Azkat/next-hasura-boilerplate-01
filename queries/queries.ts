@@ -73,6 +73,15 @@ export const CREATE_USER = gql`
   }
 `
 
+export const UPDATE_USER_NAME = gql`
+  mutation UpdateUserName($id: uuid!, $name: String!) {
+    update_users_by_pk(pk_columns: { id: $id }, _set: { name: $name }) {
+      id
+      name
+    }
+  }
+`
+
 export const CREATE_POST = gql`
   mutation CreatePost($title: String!, $description: String, $user_id: uuid!) {
     insert_posts_one(

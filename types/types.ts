@@ -27,6 +27,10 @@ export interface CreatePost {
   description: string
   user_id: string
 }
+export interface UpdateUserName {
+  id: string
+  name: string
+}
 export interface Rocket {
   company: string
   country: string
