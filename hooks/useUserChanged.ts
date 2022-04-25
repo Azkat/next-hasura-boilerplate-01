@@ -53,14 +53,14 @@ export const useUserChanged = () => {
             const hasuraClaimsSnap = idTokenResultSnap.claims[HASURA_TOKEN_KEY]
             if (hasuraClaimsSnap) {
               cookie.set('token', tokenSnap, { path: '/' })
+              const param = {
+                firebase_id: user.uid,
+                email: user.email,
+              }
+              createUserMutation.mutate(param)
               router.push('/account')
             }
           })
-          const param = {
-            firebase_id: user.uid,
-            email: user.email,
-          }
-          createUserMutation.mutate(param)
         }
       }
     })
