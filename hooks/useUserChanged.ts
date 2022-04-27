@@ -38,7 +38,7 @@ export const useUserChanged = () => {
 
         if (hasuraClaims) {
           cookie.set('token', token, { path: '/' })
-          cookie.set('user_id', 'd524bb72-4fce-4622-9c08-62264943ff68', {
+          cookie.set('user_id', '18745296-57aa-477c-987e-96b7cf2c3be5', {
             path: '/',
           })
           router.push('/account')

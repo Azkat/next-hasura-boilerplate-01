@@ -60,7 +60,7 @@ export default function UserList(props) {
           Logout
         </div>
         {providerId == 'password' ? <UpdateEmail /> : ''}
-        {/* <UpdateUserName /> */}
+        <UpdateUserName />
       </Layout>
     )
   }
