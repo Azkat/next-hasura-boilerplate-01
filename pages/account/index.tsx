@@ -8,13 +8,23 @@ import Cookie from 'universal-cookie'
 import firebase from '../../firebaseConfig'
 import { unSubMeta } from '../../hooks/useUserChanged'
 import { useRouter } from 'next/router'
-import { useUser } from '../../hooks/useUser'
+import { useFirebaseEmailUpdate } from '../../hooks/useFirebaseEmailUpdate'
+import UpdateEmail from '../../components/UpdateEmail'
+import UpdateUserName from '../../components/UpdateUserName'
 
 const cookie = new Cookie()
 
 export default function UserList(props) {
   const router = useRouter()
-  const { uid, providerId } = useUser()
+  const {
+    uid,
+    providerId,
+    email,
+    emailChange,
+    updateEmail,
+    password,
+    passwordChange,
+  } = useFirebaseEmailUpdate()
   const [isUser, setIsUser] = useState(false)
   useEffect(() => {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
@@ -49,7 +59,8 @@ export default function UserList(props) {
         <div className="cursor-pointer" onClick={logout}>
           Logout
         </div>
-        <div></div>
+        {providerId == 'password' ? <UpdateEmail /> : ''}
+        {/* <UpdateUserName /> */}
       </Layout>
     )
   }

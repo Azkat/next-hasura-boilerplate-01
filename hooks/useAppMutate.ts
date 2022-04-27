@@ -3,16 +3,18 @@ import { useQueryClient, useMutation } from 'react-query'
 import { GraphQLClient } from 'graphql-request'
 import Cookie from 'universal-cookie'
 import {
+  UPDATE_USER_NAME,
+  CREATE_USER,
   // CREATE_TASK,
   // DELETE_TASK,
   // UPDATE_TASK,
   // CREATE_NEWS,
   // DELETE_NEWS,
   // UPDATE_NEWS,
-  CREATE_USER,
 } from '../queries/queries'
 import {
   /* Task, EditTask, News, EditNews,  */ CreateUser,
+  UpdateUserName,
 } from '../types/types'
 import { useDispatch } from 'react-redux'
 import { resetEditedTask, resetEditedNews } from '../slices/uiSlice'
@@ -32,6 +34,17 @@ export const useAppMutate = () => {
       },
     })
   }, [cookie.get('token')])
+
+  const updateUserNameMutation = useMutation(
+    (updateParam: UpdateUserName) =>
+      graphQLClient.request(UPDATE_USER_NAME, updateParam),
+    {
+      onSuccess: (res) => {
+        console.log(res)
+      },
+      onError: () => {},
+    }
+  )
 
   /* const createUserMutation = useMutation(
     (createUser: CreateUser) => graphQLClient.request(CREATE_USER, createUser),
@@ -158,6 +171,7 @@ export const useAppMutate = () => {
   ) */
 
   return {
+    updateUserNameMutation,
     //createUserMutation,
     // createTaskMutation,
     // updateTaskMutation,
