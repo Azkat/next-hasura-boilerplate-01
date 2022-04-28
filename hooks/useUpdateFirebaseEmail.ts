@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, ChangeEvent, FormEvent } from 'react'
 import firebase, { auth } from '../firebaseConfig'
 
-export const useFirebaseEmailUpdate = () => {
+export const useUpdateFirebaseEmail = () => {
   const [uid, setUid] = useState('')
   const [providerId, setProviderId] = useState('')
   const [currentEmail, setCurrentEmail] = useState('')

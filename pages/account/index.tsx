@@ -8,7 +8,7 @@ import Cookie from 'universal-cookie'
 import firebase from '../../firebaseConfig'
 import { unSubMeta } from '../../hooks/useUserChanged'
 import { useRouter } from 'next/router'
-import { useFirebaseEmailUpdate } from '../../hooks/useFirebaseEmailUpdate'
+import { useUpdateFirebaseEmail } from '../../hooks/useUpdateFirebaseEmail'
 import UpdateEmail from '../../components/UpdateEmail'
 import UpdateUserName from '../../components/UpdateUserName'
 
@@ -24,7 +24,7 @@ export default function UserList(props) {
     updateEmail,
     password,
     passwordChange,
-  } = useFirebaseEmailUpdate()
+  } = useUpdateFirebaseEmail()
   const [isUser, setIsUser] = useState(false)
   useEffect(() => {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {

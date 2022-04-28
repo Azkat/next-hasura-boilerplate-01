@@ -1,5 +1,5 @@
 import React from 'react'
-import { useFirebaseEmailUpdate } from '../hooks/useFirebaseEmailUpdate'
+import { useUpdateFirebaseEmail } from '../hooks/useUpdateFirebaseEmail'
 
 export default function UpdateEmail() {
   const {
@@ -10,7 +10,7 @@ export default function UpdateEmail() {
     updateEmail,
     password,
     passwordChange,
-  } = useFirebaseEmailUpdate()
+  } = useUpdateFirebaseEmail()
 
   return (
     <div className="mt-14 mb-8">
