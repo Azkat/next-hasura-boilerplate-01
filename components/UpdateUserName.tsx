@@ -3,48 +3,47 @@ import { useAppMutate } from '../hooks/useAppMutate'
 import { useSelector, useDispatch } from 'react-redux'
 import { setEditedNews, selectNews } from '../slices/uiSlice'
 import { QueryClient, useQueryClient } from 'react-query'
-import { fetchUserById } from '../hooks/useQueryUsers'
+import { useUpdateUserName } from '../hooks/useUpdateUserName'
 import { User } from '../types/types'
 import Cookie from 'universal-cookie'
 
-export default function UpdateUserName() {
+export default function UpdateUserName(props, status) {
   const cookie = new Cookie()
   const queryClient = useQueryClient()
-  /* await queryClient.prefetchQuery('user_by_id', () =>
-    fetchUserById(cookie.get('user_id'))
-  ) */
-  /* const data = queryClient.prefetchQuery<User>('user_by_id', () =>
-    fetchUserById(cookie.get('user_id'))
-  ) */
   const { updateUserNameMutation } = useAppMutate()
+  const { userName, userNameChange, setUserName, updateUserName } =
+    useUpdateUserName()
 
-  /* const submitHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (editedNews.id === '') {
-      updateUserNameMutation.mutate(editedNews.content)
-    } else {
-      updateNewsMutation.mutate(editedNews)
+  useEffect(() => {
+    if (props.data != undefined) {
+      setUserName(props.data.name)
     }
-  } */
+  }, [props.data])
 
   return (
     <div className="mt-14 mb-8">
-      <h3>Your user name </h3>
-      {/* <form onSubmit={updateUserNameMutation}>
-        <input
-          type="text"
-          className="my-3 px-3 py-1 border border-gray-300"
-          value={email}
-          onChange={emailChange}
-        />
-        <button
-          disabled={!email}
-          type="submit"
-          className="disabled:opacity-40 mt-5 py-1 px-3 text-white bg-indigo-600 hover:bg-indigo-700 rounded focus:outline-none"
-        >
-          update
-        </button>
-      </form> */}
+      <h3>Username</h3>
+      {props.status == 'loading' ? <h3>Loading...</h3> : ''}
+      {props.status == 'success' && props.data.name ? (
+        <form onSubmit={updateUserName}>
+          <input
+            type="text"
+            placeholder="username"
+            className="my-3 px-3 py-1 border border-gray-300"
+            value={userName}
+            onChange={userNameChange}
+          />
+          <button
+            disabled={!userName}
+            type="submit"
+            className="disabled:opacity-40 mt-5 py-1 px-3 text-white bg-indigo-600 hover:bg-indigo-700 rounded focus:outline-none"
+          >
+            update
+          </button>
+        </form>
+      ) : (
+        ''
+      )}
     </div>
   )
 }

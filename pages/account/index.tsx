@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Layout } from '../../components/Layout'
-import { Auth } from '../../components/Auth'
-import { QueryClient, useQueryClient } from 'react-query'
-import { Post } from '../../types/types'
-import Link from 'next/link'
 import Cookie from 'universal-cookie'
 import firebase from '../../firebaseConfig'
 import { unSubMeta } from '../../hooks/useUserChanged'
@@ -11,10 +7,11 @@ import { useRouter } from 'next/router'
 import { useUpdateFirebaseEmail } from '../../hooks/useUpdateFirebaseEmail'
 import UpdateEmail from '../../components/UpdateEmail'
 import UpdateUserName from '../../components/UpdateUserName'
+import { useQueryUserById } from '../../hooks/useQueryUserById'
 
 const cookie = new Cookie()
 
-export default function UserList(props) {
+export default function Account(props) {
   const router = useRouter()
   const {
     uid,
@@ -26,6 +23,9 @@ export default function UserList(props) {
     passwordChange,
   } = useUpdateFirebaseEmail()
   const [isUser, setIsUser] = useState(false)
+
+  const { status, data } = useQueryUserById(cookie.get('user_id'))
+
   useEffect(() => {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
@@ -46,7 +46,6 @@ export default function UserList(props) {
     }
     await firebase.auth().signOut()
     cookie.remove('token')
-    cookie.remove('id')
     cookie.remove('user_id')
     router.push('/login')
   }
@@ -60,7 +59,7 @@ export default function UserList(props) {
           Logout
         </div>
         {providerId == 'password' ? <UpdateEmail /> : ''}
-        <UpdateUserName />
+        <UpdateUserName data={data} status={status} />
       </Layout>
     )
   }

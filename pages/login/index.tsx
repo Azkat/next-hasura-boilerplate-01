@@ -18,7 +18,7 @@ export default function UserList(props) {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         setIsUser(true)
-        router.push('/account')
+        //router.push('/account')
       } else {
         return
       }
