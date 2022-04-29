@@ -33,7 +33,7 @@ export const useAppMutate = () => {
 
   useEffect(() => {
     const now = new Date()
-    const expireTimestamp = cookie.get('expire_timestamp')
+    const expireTimestamp = cookie.get('token_expire')
 
     if (now > expireTimestamp) {
       firebase.auth().onAuthStateChanged(async (user) => {
@@ -52,7 +52,7 @@ export const useAppMutate = () => {
         Authorization: `Bearer ${cookie.get('token')}`,
       },
     })
-  }, [cookie.get('expire_timestamp')])
+  }, [cookie.get('token_expire')])
 
   useEffect(() => {
     if (cookie.get('token')) {

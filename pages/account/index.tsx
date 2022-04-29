@@ -8,6 +8,7 @@ import { useUpdateFirebaseEmail } from '../../hooks/useUpdateFirebaseEmail'
 import UpdateEmail from '../../components/UpdateEmail'
 import UpdateUserName from '../../components/UpdateUserName'
 import { useQueryUserById } from '../../hooks/useQueryUserById'
+import Link from 'next/link'
 
 const cookie = new Cookie()
 
@@ -56,11 +57,18 @@ export default function Account(props) {
   } else {
     return (
       <Layout title="Account">
-        <div className="cursor-pointer" onClick={logout}>
-          Logout
+        <div>
+          <Link href="/account/createPost">create new post</Link>
+        </div>
+        <div>
+          <Link href="/account/posts">my posts</Link>
         </div>
         {providerId == 'password' ? <UpdateEmail /> : ''}
         <UpdateUserName data={data} status={status} />
+
+        <div className="cursor-pointer mt-16" onClick={logout}>
+          Logout
+        </div>
       </Layout>
     )
   }

@@ -28,6 +28,16 @@ export const GET_POST_BY_ID_PK = gql`
     }
   }
 `
+export const GET_USER_POSTS = gql`
+  query GetUserPosts($user_id: uuid!) {
+    posts(where: { user_id: { _eq: $user_id } }) {
+      id
+      title
+      description
+      created_at
+    }
+  }
+`
 export const GET_USERS = gql`
   query GetUsers {
     users {

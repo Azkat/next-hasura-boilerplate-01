@@ -83,7 +83,7 @@ export const useUserChanged = async () => {
         if (hasuraClaims) {
           await cookie.set('token', token, { path: '/' })
           await loginCookie(user.uid)
-          router.push('/account')
+          //router.push('/account')
         } else {
           const userRef = firebase
             .firestore()

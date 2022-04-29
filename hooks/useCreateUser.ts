@@ -21,12 +21,6 @@ export const useCreateUser = () => {
     })
   }, [cookie.get('token')])
 
-  useEffect(() => {
-    if (cookie.get('user_id')) {
-      router.push('/account')
-    }
-  }, [cookie.get('user_id')])
-
   const updateUserName = (param) => {
     graphQLClient = new GraphQLClient(endpoint, {
       headers: {

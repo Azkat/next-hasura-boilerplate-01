@@ -29,7 +29,7 @@ export default function create_post(props) {
   }, []) */
 
   return (
-    <Layout title="Account">
+    <Layout title="Create new post">
       <h1>Create new post</h1>
       <form
         onSubmit={createPost}
