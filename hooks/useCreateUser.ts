@@ -67,5 +67,6 @@ export const useCreateUser = () => {
   return {
     createUserMutation,
     createUser,
+    loginUser,
   }
 }

@@ -50,12 +50,29 @@ export const GET_USERBY_ID_PK = gql`
     users_by_pk(id: $id) {
       id
       name
+      profile_id
       posts {
         id
         title
         created_at
         description
       }
+    }
+  }
+`
+
+export const GET_USER_BY_FIREBASEID = gql`
+  query GetUserByFirebaseId($firebase_id: String!) {
+    users(where: {firebase_id: {_eq: firebase_id: $firebase_id}}) {
+      id
+        name
+        profile_id
+        posts {
+          id
+          title
+          created_at
+          description
+        }
     }
   }
 `
@@ -78,6 +95,18 @@ export const UPDATE_USER_NAME = gql`
     update_users_by_pk(pk_columns: { id: $id }, _set: { name: $name }) {
       id
       name
+    }
+  }
+`
+
+export const UPDATE_USER_EMAIL = gql`
+  mutation UpdateUserProfileEmail($id: uuid!, $email: String!) {
+    update_user_profiles_by_pk(
+      pk_columns: { id: $id }
+      _set: { email: $email }
+    ) {
+      email
+      id
     }
   }
 `

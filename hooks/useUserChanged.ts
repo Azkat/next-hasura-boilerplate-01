@@ -3,16 +3,24 @@ import firebase from '../firebaseConfig'
 import { useRouter } from 'next/router'
 import Cookie from 'universal-cookie'
 import { useCreateUser } from '../hooks/useCreateUser'
+import { useQueryUserByFirebaseId } from './useQueryUserByFirebaseId'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { useState } from 'react'
 
 export let unSubMeta: () => void
+const cookie = new Cookie()
 
-export const useUserChanged = () => {
-  const cookie = new Cookie()
+/* const storeUserIdCookie = async (firebase_id) => {
+  const user = await firebase.auth().currentUser
+  const { status, data } = useQueryUserByFirebaseId(firebase_id)
+  console.log(data)
+} */
+const { getUserByFirebaseId } = useQueryUserByFirebaseId()
+
+export const useUserChanged = async () => {
   const router = useRouter()
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
-  const { createUserMutation, createUser } = useCreateUser()
+  const { createUser } = useCreateUser()
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -24,6 +32,7 @@ export const useUserChanged = () => {
         },
       })
   )
+
   useEffect(() => {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
       const alreadyToken = cookie.get('token')
@@ -38,10 +47,7 @@ export const useUserChanged = () => {
 
         if (hasuraClaims) {
           cookie.set('token', token, { path: '/' })
-          cookie.set('user_id', '18745296-57aa-477c-987e-96b7cf2c3be5', {
-            path: '/',
-          })
-          router.push('/account')
+          //router.push('/account')
         } else {
           const userRef = firebase
             .firestore()

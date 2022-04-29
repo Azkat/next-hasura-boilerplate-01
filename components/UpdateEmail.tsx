@@ -21,6 +21,7 @@ export default function UpdateEmail() {
           type="text"
           className="my-3 px-3 py-1 border border-gray-300"
           value={email}
+          placeholder="email"
           onChange={emailChange}
         />
         <label>Password: </label>

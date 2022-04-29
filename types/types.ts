@@ -11,6 +11,7 @@ export interface Post {
 export interface User {
   id: string
   name: string
+  profile_id: string
   posts: Array<{
     id: string
     title: string
@@ -30,6 +31,10 @@ export interface CreatePost {
 export interface UpdateUserName {
   id: string
   name: string
+}
+export interface UpdateUserProfileEmail {
+  id: string
+  email: string
 }
 export interface Rocket {
   company: string

@@ -5,6 +5,7 @@ import Cookie from 'universal-cookie'
 import {
   UPDATE_USER_NAME,
   CREATE_USER,
+  UPDATE_USER_EMAIL,
   // CREATE_TASK,
   // DELETE_TASK,
   // UPDATE_TASK,
@@ -15,6 +16,7 @@ import {
 import {
   /* Task, EditTask, News, EditNews,  */ CreateUser,
   UpdateUserName,
+  UpdateUserProfileEmail,
 } from '../types/types'
 import { useDispatch } from 'react-redux'
 import { resetEditedTask, resetEditedNews } from '../slices/uiSlice'
@@ -42,6 +44,15 @@ export const useAppMutate = () => {
       onSuccess: (res) => {
         console.log(res)
       },
+      onError: () => {},
+    }
+  )
+
+  const updateUserProfileEmailMutaion = useMutation(
+    (updateParam: UpdateUserProfileEmail) =>
+      graphQLClient.request(UPDATE_USER_EMAIL, updateParam),
+    {
+      onSuccess: (res) => {},
       onError: () => {},
     }
   )
@@ -172,6 +183,7 @@ export const useAppMutate = () => {
 
   return {
     updateUserNameMutation,
+    updateUserProfileEmailMutaion,
     //createUserMutation,
     // createTaskMutation,
     // updateTaskMutation,
