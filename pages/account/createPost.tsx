@@ -3,7 +3,7 @@ import { Layout } from '../../components/Layout'
 import { useRouter } from 'next/router'
 import { useCreatePost } from '../../hooks/useCreatePost'
 
-export default function UserList(props) {
+export default function create_post(props) {
   const router = useRouter()
   const [isUser, setIsUser] = useState(false)
   const {

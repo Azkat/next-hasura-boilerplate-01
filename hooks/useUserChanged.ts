@@ -6,6 +6,8 @@ import { useCreateUser } from '../hooks/useCreateUser'
 import { useQueryUserByFirebaseId } from './useQueryUserByFirebaseId'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { useState } from 'react'
+import { GraphQLClient, gql } from 'graphql-request'
+import loginCookie from './useLoginCookie'
 
 export let unSubMeta: () => void
 const cookie = new Cookie()
@@ -16,6 +18,35 @@ const cookie = new Cookie()
   console.log(data)
 } */
 const { getUserByFirebaseId } = useQueryUserByFirebaseId()
+
+async function testQuery(firebase_id) {
+  let graphQLClient: GraphQLClient
+  const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT
+  const client = new GraphQLClient(endpoint)
+
+  const requestHeaders = {
+    authorization: `Bearer ${cookie.get('token')}`,
+  }
+
+  const query = gql`
+    query MyQuery($firebase_id: String!) {
+      users(where: { firebase_id: { _eq: $firebase_id } }) {
+        id
+        name
+        profile_id
+      }
+    }
+  `
+  const variables = {
+    firebase_id: firebase_id,
+  }
+
+  const data = await client.request(query, variables, requestHeaders)
+  console.log(data)
+  cookie.set('user_id', data.users[0].id, {
+    path: '/',
+  })
+}
 
 export const useUserChanged = async () => {
   const router = useRouter()
@@ -45,9 +76,14 @@ export const useUserChanged = async () => {
         const idTokenResult = await user.getIdTokenResult()
         const hasuraClaims = idTokenResult.claims[HASURA_TOKEN_KEY]
 
+        const now: number = Date.now()
+        const expireTimestamp: number = now + 1000 * 60 * 60
+        await cookie.set('token_expire', expireTimestamp, { path: '/' })
+
         if (hasuraClaims) {
-          cookie.set('token', token, { path: '/' })
-          //router.push('/account')
+          await cookie.set('token', token, { path: '/' })
+          await loginCookie(user.uid)
+          router.push('/account')
         } else {
           const userRef = firebase
             .firestore()

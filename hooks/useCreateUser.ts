@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useQueryClient, useMutation } from 'react-query'
+import { useRouter } from 'next/router'
 import { GraphQLClient } from 'graphql-request'
 import Cookie from 'universal-cookie'
 import { CREATE_USER, UPDATE_USER_NAME } from '../queries/queries'
@@ -10,6 +11,8 @@ const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT
 let graphQLClient: GraphQLClient
 
 export const useCreateUser = () => {
+  const router = useRouter()
+
   useEffect(() => {
     graphQLClient = new GraphQLClient(endpoint, {
       headers: {
@@ -17,6 +20,12 @@ export const useCreateUser = () => {
       },
     })
   }, [cookie.get('token')])
+
+  useEffect(() => {
+    if (cookie.get('user_id')) {
+      router.push('/account')
+    }
+  }, [cookie.get('user_id')])
 
   const updateUserName = (param) => {
     graphQLClient = new GraphQLClient(endpoint, {
@@ -67,6 +76,5 @@ export const useCreateUser = () => {
   return {
     createUserMutation,
     createUser,
-    loginUser,
   }
 }

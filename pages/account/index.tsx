@@ -47,6 +47,7 @@ export default function Account(props) {
     await firebase.auth().signOut()
     cookie.remove('token')
     cookie.remove('user_id')
+    cookie.remove('token_expire')
     router.push('/login')
   }
 

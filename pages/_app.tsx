@@ -7,6 +7,9 @@ import { Provider } from 'react-redux'
 import { store } from '../app/store'
 import { Hydrate } from 'react-query/hydration'
 import UserChanged from '../components/UserChanged'
+import Cookie from 'universal-cookie'
+
+const cookie = new Cookie()
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(

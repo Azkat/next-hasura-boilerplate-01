@@ -31,7 +31,6 @@ export const useUpdateUserName = () => {
   const updateUserName = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      alert(userName)
       const param = {
         id: userId,
         name: userName,

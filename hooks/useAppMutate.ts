@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useQueryClient, useMutation } from 'react-query'
 import { GraphQLClient } from 'graphql-request'
 import Cookie from 'universal-cookie'
+import firebase from '../firebaseConfig'
 import {
   UPDATE_USER_NAME,
   CREATE_USER,
@@ -24,27 +25,54 @@ import { resetEditedTask, resetEditedNews } from '../slices/uiSlice'
 const cookie = new Cookie()
 const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT
 let graphQLClient: GraphQLClient
+const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
 
 export const useAppMutate = () => {
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
 
   useEffect(() => {
+    const now = new Date()
+    const expireTimestamp = cookie.get('expire_timestamp')
+
+    if (now > expireTimestamp) {
+      firebase.auth().onAuthStateChanged(async (user) => {
+        if (user) {
+          const token = await user.getIdToken(true)
+          const idTokenResult = await user.getIdTokenResult()
+          const hasuraClaims = await idTokenResult.claims[HASURA_TOKEN_KEY]
+          await cookie.set('token', token, { path: '/' })
+        }
+      })
+
+      cookie.set('token_expire', Date.now() + 1000 * 60 * 60, { path: '/' })
+    }
     graphQLClient = new GraphQLClient(endpoint, {
       headers: {
         Authorization: `Bearer ${cookie.get('token')}`,
       },
     })
+  }, [cookie.get('expire_timestamp')])
+
+  useEffect(() => {
+    if (cookie.get('token')) {
+      graphQLClient = new GraphQLClient(endpoint, {
+        headers: {
+          Authorization: `Bearer ${cookie.get('token')}`,
+        },
+      })
+    }
   }, [cookie.get('token')])
 
   const updateUserNameMutation = useMutation(
     (updateParam: UpdateUserName) =>
       graphQLClient.request(UPDATE_USER_NAME, updateParam),
     {
-      onSuccess: (res) => {
+      onSuccess: (res) => {},
+      onError: (res) => {
         console.log(res)
       },
-      onError: () => {},
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     }
   )
 
