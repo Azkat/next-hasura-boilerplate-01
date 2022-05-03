@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
 import { store } from '../app/store'
+import { AuthProvider } from '../lib/authProvider'
 import { Hydrate } from 'react-query/hydration'
 import UserChanged from '../components/UserChanged'
 import Cookie from 'universal-cookie'
@@ -28,8 +29,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <Provider store={store}>
-          <UserChanged />
-          <Component {...pageProps} />
+          <AuthProvider>
+            <UserChanged />
+            <Component {...pageProps} />
+          </AuthProvider>
         </Provider>
         <ReactQueryDevtools />
       </Hydrate>
