@@ -7,6 +7,7 @@ import {
   UPDATE_USER_NAME,
   CREATE_USER,
   UPDATE_USER_EMAIL,
+  UPDATE_POST,
   // CREATE_TASK,
   // DELETE_TASK,
   // UPDATE_TASK,
@@ -18,9 +19,10 @@ import {
   /* Task, EditTask, News, EditNews,  */ CreateUser,
   UpdateUserName,
   UpdateUserProfileEmail,
+  UpdatePost,
 } from '../types/types'
-import { useDispatch } from 'react-redux'
-import { resetEditedTask, resetEditedNews } from '../slices/uiSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import { setEditedPost, resetEditedPost, selectPost } from '../slices/uiSlice'
 
 const cookie = new Cookie()
 const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT
@@ -30,6 +32,7 @@ const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
 export const useAppMutate = () => {
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
+  const editedPost = useSelector(selectPost)
 
   useEffect(() => {
     const now = new Date()
@@ -63,6 +66,30 @@ export const useAppMutate = () => {
       })
     }
   }, [cookie.get('token')])
+
+  const updatePostMutation = useMutation(
+    (updateParam: UpdatePost) =>
+      graphQLClient.request(UPDATE_POST, updateParam),
+    {
+      onSuccess: (res, variables) => {
+        const previousPosts =
+          queryClient.getQueryData<UpdatePost[]>('userposts')
+        if (previousPosts) {
+          queryClient.setQueryData<UpdatePost[]>(
+            'userposts',
+            previousPosts.map((post) =>
+              post.id === variables.id ? res.update_posts_by_pk : post
+            )
+          )
+        }
+        dispatch(resetEditedPost())
+      },
+      onError: (res) => {
+        console.log(res)
+      },
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    }
+  )
 
   const updateUserNameMutation = useMutation(
     (updateParam: UpdateUserName) =>
@@ -212,6 +239,7 @@ export const useAppMutate = () => {
   return {
     updateUserNameMutation,
     updateUserProfileEmailMutaion,
+    updatePostMutation,
     //createUserMutation,
     // createTaskMutation,
     // updateTaskMutation,

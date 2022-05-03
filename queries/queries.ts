@@ -130,6 +130,18 @@ export const CREATE_POST = gql`
     }
   }
 `
+export const UPDATE_POST = gql`
+  mutation UpdatePost($id: uuid!, $title: String!, $description: String!) {
+    update_posts_by_pk(
+      pk_columns: { id: $id }
+      _set: { title: $title, description: $description }
+    ) {
+      id
+      title
+      description
+    }
+  }
+`
 
 export const GET_ROCKET = gql`
   query GetRocket($id: ID!) {

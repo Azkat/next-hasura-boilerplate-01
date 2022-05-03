@@ -48,3 +48,8 @@ export interface Rocket {
     version: string
   }
 }
+export interface UpdatePost {
+  id: string
+  title: string
+  description: string
+}

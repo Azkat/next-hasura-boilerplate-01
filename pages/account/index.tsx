@@ -58,7 +58,7 @@ export default function Account(props) {
     return (
       <Layout title="Account">
         <div>
-          <Link href="/account/createPost">create new post</Link>
+          <Link href="/account/createpost">create new post</Link>
         </div>
         <div>
           <Link href="/account/posts">my posts</Link>
