@@ -143,6 +143,26 @@ export const UPDATE_POST = gql`
   }
 `
 
+export const DELETE_POST = gql`
+  mutation DeletePost($id: uuid!) {
+    delete_posts_by_pk(id: $id) {
+      id
+      title
+      description
+    }
+  }
+`
+
+export const CREATE_LIKE = gql`
+  mutation MyMutation($user_id: uuid!, $post_id: uuid!) {
+    insert_user_likes_one(object: { post_id: $post_id, user_id: $user_id }) {
+      id
+      post_id
+      user_id
+    }
+  }
+`
+
 export const GET_ROCKET = gql`
   query GetRocket($id: ID!) {
     rocket(id: $id) {

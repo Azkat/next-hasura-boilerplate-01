@@ -5,9 +5,10 @@ import Cookie from 'universal-cookie'
 import firebase from '../firebaseConfig'
 import {
   UPDATE_USER_NAME,
-  CREATE_USER,
   UPDATE_USER_EMAIL,
   UPDATE_POST,
+  DELETE_POST,
+  CREATE_LIKE,
   // CREATE_TASK,
   // DELETE_TASK,
   // UPDATE_TASK,
@@ -20,6 +21,8 @@ import {
   UpdateUserName,
   UpdateUserProfileEmail,
   UpdatePost,
+  Post,
+  CreateLike,
 } from '../types/types'
 import { useSelector, useDispatch } from 'react-redux'
 import { setEditedPost, resetEditedPost, selectPost } from '../slices/uiSlice'
@@ -91,6 +94,23 @@ export const useAppMutate = () => {
     }
   )
 
+  const deletePostMutation = useMutation(
+    (id: string) => graphQLClient.request(DELETE_POST, { id: id }),
+    {
+      onSuccess: (res, variables) => {
+        const previousPosts =
+          queryClient.getQueryData<UpdatePost[]>('userposts')
+        if (previousPosts) {
+          queryClient.setQueryData<UpdatePost[]>(
+            'userposts',
+            previousPosts.filter((post) => post.id !== variables)
+          )
+        }
+        dispatch(resetEditedPost())
+      },
+    }
+  )
+
   const updateUserNameMutation = useMutation(
     (updateParam: UpdateUserName) =>
       graphQLClient.request(UPDATE_USER_NAME, updateParam),
@@ -109,6 +129,31 @@ export const useAppMutate = () => {
     {
       onSuccess: (res) => {},
       onError: () => {},
+    }
+  )
+
+  const createLikeMutation = useMutation(
+    (param: CreateLike) => graphQLClient.request(CREATE_LIKE, param),
+    {
+      onSuccess: (res) => {},
+      onError: () => {},
+    }
+  )
+
+  const deleteLikeMutation = useMutation(
+    (id: string) => graphQLClient.request(DELETE_POST, { id: id }),
+    {
+      onSuccess: (res, variables) => {
+        const previousPosts =
+          queryClient.getQueryData<UpdatePost[]>('userposts')
+        if (previousPosts) {
+          queryClient.setQueryData<UpdatePost[]>(
+            'userposts',
+            previousPosts.filter((post) => post.id !== variables)
+          )
+        }
+        dispatch(resetEditedPost())
+      },
     }
   )
 
@@ -240,6 +285,9 @@ export const useAppMutate = () => {
     updateUserNameMutation,
     updateUserProfileEmailMutaion,
     updatePostMutation,
+    deletePostMutation,
+    createLikeMutation,
+    deleteLikeMutation,
     //createUserMutation,
     // createTaskMutation,
     // updateTaskMutation,

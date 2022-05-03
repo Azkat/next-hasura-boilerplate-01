@@ -10,6 +10,7 @@ const AccountPostItem = ({ post }) => {
   const editedPost = useSelector(selectPost)
   const router = useRouter()
   const { updatePostMutation } = useAppMutate()
+  const { deletePostMutation } = useAppMutate()
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -59,7 +60,12 @@ const AccountPostItem = ({ post }) => {
             )
           }}
         />
-        <TrashIcon className="h-5 w-5 mx-1 text-blue-500 cursor-pointer" />
+        <TrashIcon
+          className="h-5 w-5 mx-1 text-blue-500 cursor-pointer"
+          onClick={() => {
+            deletePostMutation.mutate(post.id)
+          }}
+        />
       </div>
     </li>
   )

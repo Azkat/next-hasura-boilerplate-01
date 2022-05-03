@@ -53,3 +53,7 @@ export interface UpdatePost {
   title: string
   description: string
 }
+export interface CreateLike {
+  user_id: string
+  post_id: string
+}
