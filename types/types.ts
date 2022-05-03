@@ -57,3 +57,6 @@ export interface CreateLike {
   user_id: string
   post_id: string
 }
+export interface UserLikes {
+  post_id: string
+}

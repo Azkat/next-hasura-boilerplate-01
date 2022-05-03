@@ -143,6 +143,14 @@ export const UPDATE_POST = gql`
   }
 `
 
+export const GET_USER_LIKES = gql`
+  query MyQuery($user_id: uuid!) {
+    user_likes(where: { user_id: { _eq: $user_id } }) {
+      post_id
+    }
+  }
+`
+
 export const DELETE_POST = gql`
   mutation DeletePost($id: uuid!) {
     delete_posts_by_pk(id: $id) {

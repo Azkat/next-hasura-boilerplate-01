@@ -23,6 +23,7 @@ import {
   UpdatePost,
   Post,
   CreateLike,
+  UserLikes,
 } from '../types/types'
 import { useSelector, useDispatch } from 'react-redux'
 import { setEditedPost, resetEditedPost, selectPost } from '../slices/uiSlice'
@@ -108,6 +109,7 @@ export const useAppMutate = () => {
         }
         dispatch(resetEditedPost())
       },
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     }
   )
 
@@ -129,14 +131,24 @@ export const useAppMutate = () => {
     {
       onSuccess: (res) => {},
       onError: () => {},
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     }
   )
 
   const createLikeMutation = useMutation(
     (param: CreateLike) => graphQLClient.request(CREATE_LIKE, param),
     {
-      onSuccess: (res) => {},
+      onSuccess: (res) => {
+        const previousLikes = queryClient.getQueryData<UserLikes[]>('likes')
+        if (previousLikes) {
+          queryClient.setQueryData('likes', [
+            ...previousLikes,
+            res.insert_user_likes_one,
+          ])
+        }
+      },
       onError: () => {},
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     }
   )
 
@@ -154,6 +166,7 @@ export const useAppMutate = () => {
         }
         dispatch(resetEditedPost())
       },
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     }
   )
 

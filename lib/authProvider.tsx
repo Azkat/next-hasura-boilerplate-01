@@ -27,6 +27,7 @@ const AuthProvider = ({ children }) => {
         setCurrentUser(user)
         setSignInCheck(true)
       } else {
+        setCurrentUser(undefined)
         setSignInCheck(true)
       }
     })
