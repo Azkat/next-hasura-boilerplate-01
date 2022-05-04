@@ -181,20 +181,3 @@ export const DELETE_LIKE = gql`
     }
   }
 `
-
-export const GET_ROCKET = gql`
-  query GetRocket($id: ID!) {
-    rocket(id: $id) {
-      id
-      company
-      country
-      diameter {
-        meters
-      }
-      engines {
-        number
-        version
-      }
-    }
-  }
-`

@@ -36,18 +36,6 @@ export interface UpdateUserProfileEmail {
   id: string
   email: string
 }
-export interface Rocket {
-  company: string
-  country: string
-  id: string
-  diameter: {
-    meters: number
-  }
-  engines: {
-    number: number
-    version: string
-  }
-}
 export interface UpdatePost {
   id: string
   title: string

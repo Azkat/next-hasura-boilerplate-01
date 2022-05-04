@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import { AuthContext } from '../lib/authProvider'
-import Link from 'next/link'
 import { Layout } from '../components/Layout'
 import { GetStaticProps } from 'next'
 import { dehydrate } from 'react-query/hydration'
