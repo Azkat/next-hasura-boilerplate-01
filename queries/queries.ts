@@ -146,7 +146,9 @@ export const UPDATE_POST = gql`
 export const GET_USER_LIKES = gql`
   query MyQuery($user_id: uuid!) {
     user_likes(where: { user_id: { _eq: $user_id } }) {
+      id
       post_id
+      user_id
     }
   }
 `
@@ -164,6 +166,15 @@ export const DELETE_POST = gql`
 export const CREATE_LIKE = gql`
   mutation MyMutation($user_id: uuid!, $post_id: uuid!) {
     insert_user_likes_one(object: { post_id: $post_id, user_id: $user_id }) {
+      id
+      post_id
+      user_id
+    }
+  }
+`
+export const DELETE_LIKE = gql`
+  mutation DeleteLike($id: uuid!) {
+    delete_user_likes_by_pk(id: $id) {
       id
       post_id
       user_id

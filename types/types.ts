@@ -58,5 +58,11 @@ export interface CreateLike {
   post_id: string
 }
 export interface UserLikes {
+  id: string
   post_id: string
+  user_id: string
+}
+
+export interface DeleteLike {
+  id: string
 }
