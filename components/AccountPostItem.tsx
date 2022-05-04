@@ -17,9 +17,6 @@ const AccountPostItem = ({ post }) => {
     alert(editedPost.title)
     updatePostMutation.mutate(editedPost)
   }
-  /* if (deleteTaskMutation.isLoading) {
-    return <p>Deleting...</p>
-  } */
   if (updatePostMutation.error) {
     return <p>Error</p>
   }
@@ -29,7 +26,7 @@ const AccountPostItem = ({ post }) => {
         <form onSubmit={submitHandler}>
           <input
             className="mb-3 px-3 py-2 border border-gray-300"
-            placeholder="new task ?"
+            placeholder="new post ?"
             type="text"
             value={editedPost.title}
             onChange={(e) =>
