@@ -10,6 +10,8 @@ import {
   DELETE_POST,
   CREATE_LIKE,
   DELETE_LIKE,
+  DELETE_ACCOUNT,
+  DELETE_USER_PROFILE,
 } from '../queries/queries'
 import {
   UpdateUserName,
@@ -129,6 +131,26 @@ export const useAppMutate = () => {
     }
   )
 
+  const deleteAccountMutation = useMutation(
+    (param: UpdateUserProfileEmail) =>
+      graphQLClient.request(DELETE_ACCOUNT, param),
+    {
+      onSuccess: (res) => {},
+      onError: () => {},
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    }
+  )
+
+  const deleteUserProfileMutation = useMutation(
+    (param: UpdateUserProfileEmail) =>
+      graphQLClient.request(DELETE_USER_PROFILE, param),
+    {
+      onSuccess: (res) => {},
+      onError: () => {},
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    }
+  )
+
   const createLikeMutation = useMutation(
     (param: CreateLike) => graphQLClient.request(CREATE_LIKE, param),
     {
@@ -169,5 +191,7 @@ export const useAppMutate = () => {
     deletePostMutation,
     createLikeMutation,
     deleteLikeMutation,
+    deleteAccountMutation,
+    deleteUserProfileMutation,
   }
 }

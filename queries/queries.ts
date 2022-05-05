@@ -181,3 +181,34 @@ export const DELETE_LIKE = gql`
     }
   }
 `
+export const DELETE_ACCOUNT = gql`
+  mutation DeleteAccount($id: uuid!) {
+    delete_user_likes(where: { user_id: { _eq: $id } }) {
+      affected_rows
+    }
+    delete_posts(
+      where: {
+        user_id: { _eq: " delete_user_likes(where: {user_id: {_eq: $id}})" }
+      }
+    ) {
+      affected_rows
+    }
+    delete_user_profiles(where: { user: { id: { _eq: $id } } }) {
+      affected_rows
+    }
+    delete_users_by_pk(id: $id) {
+      id
+      user_profile {
+        id
+      }
+    }
+  }
+`
+
+export const DELETE_USER_PROFILE = gql`
+  mutation DeleteUserProfile($id: uuid!) {
+    delete_user_profiles_by_pk(id: $id) {
+      id
+    }
+  }
+`
