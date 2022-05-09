@@ -8,7 +8,7 @@ interface PostRes {
 }
 
 interface LikesRes {
-  user_likes: UserLikes[]
+  likes: UserLikes[]
 }
 
 export const fetchPosts = async () => {
@@ -27,11 +27,12 @@ export const useQueryPosts = () => {
 }
 
 export const fetchUserLikes = async (user_id) => {
-  const { user_likes: likesData } = await request<LikesRes>({
+  const { likes: likesData } = await request<LikesRes>({
     url: process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
     document: GET_USER_LIKES,
     variables: { user_id: user_id },
   })
+
   return likesData
 }
 export const useQueryUserLikes = (user_id) => {

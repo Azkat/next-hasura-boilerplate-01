@@ -54,3 +54,11 @@ export interface UserLikes {
 export interface DeleteLike {
   id: string
 }
+
+export interface DeleteAccount {
+  id: string
+}
+
+export interface DeleteUserProfile {
+  id: string
+}

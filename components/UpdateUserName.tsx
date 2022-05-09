@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useAppMutate } from '../hooks/useAppMutate'
 import { useSelector, useDispatch } from 'react-redux'
-import { setEditedNews, selectNews } from '../slices/uiSlice'
+import {} from '../slices/uiSlice'
 import { QueryClient, useQueryClient } from 'react-query'
 import { useUpdateUserName } from '../hooks/useUpdateUserName'
 import { User } from '../types/types'

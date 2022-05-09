@@ -55,7 +55,7 @@ export const useUpdateFirebaseEmail = () => {
           .updateEmail(email)
           .then(() => {
             const param = {
-              id: data.profile_id,
+              id: cookie.get('user_id'),
               email: user.email,
             }
             updateUserProfileEmailMutaion.mutate(param)

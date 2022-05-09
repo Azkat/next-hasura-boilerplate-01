@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { useUpdateFirebaseEmail } from '../../hooks/useUpdateFirebaseEmail'
 import UpdateEmail from '../../components/UpdateEmail'
 import UpdateUserName from '../../components/UpdateUserName'
+import { DeleteUser } from '../../components/DeleteUser'
 import { useQueryUserById } from '../../hooks/useQueryUserById'
 import Link from 'next/link'
 
@@ -57,10 +58,10 @@ export default function Account(props) {
   } else {
     return (
       <Layout title="Account">
-        <div>
+        <div className="cursor-pointer mt-16">
           <Link href="/account/createpost">create new post</Link>
         </div>
-        <div>
+        <div className="cursor-pointer mt-16">
           <Link href="/account/posts">my posts</Link>
         </div>
         {providerId == 'password' ? <UpdateEmail /> : ''}
@@ -69,6 +70,8 @@ export default function Account(props) {
         <div className="cursor-pointer mt-16" onClick={logout}>
           Logout
         </div>
+
+        <DeleteUser />
       </Layout>
     )
   }

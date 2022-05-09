@@ -60,7 +60,6 @@ export const GET_USERBY_ID_PK = gql`
     users_by_pk(id: $id) {
       id
       name
-      profile_id
       posts {
         id
         title
@@ -76,7 +75,6 @@ export const GET_USER_BY_FIREBASEID = gql`
     users(where: {firebase_id: {_eq: firebase_id: $firebase_id}}) {
       id
         name
-        profile_id
         posts {
           id
           title
@@ -92,7 +90,7 @@ export const CREATE_USER = gql`
     insert_users_one(
       object: {
         firebase_id: $firebase_id
-        user_profile: { data: { email: $email } }
+        user_profiles: { data: { email: $email } }
       }
     ) {
       id
@@ -111,12 +109,14 @@ export const UPDATE_USER_NAME = gql`
 
 export const UPDATE_USER_EMAIL = gql`
   mutation UpdateUserProfileEmail($id: uuid!, $email: String!) {
-    update_user_profiles_by_pk(
-      pk_columns: { id: $id }
+    update_user_profiles(
+      where: { user_id: { _eq: $id } }
       _set: { email: $email }
     ) {
-      email
-      id
+      returning {
+        email
+        id
+      }
     }
   }
 `
@@ -145,7 +145,7 @@ export const UPDATE_POST = gql`
 
 export const GET_USER_LIKES = gql`
   query MyQuery($user_id: uuid!) {
-    user_likes(where: { user_id: { _eq: $user_id } }) {
+    likes(where: { user_id: { _eq: $user_id } }) {
       id
       post_id
       user_id
@@ -165,7 +165,7 @@ export const DELETE_POST = gql`
 
 export const CREATE_LIKE = gql`
   mutation MyMutation($user_id: uuid!, $post_id: uuid!) {
-    insert_user_likes_one(object: { post_id: $post_id, user_id: $user_id }) {
+    insert_likes_one(object: { post_id: $post_id, user_id: $user_id }) {
       id
       post_id
       user_id
@@ -174,7 +174,7 @@ export const CREATE_LIKE = gql`
 `
 export const DELETE_LIKE = gql`
   mutation DeleteLike($id: uuid!) {
-    delete_user_likes_by_pk(id: $id) {
+    delete_likes_by_pk(id: $id) {
       id
       post_id
       user_id
@@ -183,32 +183,27 @@ export const DELETE_LIKE = gql`
 `
 export const DELETE_ACCOUNT = gql`
   mutation DeleteAccount($id: uuid!) {
-    delete_user_likes(where: { user_id: { _eq: $id } }) {
+    delete_likes(where: { user_id: { _eq: $id } }) {
       affected_rows
     }
-    delete_posts(
-      where: {
-        user_id: { _eq: " delete_user_likes(where: {user_id: {_eq: $id}})" }
-      }
-    ) {
-      affected_rows
-    }
-    delete_user_profiles(where: { user: { id: { _eq: $id } } }) {
+    delete_posts(where: { user_id: { _eq: $id } }) {
       affected_rows
     }
     delete_users_by_pk(id: $id) {
       id
-      user_profile {
-        id
-      }
     }
   }
 `
 
 export const DELETE_USER_PROFILE = gql`
   mutation DeleteUserProfile($id: uuid!) {
-    delete_user_profiles_by_pk(id: $id) {
-      id
+    delete_user_profiles(where: { user_id: { _eq: $id } }) {
+      affected_rows
+      returning {
+        email
+        id
+        user_id
+      }
     }
   }
 `

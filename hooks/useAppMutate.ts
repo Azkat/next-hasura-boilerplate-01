@@ -20,6 +20,8 @@ import {
   CreateLike,
   UserLikes,
   DeleteLike,
+  DeleteAccount,
+  DeleteUserProfile,
 } from '../types/types'
 import { useSelector, useDispatch } from 'react-redux'
 import { resetEditedPost, selectPost } from '../slices/uiSlice'
@@ -132,8 +134,7 @@ export const useAppMutate = () => {
   )
 
   const deleteAccountMutation = useMutation(
-    (param: UpdateUserProfileEmail) =>
-      graphQLClient.request(DELETE_ACCOUNT, param),
+    (param: DeleteAccount) => graphQLClient.request(DELETE_ACCOUNT, param),
     {
       onSuccess: (res) => {},
       onError: () => {},
@@ -142,10 +143,12 @@ export const useAppMutate = () => {
   )
 
   const deleteUserProfileMutation = useMutation(
-    (param: UpdateUserProfileEmail) =>
+    (param: DeleteUserProfile) =>
       graphQLClient.request(DELETE_USER_PROFILE, param),
     {
-      onSuccess: (res) => {},
+      onSuccess: (res) => {
+        console.log(res)
+      },
       onError: () => {},
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     }
@@ -155,15 +158,18 @@ export const useAppMutate = () => {
     (param: CreateLike) => graphQLClient.request(CREATE_LIKE, param),
     {
       onSuccess: (res, variables) => {
+        console.log(res)
         const previousLikes = queryClient.getQueryData<UserLikes[]>('likes')
         if (previousLikes) {
           queryClient.setQueryData('likes', [
             ...previousLikes,
-            res.insert_user_likes_one,
+            res.insert_likes_one,
           ])
         }
       },
-      onError: () => {},
+      onError: (res) => {
+        console.log(res)
+      },
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     }
   )
