@@ -1,66 +1,172 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback, ChangeEvent, FormEvent } from 'react'
 import { HeartIcon } from '@heroicons/react/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/outline'
 import Cookies from 'universal-cookie'
 import { useAppMutate } from '../hooks/useAppMutate'
+import firebase, { auth } from '../firebaseConfig'
 
 export const DeleteUser = (props) => {
   const cookie = new Cookies()
   const now = new Date()
   const { deleteAccountMutation, deleteUserProfileMutation } = useAppMutate()
+  const [password, setPassword] = useState('')
+  const [providerId, setProviderId] = useState('')
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        const data = user.providerData
+        data.forEach((userinfo) => {
+          setProviderId(userinfo.providerId)
+        })
+      }
+      console.log(providerId)
+    })
+    return () => {
+      unSubUser()
+    }
+  }, [])
+
+  const passwordChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value)
+  }, [])
 
   const deleteAccountParam = {
     id: cookie.get('user_id'),
   }
 
-  const deleteFirebase = (uid) => {
-    console.log('deleteFirebase発火 :' + Date.now())
+  const deleteFirestoreDocument = async (id) => {
+    await firebase.firestore().collection('user_meta').doc(id).delete()
   }
 
-  const deleteUserProfile = (profile_id) => {
-    console.log(
-      'deleteUserProfile発火 :' + Date.now() + ' profile_idは' + profile_id
-    )
-    const deleteUserProfileParam = {
-      id: profile_id,
+  const deleteAccount = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      console.log('deleteAccount発火 :' + Date.now())
+      e.preventDefault()
+      const user = await firebase.auth().currentUser
+      const credential = await firebase.auth.EmailAuthProvider.credential(
+        user.email,
+        password
+      )
+      user.reauthenticateWithCredential(credential).then(() => {
+        user
+          .delete()
+          .then(() => {
+            console.log('deleteAccount削除完了 :' + Date.now())
+            cookie.remove('token')
+            cookie.remove('user_id')
+            cookie.remove('token_expire')
+            deleteUser()
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      })
+    },
+    [password]
+  )
+
+  const deleteGoogleAccount = () => {
+    const now = new Date()
+    const expireTimestamp = cookie.get('token_expire')
+    const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
+    const user = firebase.auth().currentUser
+
+    if (now > expireTimestamp) {
+      firebase.auth().onAuthStateChanged(async (user) => {
+        if (user) {
+          const token = await user.getIdToken(true)
+          const idTokenResult = await user.getIdTokenResult()
+          const hasuraClaims = await idTokenResult.claims[HASURA_TOKEN_KEY]
+          await cookie.set('token', token, { path: '/' })
+        }
+      })
+      cookie.set('token_expire', Date.now() + 1000 * 60 * 60, { path: '/' })
+      firebase
+        .auth()
+        .currentUser.reauthenticateWithRedirect(
+          new firebase.auth.GoogleAuthProvider()
+        )
+        .then((UserCredential) => {
+          console.log('re-outh', UserCredential)
+          deleteFirestoreDocument(user.uid)
+          user
+            .delete()
+            .then(() => {
+              deleteUser()
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+        })
+    } else {
+      console.log('deleteGoogleAccount発火 :' + Date.now())
+      deleteFirestoreDocument(user.uid)
+      user
+        .delete()
+        .then(() => {
+          console.log('deleteAccount削除完了 :' + Date.now())
+          cookie.remove('token')
+          cookie.remove('user_id')
+          cookie.remove('token_expire')
+          deleteUser()
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
-    deleteUserProfileMutation.mutate(deleteUserProfileParam, {
-      onError: (res) => {
-        console.log(res)
-      },
-      onSuccess: (res) => {
-        console.log('deleteUserProfile成功 :' + Date.now())
-      },
-    })
   }
 
-  const deleteAccount = () => {
-    console.log('deleteAccount発火 :' + Date.now())
+  const deleteUser = () => {
+    console.log('deleteUser発火 :' + Date.now())
     deleteAccountMutation.mutate(deleteAccountParam, {
       onError: (res) => {
         console.log(res)
       },
       onSuccess: (res) => {
         console.log('deleteAccount成功 :' + Date.now())
-        cookie.remove('token')
-        cookie.remove('user_id')
-        cookie.remove('token_expire')
-        //deleteUserProfile(res.delete_users_by_pk.profile_id)
       },
     })
   }
 
-  return (
-    <div
-      className="flex float-right ml-4 cursor-pointer text-red-700 mt-24"
-      onClick={async () => {
-        deleteAccount()
-        deleteFirebase('uid')
-      }}
-    >
-      Delete Account (All your data completely remove)
-    </div>
-  )
+  if (providerId == 'password') {
+    return (
+      <>
+        <div className="flex float-right ml-4 text-red-700 mt-24">
+          Delete Account (All your data completely remove)
+        </div>
+        <form onSubmit={deleteAccount}>
+          <input
+            type="password"
+            placeholder="enter password"
+            className="my-3 px-3 py-1 border border-gray-300"
+            value={password}
+            onChange={passwordChange}
+          />
+          <button
+            disabled={!password}
+            type="submit"
+            className="disabled:opacity-40 mt-5 py-1 px-3 text-white bg-indigo-600 hover:bg-indigo-700 rounded focus:outline-none"
+          >
+            DELETE ACCOUNT
+          </button>
+        </form>
+      </>
+    )
+  } else if (providerId == 'google.com') {
+    return (
+      <>
+        <div className="flex float-right ml-4 text-red-700 mt-24">
+          Delete Account (All your data completely remove)
+        </div>
+
+        <div
+          onClick={deleteGoogleAccount}
+          className="disabled:opacity-40 mt-5 py-1 px-3 text-white bg-indigo-600 hover:bg-indigo-700 rounded focus:outline-none cursor-pointer"
+        >
+          DELETE ACCOUNT !
+        </div>
+      </>
+    )
+  }
 }

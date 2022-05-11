@@ -74,13 +74,13 @@ export const GET_USER_BY_FIREBASEID = gql`
   query GetUserByFirebaseId($firebase_id: String!) {
     users(where: {firebase_id: {_eq: firebase_id: $firebase_id}}) {
       id
-        name
-        posts {
-          id
-          title
-          created_at
-          description
-        }
+      name
+      posts {
+        id
+        title
+        created_at
+        description
+      }
     }
   }
 `

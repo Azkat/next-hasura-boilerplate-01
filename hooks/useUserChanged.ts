@@ -1,23 +1,29 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import firebase from '../firebaseConfig'
 import { useRouter } from 'next/router'
 import Cookie from 'universal-cookie'
 import { useCreateUser } from '../hooks/useCreateUser'
 import { useQueryUserByFirebaseId } from './useQueryUserByFirebaseId'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { useState } from 'react'
-import { GraphQLClient, gql } from 'graphql-request'
+import { GraphQLClient, gql, request } from 'graphql-request'
 import loginCookie from './useLoginCookie'
+import { User } from '../types/types'
+import { GET_USER_BY_FIREBASEID } from '../queries/queries'
+import { useQuery } from 'react-query'
 
 export let unSubMeta: () => void
 const cookie = new Cookie()
+
+interface UserByIdRes {
+  users: User
+}
 
 /* const storeUserIdCookie = async (firebase_id) => {
   const user = await firebase.auth().currentUser
   const { status, data } = useQueryUserByFirebaseId(firebase_id)
   console.log(data)
 } */
-const { getUserByFirebaseId } = useQueryUserByFirebaseId()
+//const { getUserByFirebaseId } = useQueryUserByFirebaseId()
 
 async function testQuery(firebase_id) {
   let graphQLClient: GraphQLClient
@@ -83,6 +89,7 @@ export const useUserChanged = async () => {
         if (hasuraClaims) {
           await cookie.set('token', token, { path: '/' })
           await loginCookie(user.uid)
+          console.log('login')
           //router.push('/account')
         } else {
           const userRef = firebase
@@ -99,7 +106,8 @@ export const useUserChanged = async () => {
                 firebase_id: user.uid,
                 email: user.email,
               }
-              createUser(param)
+              await createUser(param)
+              console.log('create user : ' + Date.now())
             }
           })
         }
