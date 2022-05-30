@@ -8,6 +8,7 @@ import { useUpdateFirebaseEmail } from '../../hooks/useUpdateFirebaseEmail'
 import UpdateEmail from '../../components/UpdateEmail'
 import UpdateUserName from '../../components/UpdateUserName'
 import { DeleteUser } from '../../components/DeleteUser'
+import { ImageUploadTest } from '../../components/ImageUploadTest'
 import { useQueryUserById } from '../../hooks/useQueryUserById'
 import Link from 'next/link'
 
@@ -66,6 +67,8 @@ export default function Account(props) {
         </div>
         {providerId == 'password' ? <UpdateEmail /> : ''}
         <UpdateUserName data={data} status={status} />
+
+        <ImageUploadTest />
 
         <div className="cursor-pointer mt-16" onClick={logout}>
           Logout

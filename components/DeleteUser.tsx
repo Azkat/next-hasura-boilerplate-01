@@ -66,55 +66,33 @@ export const DeleteUser = (props) => {
     [password]
   )
 
+  const reauthenticate = () => {
+    const user = firebase.auth().currentUser
+    firebase
+      .auth()
+      .currentUser.reauthenticateWithRedirect(
+        new firebase.auth.GoogleAuthProvider()
+      )
+  }
+
   const deleteGoogleAccount = () => {
     const now = new Date()
     const expireTimestamp = cookie.get('token_expire')
     const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
     const user = firebase.auth().currentUser
-
-    if (now > expireTimestamp) {
-      firebase.auth().onAuthStateChanged(async (user) => {
-        if (user) {
-          const token = await user.getIdToken(true)
-          const idTokenResult = await user.getIdTokenResult()
-          const hasuraClaims = await idTokenResult.claims[HASURA_TOKEN_KEY]
-          await cookie.set('token', token, { path: '/' })
-        }
+    deleteFirestoreDocument(user.uid)
+    user
+      .delete()
+      .then(() => {
+        deleteUser()
+        cookie.remove('token')
+        cookie.remove('user_id')
+        cookie.remove('token_expire')
       })
-      cookie.set('token_expire', Date.now() + 1000 * 60 * 60, { path: '/' })
-      firebase
-        .auth()
-        .currentUser.reauthenticateWithRedirect(
-          new firebase.auth.GoogleAuthProvider()
-        )
-        .then((UserCredential) => {
-          console.log('re-outh', UserCredential)
-          deleteFirestoreDocument(user.uid)
-          user
-            .delete()
-            .then(() => {
-              deleteUser()
-            })
-            .catch((error) => {
-              console.log(error)
-            })
-        })
-    } else {
-      console.log('deleteGoogleAccount発火 :' + Date.now())
-      deleteFirestoreDocument(user.uid)
-      user
-        .delete()
-        .then(() => {
-          console.log('deleteAccount削除完了 :' + Date.now())
-          cookie.remove('token')
-          cookie.remove('user_id')
-          cookie.remove('token_expire')
-          deleteUser()
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
+      .catch((error) => {
+        console.log(error)
+        alert('Reauthenticate before delete account')
+      })
   }
 
   const deleteUser = () => {
@@ -158,6 +136,13 @@ export const DeleteUser = (props) => {
       <>
         <div className="flex float-right ml-4 text-red-700 mt-24">
           Delete Account (All your data completely remove)
+        </div>
+
+        <div
+          onClick={reauthenticate}
+          className="disabled:opacity-40 mt-5 py-1 px-3 text-white bg-indigo-600 hover:bg-indigo-700 rounded focus:outline-none cursor-pointer"
+        >
+          Reauthenticate
         </div>
 
         <div

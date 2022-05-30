@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/storage'
 
 !firebase.apps.length
   ? firebase.initializeApp({
@@ -13,6 +14,9 @@ import 'firebase/firestore'
     })
   : firebase.app()
 
+let storage_obj = firebase.storage()
+
 export const auth = firebase.auth()
 export const db = firebase.firestore()
+export const storage = storage_obj
 export default firebase
