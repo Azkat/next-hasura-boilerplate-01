@@ -28,6 +28,7 @@ export const ImageUploadTest = () => {
     <div>
       <p>Upload a .png or .jpg image (max 1MB).</p>
       <input
+        placeholder="image"
         onChange={uploadPhoto}
         type="file"
         accept="image/png, image/jpeg, video/mp4"
