@@ -12,8 +12,8 @@ function upload(file) {
 
   const s3 = new aws.S3()
   const params = {
-    Bucket: process.env.S3_BUCKET_D,
-    Key: 'video_image/' + 'test.png',
+    Bucket: process.env.S3_BUCKET_TEMP,
+    Key: 'user_icon/' + file.filename,
     ContentType: file.filetype,
   }
 

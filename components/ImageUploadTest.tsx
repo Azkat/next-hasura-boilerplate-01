@@ -30,7 +30,7 @@ export const ImageUploadTest = () => {
       <input
         onChange={uploadPhoto}
         type="file"
-        accept="image/png, image/jpeg"
+        accept="image/png, image/jpeg, video/mp4"
       />
     </div>
   )
