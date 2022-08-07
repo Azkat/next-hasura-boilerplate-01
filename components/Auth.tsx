@@ -26,7 +26,7 @@ export const Auth = () => {
       >
         <label>Email:</label>
         <input
-          className="my-3 px-3 py-1 border border-gray-300"
+          className="my-3 px-3 py-1 border border-gray-300 text-gray-900"
           placeholder="email ?"
           type="text"
           value={email}

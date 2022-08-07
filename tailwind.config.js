@@ -7,6 +7,15 @@ module.exports = {
     extend: {
       colors: {
         accentYellow: '#FFF133',
+        baseNav: '#000',
+        baseBody: '#151515',
+        backgroundGray: '#1E1E1E',
+      },
+      maxWidth: {
+        main: '640px',
+      },
+      btn: {
+        disabled: '#fff',
       },
     },
   },

@@ -125,11 +125,17 @@ export function CropImage() {
   return (
     <div className="App">
       <div className="Crop-Controls">
-        <label>
-          image
-          <input type="file" accept="image/*" onChange={onSelectFile} />
-        </label>
-        <div>
+        <input
+          className="text-sm text-grey-500 file:cursor-pointer
+          file:mr-5 file:py-2 file:px-6
+          file:rounded-full file:border-0
+          file:text-sm file:font-medium
+          file:bg-gray-300 file:text-secondary"
+          type="file"
+          accept="image/*"
+          onChange={onSelectFile}
+        />
+        {/* <div>
           <label htmlFor="scale-input">Scale: </label>
           <input
             id="scale-input"
@@ -156,7 +162,7 @@ export function CropImage() {
           <button onClick={handleToggleAspectClick}>
             Toggle aspect {aspect ? 'off' : 'on'}
           </button>
-        </div>
+        </div> */}
       </div>
       {Boolean(imgSrc) && (
         <ReactCrop
@@ -174,7 +180,7 @@ export function CropImage() {
           />
         </ReactCrop>
       )}
-      <div>
+      {/* <div>
         {Boolean(completedCrop) && (
           <canvas
             id="croppedImage"
@@ -187,7 +193,7 @@ export function CropImage() {
             }}
           />
         )}
-      </div>
+      </div> */}
 
       <div onClick={uploadPhoto} ref={ref}>
         send

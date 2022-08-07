@@ -12,7 +12,7 @@ import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid'
 import { useAppMutate } from '../../hooks/useAppMutate'
 import { AccountPostListMemo } from '../../components/AccountPostList'
 
-export default function posts(props) {
+export default function Posts(props) {
   const dispatch = useDispatch()
   const editedPost = useSelector(selectPost)
   const router = useRouter()

@@ -35,9 +35,12 @@ export const useCreatePost = () => {
   const titleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)
   }, [])
-  const descriptionChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value)
-  }, [])
+  const descriptionChange = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      setDescription(e.target.value)
+    },
+    []
+  )
   const resetInput = useCallback(() => {
     setTitle('')
     setDescription('')

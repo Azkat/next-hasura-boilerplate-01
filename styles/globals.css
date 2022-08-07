@@ -2,3 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+@layer utilities {
+  .header-h2 {
+    @apply font-medium leading-tight text-xl sm:text-2xl pt-7 mb-2;
+  }
+  .text-input-1 {
+    @apply input input-bordered w-full bg-transparent;
+  }
+
+  .textarea-1 {
+    @apply textarea textarea-bordered h-32 bg-transparent;
+  }
+}

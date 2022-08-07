@@ -17,7 +17,6 @@ export default async function loginCookie(firebase_id) {
       users(where: { firebase_id: { _eq: $firebase_id } }) {
         id
         name
-        profile_id
       }
     }
   `
