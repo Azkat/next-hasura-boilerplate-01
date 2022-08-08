@@ -4,6 +4,7 @@ import { RootState } from '../app/store'
 
 export interface uiState {
   editedPost: UpdatePost
+  previewCanvasRef: any
 }
 const initialState: uiState = {
   editedPost: {
@@ -11,6 +12,7 @@ const initialState: uiState = {
     title: '',
     description: '',
   },
+  previewCanvasRef: 'オオオオオ',
 }
 export const uiSlice = createSlice({
   name: 'ui',
@@ -22,10 +24,15 @@ export const uiSlice = createSlice({
     resetEditedPost: (state) => {
       state.editedPost = initialState.editedPost
     },
+    setPreviewCanvasRef: (state, action: PayloadAction<UpdatePost>) => {
+      state.previewCanvasRef = action.payload
+    },
   },
 })
-export const { setEditedPost, resetEditedPost } = uiSlice.actions
+export const { setEditedPost, resetEditedPost, setPreviewCanvasRef } =
+  uiSlice.actions
 
 export const selectPost = (state: RootState) => state.ui.editedPost
+export const previewCanvasRef = (state: RootState) => state.ui.previewCanvasRef
 
 export default uiSlice.reducer

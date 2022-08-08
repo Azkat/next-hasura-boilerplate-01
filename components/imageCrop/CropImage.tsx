@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
+import { Store } from '../../reducer/reducer'
 import axios from 'axios'
 
 import ReactCrop, {
@@ -35,6 +36,7 @@ function centerAspectCrop(
 }
 
 export function CropImage() {
+  const { state, dispatch } = useContext(Store)
   const [imgSrc, setImgSrc] = useState('')
   const previewCanvasRef = useRef<HTMLCanvasElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
@@ -44,6 +46,15 @@ export function CropImage() {
   const [rotate, setRotate] = useState(0)
   const [aspect, setAspect] = useState<number | undefined>(1)
   const ref = React.useRef(null)
+
+  useEffect(() => {
+    const canvas = previewCanvasRef.current
+    if (canvas != null) {
+      const dataURL = canvas.toDataURL('image/jpeg')
+      dispatch({ type: 'setImageUrl', payload: dataURL })
+      console.log(state.imageUrl)
+    }
+  }, [completedCrop])
 
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
@@ -61,6 +72,10 @@ export function CropImage() {
       const { width, height } = e.currentTarget
       setCrop(centerAspectCrop(width, height, aspect))
     }
+  }
+
+  const showRef = () => {
+    console.log(state.setImageUrl)
   }
 
   const uploadPhoto = async (e) => {
@@ -124,6 +139,7 @@ export function CropImage() {
 
   return (
     <div className="App">
+      <div onClick={showRef}>あああ</div>
       <div className="Crop-Controls">
         <input
           className="text-sm text-grey-500 file:cursor-pointer
@@ -180,7 +196,7 @@ export function CropImage() {
           />
         </ReactCrop>
       )}
-      {/* <div>
+      <div>
         {Boolean(completedCrop) && (
           <canvas
             id="croppedImage"
@@ -193,8 +209,7 @@ export function CropImage() {
             }}
           />
         )}
-      </div> */}
-
+      </div>
       <div onClick={uploadPhoto} ref={ref}>
         send
       </div>

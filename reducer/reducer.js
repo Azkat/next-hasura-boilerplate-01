@@ -1,0 +1,33 @@
+import React, { useReducer, createContext } from 'react'
+
+const initialState = {
+  //reducer test
+  sono1: 0,
+  sono2: 100,
+  testState: '実行前',
+  name: 'to-R Media',
+  imageUrl: '',
+}
+
+const Store = createContext()
+
+function reducer(state, action) {
+  switch (action.type) {
+    //test
+    case 'sono1_increment':
+      return { ...state, sono1: state.sono1 + 1 }
+    case 'testChange':
+      return { ...state, name: 'me' }
+    case 'setImageUrl':
+      return { ...state, imageUrl: action.payload }
+    default:
+      return state
+  }
+}
+
+const ReducerProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  return <Store.Provider value={{ state, dispatch }}>{children}</Store.Provider>
+}
+
+export { Store, ReducerProvider }

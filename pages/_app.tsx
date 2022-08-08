@@ -9,6 +9,7 @@ import { AuthProvider } from '../lib/authProvider'
 import { Hydrate } from 'react-query/hydration'
 import UserChanged from '../components/UserChanged'
 import Cookie from 'universal-cookie'
+import { ReducerProvider } from '../reducer/reducer'
 
 const cookie = new Cookie()
 
@@ -29,10 +30,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <Provider store={store}>
-          <AuthProvider>
-            <UserChanged />
-            <Component {...pageProps} />
-          </AuthProvider>
+          <ReducerProvider>
+            <AuthProvider>
+              <UserChanged />
+              <Component {...pageProps} />
+            </AuthProvider>
+          </ReducerProvider>
         </Provider>
         <ReactQueryDevtools />
       </Hydrate>

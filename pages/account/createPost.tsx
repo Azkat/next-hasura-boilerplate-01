@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { Store } from '../../reducer/reducer'
 import { Layout } from '../../components/Layout'
 import { useRouter } from 'next/router'
 import { useCreatePost } from '../../hooks/useCreatePost'
 import { CropImage } from '../../components/imageCrop/CropImage'
+import { useSelector, useDispatch } from 'react-redux'
+import axios from 'axios'
 
 export default function Create_post(props) {
   const router = useRouter()
   const [isUser, setIsUser] = useState(false)
+  const { state, dispatch } = useContext(Store)
   const {
     title,
     description,
@@ -15,6 +19,12 @@ export default function Create_post(props) {
     resetInput,
     createPost,
   } = useCreatePost()
+
+  console.log(state.name)
+
+  const testDispatch = () => {
+    dispatch({ type: 'testChange', payload: 'YOU' })
+  }
 
   /*   useEffect(() => {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
@@ -29,10 +39,38 @@ export default function Create_post(props) {
     }
   }, []) */
 
+  const uploadPhoto = async (e) => {
+    const dataURL = state.imageUrl
+    fetch(dataURL)
+      .then((res) => res.blob())
+      .then((blob) => {
+        return axios
+          .get('/api/upload-url', {
+            params: {
+              filename: 'canvasImage.jpg',
+              filetype: 'image/jpeg',
+            },
+          })
+          .then((res) => {
+            const options = {
+              headers: {
+                'Content-Type': 'image/jpeg',
+              },
+            }
+            return axios.put(res.data.url, blob, options)
+          })
+          .then((res) => {
+            console.log(res)
+          })
+      })
+  }
+
   return (
     <Layout title="Create new post">
       <div className="px-4 mb-32">
-        <h2 className="header-h2">Create New Post</h2>
+        <h2 className="header-h2" onClick={uploadPhoto}>
+          Create New Post {state.imageUrl}
+        </h2>
 
         <div className="card w-full bg-backgroundGray shadow-xl mt-8">
           <div className="card-body">
