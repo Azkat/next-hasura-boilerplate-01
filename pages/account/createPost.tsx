@@ -49,6 +49,7 @@ export default function Create_post(props) {
             params: {
               filename: 'canvasImage.jpg',
               filetype: 'image/jpeg',
+              width: state.canvasWidth,
             },
           })
           .then((res) => {
@@ -65,24 +66,60 @@ export default function Create_post(props) {
       })
   }
 
+  const uploadAudio = async (e, file) => {
+    axios
+      .get('/api/upload-url', {
+        params: {
+          filename: file.name,
+          filetype: file.type,
+        },
+      })
+      .then((res) => {
+        const options = {
+          headers: {
+            'Content-Type': file.type,
+          },
+        }
+        return axios.put(res.data.url, file, options)
+      })
+      .then((res) => {
+        console.log(res)
+      })
+  }
+
+  const checkFile = async (e) => {
+    const file = e.target.files
+    if (file[0].size > 1500000) {
+      //1.5MB以下しかダメ
+      const audiofile = document.getElementById('audiofile')
+      alert('Too big file. Upload under 1.5MB audio file.')
+    } else {
+      uploadAudio(e, file[0])
+    }
+  }
+
   return (
     <Layout title="Create new post">
       <div className="px-4 mb-32">
         <h2 className="header-h2" onClick={uploadPhoto}>
-          Create New Post {state.imageUrl}
+          Create New Post {state.canvasWidth}
         </h2>
 
         <div className="card w-full bg-backgroundGray shadow-xl mt-8">
           <div className="card-body">
-            <h2 className="card-title mb-6">Audio</h2>
+            <h2 id="audio_heading" className="card-title mb-6">
+              Audio
+            </h2>
             <input
+              id="audiofile"
               className="text-sm text-grey-500 file:cursor-pointer
           file:mr-5 file:py-2 file:px-6
           file:rounded-full file:border-0
           file:text-sm file:font-medium
           file:bg-gray-300 file:text-secondary"
               type="file"
-              accept="image/*"
+              accept="audio/m4a, audio/mp3, audio/wav, audio/aac"
+              onChange={checkFile}
             />
             <div className="form-control w-full  mt-6">
               <label className="label">
@@ -100,7 +137,9 @@ export default function Create_post(props) {
             <div className="divider "></div>
 
             <h2 className="card-title mb-6">Image</h2>
+
             <CropImage />
+
             <div className="form-control w-full  mt-6">
               <label className="label">
                 <span className="label-text">Image URL (Optional)</span>

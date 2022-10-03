@@ -45,14 +45,17 @@ exports.handler = async (event, context) => {
   let ffmpegCommand = "";
   if (extension == "png") {
     ffmpegCommand =
-      "ffmpeg -i /tmp/" + filename + ".png -q 3 /tmp/" + filename + ".jpg";
+      "ffmpeg -y -i /tmp/" + filename + ".png -q 3 -vf scale=1280:-1 /tmp/" + filename + ".jpg";
   } else if (extension == "gif") {
     ffmpegCommand =
-      "ffmpeg -i /tmp/" + filename + ".gif /tmp/" + filename + ".jpg";
+      "ffmpeg -y -i /tmp/" + filename + ".gif -vf scale=1280:-1 /tmp/" + filename + ".jpg";
   } else if (extension == "jpeg") {
     ffmpegCommand =
-      "ffmpeg -i /tmp/" + filename + ".jpeg /tmp/" + filename + ".jpg";
+      "ffmpeg -y -i /tmp/" + filename + ".jpeg -vf scale=1280:-1 /tmp/" + filename + ".jpg";
   } else if (extension == "jpg") {
+    ffmpegCommand =
+      "ffmpeg -y -i /tmp/" + filename + ".jpg -vf scale=1280:-1 /tmp/" + filename + ".jpg";
+    execSync(ffmpegCommand);
     const fileStream = fs.createReadStream("/tmp/" + filename + ".jpg");
     fileStream.on("error", function (error) {
       console.log(error);

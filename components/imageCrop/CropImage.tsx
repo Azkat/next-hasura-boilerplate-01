@@ -12,6 +12,7 @@ import { canvasPreview } from './canvasPreview'
 import { useDebounceEffect } from './useDebounceEffect'
 
 import 'react-image-crop/dist/ReactCrop.css'
+import { setTimeout } from 'timers/promises'
 
 // This is to demonstate how to make and center a % aspect crop
 // which is a bit trickier so we use some helper functions.
@@ -42,6 +43,7 @@ export function CropImage() {
   const imgRef = useRef<HTMLImageElement>(null)
   const [crop, setCrop] = useState<Crop>()
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
+  const [croppedImageWidth, setCroppedImageWidth] = useState(0)
   const [scale, setScale] = useState(1)
   const [rotate, setRotate] = useState(0)
   const [aspect, setAspect] = useState<number | undefined>(1)
@@ -49,10 +51,19 @@ export function CropImage() {
 
   useEffect(() => {
     const canvas = previewCanvasRef.current
-    if (canvas != null) {
-      const dataURL = canvas.toDataURL('image/jpeg')
-      dispatch({ type: 'setImageUrl', payload: dataURL })
-      console.log(state.imageUrl)
+
+    if (canvas != null && completedCrop) {
+      const croppedImage = document.getElementById('croppedImage')
+      const croppedImageWidth = Number(croppedImage.getAttribute('width'))
+      if (croppedImageWidth > 0) {
+        const dataURL = canvas.toDataURL('image/jpeg')
+        dispatch({ type: 'setImageUrl', payload: dataURL })
+        dispatch({
+          type: 'setCanvasWidth',
+          payload: croppedImageWidth,
+        })
+        console.log(croppedImage.getAttribute('width'))
+      }
     }
   }, [completedCrop])
 
@@ -70,12 +81,12 @@ export function CropImage() {
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
     if (aspect) {
       const { width, height } = e.currentTarget
+      dispatch({
+        type: 'setCanvasWidth',
+        payload: height,
+      })
       setCrop(centerAspectCrop(width, height, aspect))
     }
-  }
-
-  const showRef = () => {
-    console.log(state.setImageUrl)
   }
 
   const uploadPhoto = async (e) => {
@@ -139,7 +150,6 @@ export function CropImage() {
 
   return (
     <div className="App">
-      <div onClick={showRef}>あああ</div>
       <div className="Crop-Controls">
         <input
           className="text-sm text-grey-500 file:cursor-pointer
@@ -201,6 +211,8 @@ export function CropImage() {
           <canvas
             id="croppedImage"
             ref={previewCanvasRef}
+            width={0}
+            height={0}
             style={{
               border: '1px solid black',
               objectFit: 'contain',

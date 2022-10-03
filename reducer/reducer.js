@@ -7,6 +7,7 @@ const initialState = {
   testState: '実行前',
   name: 'to-R Media',
   imageUrl: '',
+  canvasWidth: 0,
 }
 
 const Store = createContext()
@@ -20,6 +21,8 @@ function reducer(state, action) {
       return { ...state, name: 'me' }
     case 'setImageUrl':
       return { ...state, imageUrl: action.payload }
+    case 'setCanvasWidth':
+      return { ...state, canvasWidth: action.payload }
     default:
       return state
   }

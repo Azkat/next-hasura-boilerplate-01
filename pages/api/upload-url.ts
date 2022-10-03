@@ -10,10 +10,19 @@ function upload(file) {
     region: process.env.AWS_REGION,
   })
 
+  let prefix = 'post_image/'
+  if (file.filetype == 'image/jpeg') {
+    if (file.width < 1280) {
+      prefix = 'post_image_noresize/'
+    }
+  } else {
+    prefix = 'audio/'
+  }
+
   const s3 = new aws.S3()
   const params = {
     Bucket: process.env.S3_BUCKET_TEMP,
-    Key: 'user_icon/' + file.filename,
+    Key: prefix + file.filename,
     ContentType: file.filetype,
   }
 
