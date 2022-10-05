@@ -44,7 +44,7 @@ export const LikeButton = (props) => {
 
   if (liked) {
     return (
-      <span className="flex float-right ml-4">
+      <span className="flex float-right">
         <HeartIcon
           className="h-5 w-5 mx-1 text-blue-500 cursor-pointer"
           onClick={async () => {
@@ -64,7 +64,7 @@ export const LikeButton = (props) => {
   }
 
   return (
-    <span className="flex float-right ml-4">
+    <span className="flex float-right">
       <HeartIconOutline
         className="h-5 w-5 mx-1 text-blue-500 cursor-pointer"
         onClick={async () => {
