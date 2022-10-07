@@ -17,8 +17,6 @@ export default function Home() {
 
   return (
     <Layout title="Home">
-      <p className="mb-5 text-blue-500 text-xl">Post</p>
-      <button className="btn btn-primary">Button</button>
       <PostList postsData={postsData} currentUser={currentUser} />
     </Layout>
   )

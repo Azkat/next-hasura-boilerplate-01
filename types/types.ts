@@ -26,6 +26,8 @@ export interface CreateUser {
 export interface CreatePost {
   title: string
   description: string
+  audio_url: string
+  image_url: string
   user_id: string
 }
 export interface UpdateUserName {

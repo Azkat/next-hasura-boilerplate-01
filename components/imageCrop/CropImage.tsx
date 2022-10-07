@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from 'react'
 import { Store } from '../../reducer/reducer'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import axios from 'axios'
 
 import ReactCrop, {
@@ -36,6 +37,10 @@ function centerAspectCrop(
   )
 }
 
+interface IFormInput {
+  audioFile: any
+}
+
 export function CropImage() {
   const { state, dispatch } = useContext(Store)
   const [imgSrc, setImgSrc] = useState('')
@@ -48,6 +53,17 @@ export function CropImage() {
   const [rotate, setRotate] = useState(0)
   const [aspect, setAspect] = useState<number | undefined>(1)
   const ref = React.useRef(null)
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<IFormInput>()
+
+  const fileRules = {
+    required: 'Select your file',
+  }
 
   useEffect(() => {
     const canvas = previewCanvasRef.current
@@ -152,6 +168,7 @@ export function CropImage() {
     <div className="App">
       <div className="Crop-Controls">
         <input
+          {...register('audioFile', fileRules)}
           className="text-sm text-grey-500 file:cursor-pointer
           file:mr-5 file:py-2 file:px-6
           file:rounded-full file:border-0
@@ -221,9 +238,6 @@ export function CropImage() {
             }}
           />
         )}
-      </div>
-      <div onClick={uploadPhoto} ref={ref}>
-        send
       </div>
     </div>
   )

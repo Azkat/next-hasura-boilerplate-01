@@ -17,6 +17,12 @@ module.exports = {
       btn: {
         disabled: '#fff',
       },
+      width: {
+        desktopPost: '576px',
+      },
+      height: {
+        desktopPost: '576px',
+      },
     },
   },
   darkMode: 'class',

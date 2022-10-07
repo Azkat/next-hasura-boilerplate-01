@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Cookies from 'universal-cookie'
 import { LikeButton } from './LikeButton'
+import { PlayIcon } from '@heroicons/react/solid'
 
 const PostItem = (props) => {
   const cookie = new Cookies()
@@ -11,7 +12,7 @@ const PostItem = (props) => {
   return (
     <div className="bg-backgroundGray mb-4">
       <p className="font-bold my-3" key={props.post.id}>
-        <div className="flex items-center p-4 pt-3 sm:items-start">
+        <div className="flex items-center p-4 pt-3">
           <Link href={'/user/' + props.post.user.id}>
             <img
               className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
@@ -43,9 +44,9 @@ const PostItem = (props) => {
             </Link>
           </div>
         </div>
-        <div className="bg-cover w-full relative h-vw bg-[url('https://vmedia.droptune.net/post_image/canvasImage.jpg')]">
+        <div className="bg-cover bg-center w-full relative h-vw bg-[url('https://vmedia.droptune.net/post_image/canvasImage.jpg')] sm:max-h-[calc(544px)]">
           <div className="playbutton absolute">
-            <LikeButton post={props.post} currentUser={props.currentUser} />
+            <PlayIcon className="h-6 w-6  text-gray-100 opacity-80" />
           </div>
           <div className="likebutton absolute">
             <LikeButton post={props.post} currentUser={props.currentUser} />
@@ -61,11 +62,11 @@ const PostItem = (props) => {
         }
         .likebutton {
           bottom: 24px;
-          right: 24px;
+          right: 16px;
         }
         .playbutton {
           bottom: 24px;
-          left: 24px;
+          left: 16px;
         }
       `}</style>
     </div>

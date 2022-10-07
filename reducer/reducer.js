@@ -6,8 +6,9 @@ const initialState = {
   sono2: 100,
   testState: '実行前',
   name: 'to-R Media',
-  imageUrl: '',
+  imageFile: '',
   canvasWidth: 0,
+  audioFile: {},
 }
 
 const Store = createContext()
@@ -19,10 +20,12 @@ function reducer(state, action) {
       return { ...state, sono1: state.sono1 + 1 }
     case 'testChange':
       return { ...state, name: 'me' }
-    case 'setImageUrl':
-      return { ...state, imageUrl: action.payload }
+    case 'setImageFile':
+      return { ...state, imageFile: action.payload }
     case 'setCanvasWidth':
       return { ...state, canvasWidth: action.payload }
+    case 'setAudioUrl':
+      return { ...state, audioFile: action.payload }
     default:
       return state
   }

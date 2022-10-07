@@ -26,7 +26,7 @@ export const LikeButton = (props) => {
   if (status == 'loading') {
     return (
       <span className="flex float-right ml-4">
-        <HeartIcon className="h-5 w-5 mx-1 text-gray-100" />
+        <HeartIcon className="h-6 w-6  text-gray-100 opacity-10" />
       </span>
     )
   }
@@ -35,7 +35,7 @@ export const LikeButton = (props) => {
     return (
       <span className="flex float-right ml-4">
         <HeartIconOutline
-          className="h-5 w-5 mx-1 text-blue-500 cursor-pointer"
+          className="h-6 w-6  text-gray-100 opacity-80 cursor-pointer"
           onClick={() => alert('ログインしてください')}
         />
       </span>
@@ -46,7 +46,7 @@ export const LikeButton = (props) => {
     return (
       <span className="flex float-right">
         <HeartIcon
-          className="h-5 w-5 mx-1 text-blue-500 cursor-pointer"
+          className="h-6 w-6  text-blue-500 opacity-80 cursor-pointer"
           onClick={async () => {
             setLiked(false)
             const param = {
@@ -66,7 +66,7 @@ export const LikeButton = (props) => {
   return (
     <span className="flex float-right">
       <HeartIconOutline
-        className="h-5 w-5 mx-1 text-blue-500 cursor-pointer"
+        className="h-6 w-6  text-gray-100 opacity-50 cursor-pointer"
         onClick={async () => {
           setLiked(true)
           const param = await {
