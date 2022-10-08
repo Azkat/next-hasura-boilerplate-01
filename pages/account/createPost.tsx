@@ -10,6 +10,8 @@ import axios from 'axios'
 
 interface IFormInput {
   title: string
+  audioUrl: string
+  imageUrl: string
 }
 
 export default function Create_post(props) {
@@ -38,7 +40,8 @@ export default function Create_post(props) {
   } = useForm<IFormInput>()
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    createPost
+    console.log('onsubmit')
+    createPost()
   }
 
   const titleRules = {
@@ -48,6 +51,20 @@ export default function Create_post(props) {
 
   const fileRules = {
     required: 'Select your file',
+  }
+
+  const audioUrlRules = {
+    pattern: {
+      value: /(https?|ftp)(:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+)/,
+      message: 'Input URL',
+    },
+  }
+
+  const imageUrlRules = {
+    pattern: {
+      value: /(https?|ftp)(:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+)/,
+      message: 'Input URL',
+    },
   }
 
   /*   useEffect(() => {
@@ -125,11 +142,15 @@ export default function Create_post(props) {
                 </label>
                 <input
                   className="text-input-1"
+                  {...register('audioUrl', audioUrlRules)}
                   placeholder="Spotify, Soundcloud, Youtube..."
                   type="text"
                   value={audioUrl}
                   onChange={audioUrlChange}
                 />
+                <div className="text-red-500">
+                  {errors.audioUrl && errors.audioUrl.message}
+                </div>
               </div>
 
               <div className="divider "></div>
@@ -144,11 +165,15 @@ export default function Create_post(props) {
                 </label>
                 <input
                   className="text-input-1"
+                  {...register('imageUrl', imageUrlRules)}
                   placeholder="Tumblr, Instagram, Flickr..."
                   type="text"
                   value={imageUrl}
                   onChange={imageUrlChange}
                 />
+                <div className="text-red-500">
+                  {errors.imageUrl && errors.imageUrl.message}
+                </div>
               </div>
 
               <div className="divider "></div>

@@ -8,6 +8,7 @@ const initialState = {
   name: 'to-R Media',
   imageFile: '',
   canvasWidth: 0,
+  isImageFile: false,
   audioFile: {},
 }
 
@@ -24,7 +25,7 @@ function reducer(state, action) {
       return { ...state, imageFile: action.payload }
     case 'setCanvasWidth':
       return { ...state, canvasWidth: action.payload }
-    case 'setAudioUrl':
+    case 'setAudioFile':
       return { ...state, audioFile: action.payload }
     default:
       return state

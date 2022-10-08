@@ -69,13 +69,14 @@ export const useCreatePost = () => {
             }
             return axios.put(res.data.url, blob, options)
           })
-          .then((res) => {})
+          .then((res) => {
+            console.log(res)
+          })
       })
   }
 
   const uploadAudio = async (id) => {
     const file = state.audioFile
-    console.log(file)
     const extention = file.name.split('.')[1]
     axios
       .get('/api/upload-url', {
@@ -92,7 +93,9 @@ export const useCreatePost = () => {
         }
         return axios.put(res.data.url, file, options)
       })
-      .then((res) => {})
+      .then((res) => {
+        console.log(res)
+      })
   }
 
   const titleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -119,20 +122,18 @@ export const useCreatePost = () => {
     setDescription('')
   }, [])
 
-  const createPost = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      const param = {
-        title: title,
-        description: description,
-        audio_url: audioUrl,
-        image_url: audioUrl,
-        user_id: cookie.get('user_id'),
-      }
-      createPostMutation.mutate(param)
-    },
-    [title, description]
-  )
+  const createPost = useCallback(async () => {
+    //e.preventDefault()
+    console.log('createpost')
+    const param = {
+      title: title,
+      description: description,
+      audio_url: audioUrl,
+      image_url: imageUrl,
+      user_id: cookie.get('user_id'),
+    }
+    createPostMutation.mutate(param)
+  }, [title, description, audioUrl, imageUrl])
 
   return {
     title,
