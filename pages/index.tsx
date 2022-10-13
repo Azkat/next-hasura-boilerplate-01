@@ -1,9 +1,9 @@
-import { useContext } from 'react'
+import { useContext, useCallback, useState, useEffect } from 'react'
 import { AuthContext } from '../lib/authProvider'
 import { Layout } from '../components/Layout'
 import { GetStaticProps } from 'next'
 import { dehydrate } from 'react-query/hydration'
-import { fetchPosts } from '../hooks/useQueryPosts'
+import { fetchPosts, fetchFirstPosts } from '../hooks/useQueryPosts'
 import { Post } from '../types/types'
 import { QueryClient, useQueryClient } from 'react-query'
 import Cookies from 'universal-cookie'
@@ -15,6 +15,8 @@ export default function Home() {
   const postsData = queryClient.getQueryData<Post[]>('posts')
   const { currentUser } = useContext(AuthContext)
 
+  console.log(postsData)
+
   return (
     <Layout title="Home">
       <PostList postsData={postsData} currentUser={currentUser} />
@@ -24,7 +26,7 @@ export default function Home() {
 
 export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient()
-  await queryClient.prefetchQuery('posts', fetchPosts)
+  await queryClient.prefetchQuery('posts', fetchFirstPosts)
   return {
     props: {
       dehydratedState: dehydrate(queryClient),

@@ -1,16 +1,26 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Link from 'next/link'
 import Cookies from 'universal-cookie'
 import { LikeButton } from './LikeButton'
 import { PlayIcon } from '@heroicons/react/solid'
+import { useOnScreen } from '../hooks/useOnScreen'
 
 const PostItem = (props) => {
   const cookie = new Cookies()
+  const targetRef = useRef<HTMLDivElement>(null)
+  const targetViewPosition = useOnScreen(targetRef)
 
-  console.log(props.post)
+  console.log(props.index)
 
   return (
     <div className="bg-backgroundGray mb-4">
+      {targetViewPosition === 'VISIBLE' && <p>画面内に表示されています</p>}
+      {targetViewPosition === 'ABOVE_VIEWPORT' && (
+        <p>画面より上に表示されています</p>
+      )}
+      {targetViewPosition === 'BELOW_VIEWPORT' && (
+        <p>画面より下に表示されています</p>
+      )}
       <p className="font-bold my-3" key={props.post.id}>
         <div className="flex items-center p-4 pt-3">
           <Link href={'/user/' + props.post.user.id}>
@@ -56,6 +66,10 @@ const PostItem = (props) => {
           <Link href={'/post/' + props.post.id}>{props.post.title}</Link>
         </div>
       </p>
+      {props.index == 8 && (
+        <div ref={targetRef}>位置をチェックする対象の要素</div>
+      )}
+
       <style jsx>{`
         .h-vw {
           height: 100vw;

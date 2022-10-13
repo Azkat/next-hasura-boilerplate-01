@@ -73,7 +73,7 @@ export function CropImage() {
       const croppedImageWidth = Number(croppedImage.getAttribute('width'))
       if (croppedImageWidth > 0) {
         const dataURL = canvas.toDataURL('image/jpeg')
-        dispatch({ type: 'setImageUrl', payload: dataURL })
+        dispatch({ type: 'setImageFile', payload: dataURL })
         dispatch({
           type: 'setCanvasWidth',
           payload: croppedImageWidth,
@@ -130,6 +130,14 @@ export function CropImage() {
             console.log(res)
           })
       })
+  }
+
+  const setAdjust = () => {
+    console.log(state.canvasAdjust)
+    dispatch({
+      type: 'setCanvasAdjust',
+      payload: true,
+    })
   }
 
   useDebounceEffect(
@@ -214,13 +222,18 @@ export function CropImage() {
           onComplete={(c) => setCompletedCrop(c)}
           aspect={aspect}
         >
-          <img
-            ref={imgRef}
-            alt="Crop me"
-            src={imgSrc}
-            style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
-            onLoad={onImageLoad}
-          />
+          <div className="relative">
+            <img
+              ref={imgRef}
+              alt="Crop me"
+              src={imgSrc}
+              style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
+              onLoad={onImageLoad}
+            />
+            <div className="text-red-500 absolute adjustImage">
+              {!state.imageFile && 'Adjust image cropping'}
+            </div>
+          </div>
         </ReactCrop>
       )}
       <div>
@@ -239,6 +252,18 @@ export function CropImage() {
           />
         )}
       </div>
+      <style jsx>{`
+        .adjustImage {
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          font-size: 21px;
+          font-weight: bold;
+          text-shadow: 0 0 white;
+        }
+      `}</style>
     </div>
   )
 }

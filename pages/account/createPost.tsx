@@ -114,6 +114,12 @@ export default function Create_post(props) {
     }
   }
 
+  const AdjustCheck = () => {
+    if (title && state.canvasWidth && isAudioFile && !state.imageFile) {
+      return <div className="text-red-500">Adjust image cropping</div>
+    }
+  }
+
   return (
     <Layout title="Create new post">
       <div className="px-4 mb-32">
@@ -211,10 +217,17 @@ export default function Create_post(props) {
 
               <div className="mt-20">
                 <input
-                  disabled={!title || !state.canvasWidth || !isAudioFile}
+                  disabled={
+                    !title ||
+                    !state.canvasWidth ||
+                    !isAudioFile ||
+                    !state.imageFile
+                  }
                   className="btn btn-primary disabled:bg-gray-600"
                   type="submit"
                 />
+                <br />
+                <AdjustCheck />
               </div>
             </div>
           </div>

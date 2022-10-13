@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Cookies from 'universal-cookie'
 import PostItem from './PostItem'
 
@@ -7,8 +7,13 @@ const PostList = (props) => {
 
   return (
     <div>
-      {props.postsData?.map((post) => (
-        <PostItem post={post} currentUser={props.currentUser} key={post.id} />
+      {props.postsData?.map((post, index) => (
+        <PostItem
+          post={post}
+          currentUser={props.currentUser}
+          index={index}
+          key={props.id}
+        />
       ))}
     </div>
   )

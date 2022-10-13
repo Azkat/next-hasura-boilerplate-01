@@ -14,6 +14,37 @@ export const GET_POSTS = gql`
     }
   }
 `
+
+export const GET_FIRST_POSTS = gql`
+  query GetPosts {
+    posts(order_by: { created_at: desc }, limit: 10) {
+      title
+      id
+      description
+      created_at
+      user {
+        id
+        name
+      }
+    }
+  }
+`
+
+export const GET_NEXT_POSTS = gql`
+  query GetPosts($offset: Number!) {
+    posts(order_by: { created_at: desc }, limit: 10, offset: $offset) {
+      title
+      id
+      description
+      created_at
+      user {
+        id
+        name
+      }
+    }
+  }
+`
+
 export const GET_POST_BY_ID_PK = gql`
   query GetPostByIdPk($id: uuid!) {
     posts_by_pk(id: $id) {

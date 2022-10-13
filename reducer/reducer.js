@@ -9,6 +9,7 @@ const initialState = {
   imageFile: '',
   canvasWidth: 0,
   isImageFile: false,
+  canvasAdjust: false,
   audioFile: {},
 }
 
@@ -25,6 +26,8 @@ function reducer(state, action) {
       return { ...state, imageFile: action.payload }
     case 'setCanvasWidth':
       return { ...state, canvasWidth: action.payload }
+    case 'setCanvasAdjust':
+      return { ...state, canvasAdjust: action.payload }
     case 'setAudioFile':
       return { ...state, audioFile: action.payload }
     default:

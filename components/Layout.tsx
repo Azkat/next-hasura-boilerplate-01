@@ -29,7 +29,10 @@ export const Layout = ({ children, title = 'Welcome to Nextjs' }) => {
   const { uid } = useUser()
 
   return (
-    <div className="font-body flex flex-col justify-center min-h-screen text-white text-sm ">
+    <div
+      id="postList"
+      className="font-body flex flex-col justify-center min-h-screen text-white text-sm "
+    >
       <Head>
         <title>{title}</title>
       </Head>
