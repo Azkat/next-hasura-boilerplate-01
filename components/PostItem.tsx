@@ -1,4 +1,5 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect, useContext } from 'react'
+import { Store } from '../reducer/reducer'
 import Link from 'next/link'
 import Cookies from 'universal-cookie'
 import { LikeButton } from './LikeButton'
@@ -7,10 +8,22 @@ import { useOnScreen } from '../hooks/useOnScreen'
 
 const PostItem = (props) => {
   const cookie = new Cookies()
+  const [scrollEnough, setScrollEnough] = useState(false)
   const targetRef = useRef<HTMLDivElement>(null)
   const targetViewPosition = useOnScreen(targetRef)
+  const { state, dispatch } = useContext(Store)
 
-  console.log(props.index)
+  useEffect(() => {
+    if (scrollEnough) {
+      dispatch({ type: 'increment_listViewLoadCount' })
+    }
+  }, [scrollEnough])
+
+  useEffect(() => {
+    if (targetViewPosition === 'VISIBLE') {
+      setScrollEnough(true)
+    }
+  }, [targetViewPosition])
 
   return (
     <div className="bg-backgroundGray mb-4">
@@ -67,7 +80,7 @@ const PostItem = (props) => {
         </div>
       </p>
       {props.index == 8 && (
-        <div ref={targetRef}>位置をチェックする対象の要素</div>
+        <span ref={targetRef}>{state.listViewLoadCount}</span>
       )}
 
       <style jsx>{`

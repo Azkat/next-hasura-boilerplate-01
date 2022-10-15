@@ -11,6 +11,7 @@ const initialState = {
   isImageFile: false,
   canvasAdjust: false,
   audioFile: {},
+  listViewLoadCount: 0,
 }
 
 const Store = createContext()
@@ -30,6 +31,8 @@ function reducer(state, action) {
       return { ...state, canvasAdjust: action.payload }
     case 'setAudioFile':
       return { ...state, audioFile: action.payload }
+    case 'increment_listViewLoadCount':
+      return { ...state, listViewLoadCount: state.listViewLoadCount + 1 }
     default:
       return state
   }
