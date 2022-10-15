@@ -176,6 +176,7 @@ export function CropImage() {
     <div className="App">
       <div className="Crop-Controls">
         <input
+          title="imagefile"
           {...register('audioFile', fileRules)}
           className="text-sm text-grey-500 file:cursor-pointer
           file:mr-5 file:py-2 file:px-6

@@ -10,8 +10,6 @@ import axios from 'axios'
 
 interface IFormInput {
   title: string
-  audioUrl: string
-  imageUrl: string
 }
 
 export default function Create_post(props) {
@@ -40,8 +38,7 @@ export default function Create_post(props) {
   } = useForm<IFormInput>()
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log('onsubmit')
-    createPost()
+    createPost
   }
 
   const titleRules = {
@@ -51,20 +48,6 @@ export default function Create_post(props) {
 
   const fileRules = {
     required: 'Select your file',
-  }
-
-  const audioUrlRules = {
-    pattern: {
-      value: /(https?|ftp)(:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+)/,
-      message: 'Input URL',
-    },
-  }
-
-  const imageUrlRules = {
-    pattern: {
-      value: /(https?|ftp)(:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+)/,
-      message: 'Input URL',
-    },
   }
 
   /*   useEffect(() => {
@@ -114,12 +97,6 @@ export default function Create_post(props) {
     }
   }
 
-  const AdjustCheck = () => {
-    if (title && state.canvasWidth && isAudioFile && !state.imageFile) {
-      return <div className="text-red-500">Adjust image cropping</div>
-    }
-  }
-
   return (
     <Layout title="Create new post">
       <div className="px-4 mb-32">
@@ -132,6 +109,7 @@ export default function Create_post(props) {
                 Audio
               </h2>
               <input
+                title="audiofile"
                 id="audiofile"
                 className="text-sm text-grey-500 file:cursor-pointer
           file:mr-5 file:py-2 file:px-6
@@ -148,15 +126,11 @@ export default function Create_post(props) {
                 </label>
                 <input
                   className="text-input-1"
-                  {...register('audioUrl', audioUrlRules)}
                   placeholder="Spotify, Soundcloud, Youtube..."
                   type="text"
                   value={audioUrl}
                   onChange={audioUrlChange}
                 />
-                <div className="text-red-500">
-                  {errors.audioUrl && errors.audioUrl.message}
-                </div>
               </div>
 
               <div className="divider "></div>
@@ -171,15 +145,11 @@ export default function Create_post(props) {
                 </label>
                 <input
                   className="text-input-1"
-                  {...register('imageUrl', imageUrlRules)}
                   placeholder="Tumblr, Instagram, Flickr..."
                   type="text"
                   value={imageUrl}
                   onChange={imageUrlChange}
                 />
-                <div className="text-red-500">
-                  {errors.imageUrl && errors.imageUrl.message}
-                </div>
               </div>
 
               <div className="divider "></div>
@@ -217,17 +187,10 @@ export default function Create_post(props) {
 
               <div className="mt-20">
                 <input
-                  disabled={
-                    !title ||
-                    !state.canvasWidth ||
-                    !isAudioFile ||
-                    !state.imageFile
-                  }
+                  disabled={!title || !state.canvasWidth || !isAudioFile}
                   className="btn btn-primary disabled:bg-gray-600"
                   type="submit"
                 />
-                <br />
-                <AdjustCheck />
               </div>
             </div>
           </div>
