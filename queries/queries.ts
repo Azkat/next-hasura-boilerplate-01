@@ -17,7 +17,7 @@ export const GET_POSTS = gql`
 
 export const GET_FIRST_POSTS = gql`
   query GetPosts {
-    posts(order_by: { created_at: desc }, limit: 10) {
+    posts(order_by: { created_at: desc }, limit: 100) {
       title
       id
       description

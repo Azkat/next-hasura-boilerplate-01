@@ -3,6 +3,8 @@ import { Store } from '../reducer/reducer'
 import Cookies from 'universal-cookie'
 import PostItem from './PostItem'
 
+const postItemMap = []
+
 const PostList = (props) => {
   const cookie = new Cookies()
   const { state, dispatch } = useContext(Store)
@@ -11,19 +13,37 @@ const PostList = (props) => {
   )
 
   useEffect(() => {
-    if (state.listViewLoadCount > currentViewCount) {
-      const newElement = document.createElement('p') // p要素作成
-      const newContent = document.createTextNode('グララララ') // テキストノードを作成
-      newElement.appendChild(newContent)
+    dispatch({ type: 'setListViewData', value: props.postsData })
+    if (postItemMap.length == 0) {
+      postItemMap.push(
+        <PostItemMap postsData={props.postsData} listViewLoadCount={0} />
+      )
+    }
+  }, [])
 
-      const postList = document.getElementById('innerPostList')
-      postList.appendChild(newElement)
+  useEffect(() => {
+    if (state.listViewLoadCount > currentViewCount) {
+      setCurrenViewCount(state.listViewLoadCount)
+      postItemMap.push(
+        <PostItemMap
+          postsData={props.postsData}
+          listViewLoadCount={state.listViewLoadCount}
+        />
+      )
     }
   }, [state.listViewLoadCount])
 
+  return <div id="innerPostList">{postItemMap}</div>
+}
+
+const PostItemMap = (props) => {
+  const data = props.postsData.slice(
+    10 * props.listViewLoadCount,
+    10 * props.listViewLoadCount + 10
+  )
   return (
-    <div id="innerPostList">
-      {props.postsData?.map((post, index) => (
+    <>
+      {data?.map((post, index) => (
         <PostItem
           post={post}
           currentUser={props.currentUser}
@@ -31,7 +51,7 @@ const PostList = (props) => {
           key={props.id}
         />
       ))}
-    </div>
+    </>
   )
 }
 

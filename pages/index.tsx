@@ -15,8 +15,6 @@ export default function Home() {
   const postsData = queryClient.getQueryData<Post[]>('posts')
   const { currentUser } = useContext(AuthContext)
 
-  console.log(postsData)
-
   return (
     <Layout title="Home">
       <PostList postsData={postsData} currentUser={currentUser} />
