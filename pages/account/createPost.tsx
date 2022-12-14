@@ -38,7 +38,7 @@ export default function Create_post(props) {
   } = useForm<IFormInput>()
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    createPost
+    createPost()
   }
 
   const titleRules = {

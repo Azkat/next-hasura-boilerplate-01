@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie'
 import { LikeButton } from './LikeButton'
 import { PlayIcon } from '@heroicons/react/solid'
 import { useOnScreen } from '../hooks/useOnScreen'
+import Image from 'next/image'
 
 const PostItem = (props) => {
   const cookie = new Cookies()
@@ -67,7 +68,14 @@ const PostItem = (props) => {
             </Link>
           </div>
         </div>
-        <div className="bg-cover bg-center w-full relative h-vw bg-[url('https://vmedia.droptune.net/post_image/canvasImage.jpg')] sm:max-h-[calc(544px)]">
+        <div className="bg-cover bg-center w-full relative h-vw sm:max-h-[calc(544px)] cursor-pointer">
+          <Link href={'/post/' + props.post.id}>
+            <Image
+              src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
+              layout="fill"
+              objectFit="contain"
+            />
+          </Link>
           <div className="playbutton absolute">
             <PlayIcon className="h-6 w-6  text-gray-100 opacity-80" />
           </div>

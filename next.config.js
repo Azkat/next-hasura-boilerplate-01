@@ -4,6 +4,9 @@ const nextConfig = {
   experimental: {
     optimizeFonts: true,
   },
+  images: {
+    domains: ['vmedia.droptune.net'],
+  },
 }
 
 module.exports = nextConfig
