@@ -4,6 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useUser } from '../hooks/useUser'
 import { MenuIcon } from '@heroicons/react/solid'
+import { UserCircleIcon } from '@heroicons/react/solid'
+import { PlayIcon } from '@heroicons/react/solid'
 
 interface Props {
   children: ReactNode
@@ -20,7 +22,7 @@ export const Drawer = (props) => {
       <div className="drawer-content flex flex-col">
         <div className="w-full navbar bg-baseNav">
           <div className="max-w-3xl mx-auto w-full flex">
-            <div className="flex-none lg:hidden">
+            <div className="flex-none ">
               <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -42,22 +44,23 @@ export const Drawer = (props) => {
                 <Link href="/">
                   <Image
                     src="/logo.svg"
-                    width={80}
-                    height={31}
+                    width={120}
+                    height={46}
                     alt="Droptune"
                   />
                 </Link>
               </h1>
             </div>
-            <div className="flex-none hidden lg:block">
-              <ul className="menu menu-horizontal">
-                <li>
-                  <a>Navbar Item 1</a>
-                </li>
-                <li>
-                  <a>Navbar Item 2</a>
-                </li>
-              </ul>
+            <div className="flex-none mr-2">
+              <Link href="/account">
+                {uid ? (
+                  <UserCircleIcon className="h-8 w-8  text-gray-100 opacity-80 cursor-pointer" />
+                ) : (
+                  <button className="btn btn-sm btn-primary px-4 py-1">
+                    Log in
+                  </button>
+                )}
+              </Link>
             </div>
           </div>
         </div>
@@ -65,17 +68,7 @@ export const Drawer = (props) => {
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-        <ul className="menu p-4 overflow-y-auto w-80 bg-baseNav">
-          <Link href="/account">
-            <li className="mb-4">
-              <button className="btn btn-wide btn-primary">Log in</button>
-            </li>
-          </Link>
-          <li className="mb-7">
-            <button className="btn btn-wide btn-primary btn-outline">
-              Sign up
-            </button>
-          </li>
+        <ul className="menu p-4 pt-12 overflow-y-auto w-80 bg-baseNav">
           <li className="mb-4">About</li>
           <li className="mb-4">Terms</li>
           <li className="mb-4">Privacy</li>

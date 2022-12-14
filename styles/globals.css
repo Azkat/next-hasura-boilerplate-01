@@ -15,3 +15,9 @@
     @apply textarea textarea-bordered h-32 bg-transparent;
   }
 }
+
+@layer components {
+  .btn {
+    text-transform: none;
+  }
+}

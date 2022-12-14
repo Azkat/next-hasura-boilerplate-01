@@ -18,7 +18,7 @@ export default function UserList(props) {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         setIsUser(true)
-        //router.push('/account')
+        router.push('/account')
       } else {
         return
       }
@@ -31,10 +31,12 @@ export default function UserList(props) {
   if (!isUser) {
     return (
       <Layout title="Login">
-        <>
-          <Auth></Auth>
-          <AuthGoogle></AuthGoogle>
-        </>
+        <div className="px-4 mb-32">
+          <>
+            <Auth></Auth>
+            <AuthGoogle></AuthGoogle>
+          </>
+        </div>
       </Layout>
     )
   } else {

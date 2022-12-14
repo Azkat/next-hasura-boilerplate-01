@@ -19,42 +19,48 @@ export const Auth = () => {
   } = useFirebaseAuth()
   return (
     <>
-      <h1>{isLogin ? 'Login' : 'Singup'}</h1>
+      <h2 className="header-h2 text-center">{isLogin ? 'Login' : 'Singup'}</h2>
+
       <form
         onSubmit={authUser}
-        className="mt-8 flex justify-center items-center flex-col"
+        className="mt-4 flex justify-center items-center flex-col"
       >
-        <label>Email:</label>
-        <input
-          className="my-3 px-3 py-1 border border-gray-300 text-gray-900"
-          placeholder="email ?"
-          type="text"
-          value={email}
-          onChange={emailChange}
-        />
+        <div className="form-control w-full  mt-6">
+          <input
+            className="text-input-1"
+            placeholder="Email"
+            type="text"
+            value={email}
+            onChange={emailChange}
+          />
+        </div>
 
-        <label>Password:</label>
-        <input
-          className="my-3 px-3 py-1 border border-gray-300"
-          placeholder="password ?"
-          type="password"
-          value={password}
-          onChange={pwChange}
-        />
+        <div className="form-control w-full  mt-6">
+          <input
+            className="text-input-1"
+            placeholder="Password"
+            type="password"
+            value={password}
+            onChange={pwChange}
+          />
+        </div>
         <button
+          className="disabled:bg-gray-600 btn btn-wide btn-primary px-4 py-1 mt-6"
           disabled={!email || !password}
           type="submit"
-          className="disabled:opacity-40 mt-5 py-1 px-3 text-white bg-indigo-600 hover:bg-indigo-700 rounded focus:outline-none"
         >
           {isLogin ? 'Login' : 'Singup'}
         </button>
       </form>
-      <div
-        className="mt-20 flex items-center cursor-pointer "
-        onClick={toggleMode}
-      >
-        <ChevronDoubleRightIcon className="h-5 w-5 mx-1 text-blue-500" />
-        <span>{isLogin ? 'Signup' : 'Login'}</span>
+
+      <div className="mt-20 flex justify-center items-center flex-col">
+        <div
+          className="btn btn-wide px-4 py-1 mt-6 cursor-pointer outline"
+          onClick={toggleMode}
+        >
+          <ChevronDoubleRightIcon className="h-4 w-4  text-gray-100 opacity-80 cursor-pointer mr-2" />
+          <span>{isLogin ? 'Signup' : 'Login'}</span>
+        </div>
       </div>
     </>
   )
