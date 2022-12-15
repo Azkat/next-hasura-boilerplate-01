@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState, useContext } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -6,6 +6,7 @@ import { useUser } from '../hooks/useUser'
 import { MenuIcon } from '@heroicons/react/solid'
 import { UserCircleIcon } from '@heroicons/react/solid'
 import { PlayIcon } from '@heroicons/react/solid'
+import { AuthContext } from '../lib/authProvider'
 
 interface Props {
   children: ReactNode
@@ -15,6 +16,12 @@ interface Props {
 
 export const Drawer = (props) => {
   const { uid } = useUser()
+  const [login, setLogin] = useState('loading')
+  const { currentUser } = useContext(AuthContext)
+
+  useEffect(() => {
+    setLogin(uid)
+  }, [uid])
 
   return (
     <div className="drawer bg-baseBody">
@@ -55,13 +62,19 @@ export const Drawer = (props) => {
             </div>
             <div className="flex-none mr-2">
               <Link href="/account">
-                {uid ? (
-                  <UserCircleIcon className="h-8 w-8  text-gray-100 opacity-80 cursor-pointer" />
-                ) : (
-                  <button className="btn btn-sm btn-primary px-4 py-1">
-                    Log in
-                  </button>
-                )}
+                {(() => {
+                  if (currentUser == undefined) {
+                    return (
+                      <button className="btn btn-sm btn-primary px-4 py-1">
+                        Log in
+                      </button>
+                    )
+                  } else {
+                    return (
+                      <UserCircleIcon className="h-8 w-8  text-gray-100 opacity-80 cursor-pointer" />
+                    )
+                  }
+                })()}
               </Link>
             </div>
           </div>

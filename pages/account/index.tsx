@@ -61,7 +61,7 @@ export default function Account(props) {
 
         <div className="px-4">
           <Link href="/account/createPost">
-            <button className="btn btn-outline btn-block btn-primary">
+            <button className="btn btn-block btn-primary">
               <PlusSmIcon className="h-5 w-5" />
               New Post
             </button>
