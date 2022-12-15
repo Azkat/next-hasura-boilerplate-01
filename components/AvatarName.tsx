@@ -12,12 +12,18 @@ const AvatarName = (props) => {
         alt=""
       />
       <div className="">
-        <div className="font-light text-2xl sm:text-3xl">solardo_823</div>
-        <Link href="/account/editprofile">
-          <a className="text-sm text-secondary">Edit Profile</a>
-        </Link>
+        <div className="font-light text-2xl sm:text-3xl">
+          {props.status == 'success' ? props.data.name : ''}
+        </div>
+        <div className="mt-2">
+          <Link href="/account/editprofile">
+            <button className="btn btn-sm btn-outline text-sm">
+              Edit Profile
+            </button>
+          </Link>
+        </div>
         <div className="hidden sm:block">
-          <UserInfomation />
+          <UserInfomation data={props.data} status={props.status} />
         </div>
       </div>
       <div className="ml-auto">

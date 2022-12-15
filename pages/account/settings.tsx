@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Layout } from '../../components/Layout'
 import { useRouter } from 'next/router'
 import { useCreatePost } from '../../hooks/useCreatePost'
+import firebase from '../../firebaseConfig'
+import { unSubMeta } from '../../hooks/useUserChanged'
+import Cookie from 'universal-cookie'
+import { DeleteUser } from '../../components/DeleteUser'
+
+const cookie = new Cookie()
 
 export default function Settings(props) {
   const router = useRouter()
@@ -14,6 +20,31 @@ export default function Settings(props) {
     resetInput,
     createPost,
   } = useCreatePost()
+
+  useEffect(() => {
+    const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        setIsUser(true)
+        return
+      } else {
+        router.push('/login')
+      }
+    })
+    return () => {
+      unSubUser()
+    }
+  }, [])
+
+  const logout = async () => {
+    if (unSubMeta) {
+      unSubMeta()
+    }
+    await firebase.auth().signOut()
+    cookie.remove('token')
+    cookie.remove('user_id')
+    cookie.remove('token_expire')
+    router.push('/login')
+  }
 
   return (
     <Layout title="Create new post">
@@ -49,6 +80,12 @@ export default function Settings(props) {
             </div>
           </div>
         </div>
+
+        <div className="cursor-pointer mt-40" onClick={logout}>
+          Logout
+        </div>
+
+        <DeleteUser />
       </div>
     </Layout>
   )

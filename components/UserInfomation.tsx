@@ -1,21 +1,23 @@
 import React from 'react'
 
 const UserInformation = (props) => {
+  console.log(props)
+
   return (
-    <div className="px-4 mb-4 sm:px-0 sm:mt-6">
-      <div className="text-base font-bold mb-2">
-        <div>Solardo</div>
-      </div>
-      <div className="text-sm mb-1">
-        <div>
-          Surveying the wonders of cultures from across the globe, Chris Gavino,
-          best known as Manila Killa is a well-traveled producer inspired.{' '}
+    <>
+      {props.status == 'success' ? (
+        <div className="px-4 mb-4 sm:px-0 sm:mt-6">
+          <div className="text-sm mb-1">
+            <div>{props.data.bio}</div>
+          </div>
+          <div className="text-sm mb-2 text-secondary">
+            <a>{props.data.website}</a>
+          </div>
         </div>
-      </div>
-      <div className="text-sm mb-2 text-secondary">
-        <a>www.mywebsite.com</a>
-      </div>
-    </div>
+      ) : (
+        ''
+      )}
+    </>
   )
 }
 

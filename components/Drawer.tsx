@@ -42,12 +42,14 @@ export const Drawer = (props) => {
             <div className="flex-1">
               <h1 className="flex px-2 mx-2 items-center cursor-pointer">
                 <Link href="/">
-                  <Image
-                    src="/logo.svg"
-                    width={120}
-                    height={46}
-                    alt="Droptune"
-                  />
+                  <div className="mt-2px">
+                    <Image
+                      src="/logo.svg"
+                      width={120}
+                      height={46}
+                      alt="Droptune"
+                    />
+                  </div>
                 </Link>
               </h1>
             </div>
@@ -74,6 +76,11 @@ export const Drawer = (props) => {
           <li className="mb-4">Privacy</li>
         </ul>
       </div>
+      <style jsx>{`
+        .mt-2px {
+          margin-top: 9px !important;
+        }
+      `}</style>
     </div>
   )
 }

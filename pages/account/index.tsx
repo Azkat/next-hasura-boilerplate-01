@@ -7,18 +7,11 @@ import firebase from '../../firebaseConfig'
 import { unSubMeta } from '../../hooks/useUserChanged'
 import { useRouter } from 'next/router'
 import { useUpdateFirebaseEmail } from '../../hooks/useUpdateFirebaseEmail'
-import UpdateEmail from '../../components/UpdateEmail'
-import UpdateUserName from '../../components/UpdateUserName'
-import { DeleteUser } from '../../components/DeleteUser'
-import { Forms } from '../../components/Forms'
-import { CropImage } from '../../components/imageCrop/CropImage'
-import { ImageUploadTest } from '../../components/ImageUploadTest'
 import AvatarName from '../../components/AvatarName'
 import UserInfomation from '../../components/UserInfomation'
 import { PlusSmIcon } from '@heroicons/react/solid'
 import { useQueryUserById } from '../../hooks/useQueryUserById'
 import Link from 'next/link'
-import PostList from '../../components/PostList'
 import { QueryClient, useQueryClient } from 'react-query'
 
 const cookie = new Cookie()
@@ -56,25 +49,14 @@ export default function Account(props) {
     }
   }, [])
 
-  const logout = async () => {
-    if (unSubMeta) {
-      unSubMeta()
-    }
-    await firebase.auth().signOut()
-    cookie.remove('token')
-    cookie.remove('user_id')
-    cookie.remove('token_expire')
-    router.push('/login')
-  }
-
   if (!isUser) {
     return <></>
   } else {
     return (
       <Layout title="Account">
-        <AvatarName />
+        <AvatarName data={data} status={status} />
         <div className="block sm:hidden">
-          <UserInfomation />
+          <UserInfomation data={data} status={status} />
         </div>
 
         <div className="px-4">
@@ -133,27 +115,6 @@ export default function Account(props) {
             </div>
           </div>
         </section>
-
-        <CropImage />
-
-        <Forms />
-
-        <div className="cursor-pointer mt-16">
-          <Link href="/account/createpost">create new post</Link>
-        </div>
-        <div className="cursor-pointer mt-16">
-          <Link href="/account/posts">my posts</Link>
-        </div>
-        {providerId == 'password' ? <UpdateEmail /> : ''}
-        <UpdateUserName data={data} status={status} />
-
-        <ImageUploadTest />
-
-        <div className="cursor-pointer mt-16" onClick={logout}>
-          Logout
-        </div>
-
-        <DeleteUser />
       </Layout>
     )
   }

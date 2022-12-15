@@ -82,6 +82,8 @@ export const GET_USERBY_ID = gql`
     users(where: { id: { _eq: $id } }) {
       id
       name
+      bio
+      website
     }
   }
 `
@@ -91,6 +93,9 @@ export const GET_USERBY_ID_PK = gql`
     users_by_pk(id: $id) {
       id
       name
+
+      website
+      bio
       posts {
         id
         title
@@ -128,12 +133,26 @@ export const CREATE_USER = gql`
     }
   }
 `
+export const UPDATE_PROFILE = gql`
+  mutation UpdateUserName(
+    $id: uuid!
+    $name: String!
+    $bio: String!
+    $website: String!
+  ) {
+    update_users_by_pk(
+      pk_columns: { id: $id }
+      _set: { name: $name, bio: $bio, website: $website }
+    ) {
+      id
+    }
+  }
+`
 
 export const UPDATE_USER_NAME = gql`
   mutation UpdateUserName($id: uuid!, $name: String!) {
     update_users_by_pk(pk_columns: { id: $id }, _set: { name: $name }) {
       id
-      name
     }
   }
 `

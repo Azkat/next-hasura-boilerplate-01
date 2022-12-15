@@ -9,7 +9,7 @@ import { QueryClient, useQueryClient } from 'react-query'
 import Cookies from 'universal-cookie'
 import PostList from '../components/PostList'
 
-export default function Home() {
+export default function Home(props) {
   const cookie = new Cookies()
   const queryClient = useQueryClient()
   const postsData = queryClient.getQueryData<Post[]>('posts')

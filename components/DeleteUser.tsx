@@ -110,7 +110,7 @@ export const DeleteUser = (props) => {
   if (providerId == 'password') {
     return (
       <>
-        <div className="flex float-right ml-4 text-red-700 mt-24">
+        <div className="flex  text-red-700 mt-8">
           Delete Account (All your data completely remove)
         </div>
         <form onSubmit={deleteAccount}>

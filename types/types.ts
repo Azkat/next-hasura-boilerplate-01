@@ -12,12 +12,20 @@ export interface User {
   id: string
   name: string
   profile_id: string
+  bio: string
+  website: string
   posts: Array<{
     id: string
     title: string
     created_at: string
     description: string
   }>
+}
+export interface UpdateProfile {
+  id: string
+  name: string
+  bio: string
+  website: string
 }
 export interface CreateUser {
   firebase_id: string
