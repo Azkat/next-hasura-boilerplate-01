@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Layout } from '../../components/Layout'
 import { useRouter } from 'next/router'
 import { useEditProfile } from '../../hooks/useEditProfile'
 import Cookie from 'universal-cookie'
 import { useQueryUserById } from '../../hooks/useQueryUserById'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { AuthContext } from '../../lib/authProvider'
 
 const cookie = new Cookie()
 interface IFormInput {
@@ -15,6 +16,9 @@ export default function EditProfile(props) {
   const router = useRouter()
 
   const { status, data } = useQueryUserById(cookie.get('user_id'))
+
+  const { currentUser } = useContext(AuthContext)
+  !currentUser ? router.push('/login') : ''
 
   const {
     name,

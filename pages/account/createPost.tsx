@@ -7,6 +7,7 @@ import { CropImage } from '../../components/imageCrop/CropImage'
 import { useSelector, useDispatch } from 'react-redux'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import axios from 'axios'
+import { AuthContext } from '../../lib/authProvider'
 
 interface IFormInput {
   title: string
@@ -29,6 +30,9 @@ export default function Create_post(props) {
     resetInput,
     createPost,
   } = useCreatePost()
+
+  const { currentUser } = useContext(AuthContext)
+  !currentUser ? router.push('/login') : ''
 
   const {
     register,

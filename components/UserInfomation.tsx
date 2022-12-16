@@ -1,8 +1,6 @@
 import React from 'react'
 
 const UserInformation = (props) => {
-  console.log(props)
-
   return (
     <>
       {props.status == 'success' ? (

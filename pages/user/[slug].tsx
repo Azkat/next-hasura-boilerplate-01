@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { useEffect, Component } from 'react'
 import { Layout } from '../../components/Layout'
-import { fetchUserById } from '../../hooks/useQueryUsers'
+import { fetchUserById, fetchUsers } from '../../hooks/useQueryUsers'
 import { QueryClient, useQueryClient } from 'react-query'
 import { User } from '../../types/types'
 import Link from 'next/link'
@@ -12,20 +12,16 @@ import { PlusSmIcon } from '@heroicons/react/solid'
 export default function UserList(props) {
   const queryClient = useQueryClient()
   const data = queryClient.getQueryData<User>('user_by_id')
+  const status = 'success'
+
+  console.log(data.posts)
 
   return (
     <Layout title={data.name}>
       <>
-        <h1>{data.name}</h1>
-        {data.posts?.map((post) => (
-          <Link href={'/post/' + post.id} key={post.id}>
-            {post.title}
-          </Link>
-        ))}
-
-        <AvatarName />
+        <AvatarName data={data} status={status} />
         <div className="block sm:hidden">
-          <UserInfomation />
+          <UserInfomation data={data} status={status} />
         </div>
 
         {/* <PostList postsData={postsData} currentUser={currentUser} /> */}
@@ -33,45 +29,19 @@ export default function UserList(props) {
         <section className="overflow-hidden mt-10 ">
           <div className="container px-4 py-2 mx-auto ">
             <div className="flex flex-wrap -m-1 md:-m-2">
-              <div className="flex flex-wrap w-1/3">
-                <div className="w-full p-1 md:p-2  aspect-square">
-                  <img
-                    alt="gallery"
-                    className="block object-cover object-center w-full h-full"
-                    src="https://random.imagecdn.app/400/400"
-                  />
+              {data.posts?.map((post) => (
+                <div className="flex flex-wrap w-1/3">
+                  <div className="w-full p-1 md:p-2  aspect-square cursor-pointer">
+                    <Link href={`/post/${post.id}`}>
+                      <img
+                        alt={post.title}
+                        className="block object-cover object-center w-full h-full"
+                        src={`https://vmedia.droptune.net/post_image/${post.id}.jpg`}
+                      />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-
-              <div className="flex flex-wrap w-1/3">
-                <div className="w-full p-1 md:p-2  aspect-square">
-                  <img
-                    alt="gallery"
-                    className="block object-cover object-center w-full h-full"
-                    src="https://random.imagecdn.app/400/400"
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-wrap w-1/3">
-                <div className="w-full p-1 md:p-2  aspect-square">
-                  <img
-                    alt="gallery"
-                    className="block object-cover object-center w-full h-full"
-                    src="https://random.imagecdn.app/400/400"
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-wrap w-1/3">
-                <div className="w-full p-1 md:p-2  aspect-square">
-                  <img
-                    alt="gallery"
-                    className="block object-cover object-center w-full h-full"
-                    src="https://random.imagecdn.app/400/400"
-                  />
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>

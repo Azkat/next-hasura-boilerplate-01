@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Layout } from '../../components/Layout'
 import { useRouter } from 'next/router'
 import { useCreatePost } from '../../hooks/useCreatePost'
@@ -6,6 +6,7 @@ import firebase from '../../firebaseConfig'
 import { unSubMeta } from '../../hooks/useUserChanged'
 import Cookie from 'universal-cookie'
 import { DeleteUser } from '../../components/DeleteUser'
+import { AuthContext } from '../../lib/authProvider'
 
 const cookie = new Cookie()
 
@@ -20,6 +21,9 @@ export default function Settings(props) {
     resetInput,
     createPost,
   } = useCreatePost()
+
+  const { currentUser } = useContext(AuthContext)
+  !currentUser ? router.push('/login') : ''
 
   useEffect(() => {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {

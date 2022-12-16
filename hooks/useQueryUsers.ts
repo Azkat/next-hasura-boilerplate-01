@@ -48,7 +48,6 @@ export const fetchUserById = async (id) => {
     GET_USERBY_ID_PK,
     { id: id }
   )
-  console.log(data)
   return data
 }
 export const createUser = async (firebase_id) => {

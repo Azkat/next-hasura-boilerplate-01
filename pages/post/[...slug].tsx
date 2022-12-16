@@ -19,7 +19,7 @@ export default function UserList(props) {
 
   return (
     <Layout title={data.title}>
-      <div className="bg-backgroundGray mt-8 mb-4">
+      <div className="bg-backgroundGray mt-8 mb-4 rounded-lg">
         <p className="font-bold my-3" key={data.id}>
           <div className="flex items-center p-4 pt-3">
             <Link href={'/user/' + data.user.id}>
