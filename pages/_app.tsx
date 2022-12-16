@@ -10,6 +10,7 @@ import { Hydrate } from 'react-query/hydration'
 import UserChanged from '../components/UserChanged'
 import Cookie from 'universal-cookie'
 import { ReducerProvider } from '../reducer/reducer'
+import NextNprogress from 'nextjs-progressbar'
 
 const cookie = new Cookie()
 
@@ -33,6 +34,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           <ReducerProvider>
             <AuthProvider>
               <UserChanged />
+              <NextNprogress
+                color="#44ADED"
+                startPosition={0.3}
+                stopDelayMs={200}
+                height={2}
+                showOnShallow={true}
+              />
               <Component {...pageProps} />
             </AuthProvider>
           </ReducerProvider>
