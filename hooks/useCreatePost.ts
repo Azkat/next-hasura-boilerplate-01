@@ -71,6 +71,7 @@ export const useCreatePost = () => {
           })
           .then((res) => {
             console.log(res)
+            dispatch({ type: 'setImageFile', payload: '' })
           })
       })
   }

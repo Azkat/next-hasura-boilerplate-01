@@ -25,7 +25,7 @@ const Content = ({ children }) => {
   )
 }
 
-export const Layout = ({ children, title = 'Welcome to Nextjs' }) => {
+export const Layout = ({ children, title = 'Droptune' }) => {
   const { uid } = useUser()
 
   return (
@@ -34,7 +34,7 @@ export const Layout = ({ children, title = 'Welcome to Nextjs' }) => {
       className="font-body flex flex-col justify-center min-h-screen text-white text-sm "
     >
       <Head>
-        <title>{title}</title>
+        <title>{title} - Droptune</title>
       </Head>
 
       <Drawer content={<Content>{children}</Content>} />

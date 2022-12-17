@@ -1,20 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CogIcon } from '@heroicons/react/solid'
 import UserInfomation from './UserInfomation'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
+import Cookie from 'universal-cookie'
+
+const cookie = new Cookie()
 
 const AvatarName = (props) => {
   const router = useRouter()
   const pagePath = router.pathname
 
+  const [src, setSrc] = useState(`/noImageYet.png`)
+
   return (
     <div className="flex items-center p-4 pt-7 sm:items-start">
-      <img
-        className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32"
-        src="https://placeimg.com/192/192/people"
-        alt=""
-      />
+      {pagePath == '/user/[slug]' ? (
+        <img
+          className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32"
+          src={src}
+          alt=""
+        />
+      ) : (
+        <Link href="/account/changeProfileImage">
+          <img
+            className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32 cursor-pointer"
+            src={src}
+            alt=""
+          />
+        </Link>
+      )}
+
       <div className="">
         <div className="font-light text-2xl sm:text-3xl">
           {props.status == 'success' ? props.data.name : ''}
