@@ -16,6 +16,7 @@ module.exports = {
       },
       btn: {
         disabled: '#fff',
+        gradient: '#fff',
       },
       width: {
         desktopPost: '576px',
@@ -30,7 +31,8 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          primary: '#44ADEE',
+          //primary: '#44ADEE',
+          primary: '#FFF',
           secondary: '#0284c7',
           accent: '#E9498C',
           accent2: '#FFF133',

@@ -63,7 +63,7 @@ export default function Account(props) {
 
         <div className="px-4">
           <Link href="/account/createPost">
-            <button className="btn btn-block btn-primary">
+            <button className="btn btn-block bg-gradient-to-r from-teal-300 to-violet-700 text-white">
               <PlusSmIcon className="h-5 w-5" />
               New Post
             </button>
@@ -75,7 +75,7 @@ export default function Account(props) {
             {data ? (
               <div className="flex flex-wrap -m-1 md:-m-2">
                 {data.posts?.map((post) => (
-                  <div className="flex flex-wrap w-1/3">
+                  <div className="flex flex-wrap w-1/3" key={post.id}>
                     <div className="w-full p-1 md:p-2  aspect-square cursor-pointer">
                       <Link href={`/post/${post.id}`}>
                         <img

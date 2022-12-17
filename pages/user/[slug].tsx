@@ -1,4 +1,4 @@
-import React, { useEffect, Component } from 'react'
+import React, { useEffect, Component, useState } from 'react'
 import { Layout } from '../../components/Layout'
 import { fetchUserById, fetchUsers } from '../../hooks/useQueryUsers'
 import { QueryClient, useQueryClient } from 'react-query'
@@ -8,13 +8,16 @@ import { dehydrate } from 'react-query/hydration'
 import AvatarName from '../../components/AvatarName'
 import UserInfomation from '../../components/UserInfomation'
 import { PlusSmIcon } from '@heroicons/react/solid'
+import Image from 'next/image'
 
 export default function UserList(props) {
   const queryClient = useQueryClient()
   const data = queryClient.getQueryData<User>('user_by_id')
   const status = 'success'
-
-  console.log(data.posts)
+  const [postImageSrc, setPostImageSrc] = useState(
+    `https://vmedia.droptune.net/post_image/`
+  )
+  const [hasImage, setHasImage] = useState(true)
 
   return (
     <Layout title={data.name}>
@@ -30,13 +33,15 @@ export default function UserList(props) {
           <div className="container px-4 py-2 mx-auto ">
             <div className="flex flex-wrap -m-1 md:-m-2">
               {data.posts?.map((post) => (
-                <div className="flex flex-wrap w-1/3">
-                  <div className="w-full p-1 md:p-2  aspect-square cursor-pointer">
-                    <Link href={`/post/${post.id}`}>
-                      <img
-                        alt={post.title}
-                        className="block object-cover object-center w-full h-full"
-                        src={`https://vmedia.droptune.net/post_image/${post.id}.jpg`}
+                <div className="flex flex-wrap w-1/3" key={post.id}>
+                  <div className="w-full p-1 md:p-2  aspect-square cursor-pointer relative">
+                    <Link href={`/post/${post.id}`} className="w-full">
+                      <Image
+                        src={postImageSrc + post.id + '.jpg'}
+                        className="block object-cover object-center w-full h-full relative"
+                        layout="fill"
+                        objectFit="contain"
+                        alt=""
                       />
                     </Link>
                   </div>

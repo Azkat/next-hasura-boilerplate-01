@@ -65,7 +65,7 @@ export const Drawer = (props) => {
                 {(() => {
                   if (currentUser == undefined) {
                     return (
-                      <button className="btn btn-sm btn-primary px-4 py-1">
+                      <button className="btn btn-sm  btn-primary px-4 py-1">
                         Log in
                       </button>
                     )

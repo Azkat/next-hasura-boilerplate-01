@@ -41,7 +41,11 @@ const PostItem = (props) => {
       <p className="font-bold my-3" key={props.post.id}>
         <div className="flex items-center p-4 pt-3 ">
           <div className="w-8 h-8 mr-2  relative">
-            <Link href={'/user/' + props.post.user.id} className="contents">
+            <Link
+              href={'/user/' + props.post.user.id}
+              className="contents"
+              scroll={false}
+            >
               <Image
                 src={userIconSrc}
                 className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
@@ -79,7 +83,13 @@ const PostItem = (props) => {
           </div>
         </div>
         <div className="bg-cover bg-center w-full relative h-vw sm:max-h-[calc(544px)] cursor-pointer">
-          <Link href={'/post/' + props.post.id}>
+          {/*  <Link href={'/post/' + props.post.id}> */}
+          <Link
+            key={props.post.id}
+            href={`/?modalId=${props.post.id}`}
+            as={`/modal/${props.post.id}`}
+            scroll={false}
+          >
             <Image
               src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
               layout="fill"
