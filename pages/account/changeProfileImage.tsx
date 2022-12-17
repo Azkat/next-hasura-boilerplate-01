@@ -47,7 +47,7 @@ export default function Change_Profile_Image(props) {
               className="btn btn-primary disabled:bg-gray-600 mt-10"
               type="submit"
               disabled={!state.imageFile}
-              onClick={uploadPhoto}
+              onClick={() => uploadPhoto(cookie.get('user_id'))}
             >
               Update Image
             </button>

@@ -12,7 +12,9 @@ const AvatarName = (props) => {
   const router = useRouter()
   const pagePath = router.pathname
 
-  const [src, setSrc] = useState(`/noImageYet.png`)
+  const [src, setSrc] = useState(
+    `https://vmedia.droptune.net/user_icon/${cookie.get('user_id')}.jpg`
+  )
 
   return (
     <div className="flex items-center p-4 pt-7 sm:items-start">
@@ -23,10 +25,13 @@ const AvatarName = (props) => {
           alt=""
         />
       ) : (
-        <Link href="/account/changeProfileImage">
+        <Link href="/account/changeProfileImage" className="contents">
           <img
             className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32 cursor-pointer"
             src={src}
+            onError={() => {
+              setSrc(`/noImageYet.png`)
+            }}
             alt=""
           />
         </Link>

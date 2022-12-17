@@ -19,6 +19,10 @@ function upload(file) {
     prefix = 'audio/'
   }
 
+  if (file.prefix == 'user_icon') {
+    prefix = 'user_icon/'
+  }
+
   const s3 = new aws.S3()
   const params = {
     Bucket: process.env.S3_BUCKET_TEMP,

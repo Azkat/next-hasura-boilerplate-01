@@ -13,6 +13,9 @@ const PostItem = (props) => {
   const targetRef = useRef<HTMLDivElement>(null)
   const targetViewPosition = useOnScreen(targetRef)
   const { state, dispatch } = useContext(Store)
+  const [userIconSrc, setUserIconSrc] = useState(
+    `https://vmedia.droptune.net/user_icon/${props.post.user.id}.jpg`
+  )
 
   useEffect(() => {
     if (scrollEnough) {
@@ -37,13 +40,20 @@ const PostItem = (props) => {
       )}
       <p className="font-bold my-3" key={props.post.id}>
         <div className="flex items-center p-4 pt-3 ">
-          <Link href={'/user/' + props.post.user.id}>
-            <img
-              className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
-              src="https://placeimg.com/192/192/people"
-              alt=""
-            />
-          </Link>
+          <div className="w-8 h-8 mr-2  relative">
+            <Link href={'/user/' + props.post.user.id} className="contents">
+              <Image
+                src={userIconSrc}
+                className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
+                layout="fill"
+                objectFit="contain"
+                onError={() => {
+                  setUserIconSrc(`/noImageYet.png`)
+                }}
+                alt=""
+              />
+            </Link>
+          </div>
           <div className="font-light dark:text-white">
             <Link href={'/user/' + props.post.user.id}>
               {props.post.user.name}
@@ -74,6 +84,7 @@ const PostItem = (props) => {
               src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
               layout="fill"
               objectFit="contain"
+              alt=""
             />
           </Link>
           <div className="playbutton absolute">

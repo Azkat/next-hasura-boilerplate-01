@@ -1,4 +1,4 @@
-import React, { Component, useContext } from 'react'
+import React, { Component, useContext, useState } from 'react'
 import { Layout } from '../../components/Layout'
 import { fetchPostById } from '../../hooks/useQueryPostById'
 import { QueryClient, useQueryClient } from 'react-query'
@@ -14,6 +14,9 @@ export default function UserList(props) {
   const queryClient = useQueryClient()
   const data = queryClient.getQueryData<Post>('post')
   const { state, dispatch } = useContext(Store)
+  const [userIconSrc, setUserIconSrc] = useState(
+    `https://vmedia.droptune.net/user_icon/${data.user.id}.jpg`
+  )
 
   console.log(data)
 
@@ -22,13 +25,20 @@ export default function UserList(props) {
       <div className="bg-backgroundGray mt-8 mb-4 rounded-lg">
         <p className="font-bold my-3" key={data.id}>
           <div className="flex items-center p-4 pt-3">
-            <Link href={'/user/' + data.user.id}>
-              <img
-                className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
-                src="https://placeimg.com/192/192/people"
-                alt=""
-              />
-            </Link>
+            <div className="w-8 h-8 mr-2  relative">
+              <Link href={'/user/' + data.user.id} className="contents">
+                <Image
+                  src={userIconSrc}
+                  className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
+                  layout="fill"
+                  objectFit="contain"
+                  onError={() => {
+                    setUserIconSrc(`/noImageYet.png`)
+                  }}
+                  alt=""
+                />
+              </Link>
+            </div>
             <div className="font-light dark:text-white">
               <Link href={'/user/' + data.user.id}>{data.user.name}</Link>
             </div>
@@ -56,6 +66,7 @@ export default function UserList(props) {
               src={`https://vmedia.droptune.net/post_image/${data.id}.jpg`}
               layout="fill"
               objectFit="contain"
+              alt=""
             />
             <div className="playbutton absolute">
               <PlayIcon className="h-6 w-6  text-gray-100 opacity-80" />
