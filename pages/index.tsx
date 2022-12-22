@@ -1,6 +1,7 @@
 import { useContext, useCallback, useState, useEffect } from 'react'
 import { AuthContext } from '../lib/authProvider'
 import { Layout } from '../components/Layout'
+import ModalPost from '../components/ModalPost'
 import { GetStaticProps } from 'next'
 import { dehydrate } from 'react-query/hydration'
 import { fetchPosts, fetchFirstPosts } from '../hooks/useQueryPosts'
@@ -13,11 +14,12 @@ import { useRouter } from 'next/router'
 
 const modalStyles = {
   content: {
-    background: '#000',
+    backgroundColor: 'rgba(30, 30, 30, 1)',
+    border: 'none',
+    inset: '170px 80px',
+    padding: '0px',
   },
-  overlay: {
-    background: 'none',
-  },
+  overlay: { backgroundColor: 'rgba(0, 0, 0, 0.7)' },
 }
 
 export default function Home(props) {
@@ -38,12 +40,12 @@ export default function Home(props) {
   return (
     <Layout title="Home">
       <Modal
-        isOpen={!!router.query.modalId}
+        isOpen={!!router.query.postId}
         onRequestClose={() => router.push('/', undefined, { scroll: false })}
         contentLabel="Post modal"
         style={modalStyles}
       >
-        <Post id={router.query.modalId} pathname={router.pathname} />
+        <ModalPost id={router.query.postId} pathname={router.pathname} />
       </Modal>
       <PostList postsData={postsData} currentUser={currentUser} />
     </Layout>

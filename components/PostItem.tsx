@@ -30,7 +30,7 @@ const PostItem = (props) => {
   }, [targetViewPosition])
 
   return (
-    <div className="bg-backgroundGray mb-4 rounded-lg">
+    <div className="bg-backgroundGray mb-4 sm:rounded-lg">
       {targetViewPosition === 'VISIBLE' && <p>画面内に表示されています</p>}
       {targetViewPosition === 'ABOVE_VIEWPORT' && (
         <p>画面より上に表示されています</p>
@@ -86,8 +86,8 @@ const PostItem = (props) => {
           {/*  <Link href={'/post/' + props.post.id}> */}
           <Link
             key={props.post.id}
-            href={`/?modalId=${props.post.id}`}
-            as={`/modal/${props.post.id}`}
+            href={`/?postId=${props.post.id}`}
+            as={`/post/${props.post.id}`}
             scroll={false}
           >
             <Image

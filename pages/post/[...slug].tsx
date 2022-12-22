@@ -18,8 +18,6 @@ export default function UserList(props) {
     `https://vmedia.droptune.net/user_icon/${data.user.id}.jpg`
   )
 
-  console.log(data)
-
   return (
     <Layout title={data.title}>
       <div className="bg-backgroundGray mt-8 mb-4 rounded-lg">
