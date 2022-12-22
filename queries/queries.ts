@@ -7,6 +7,8 @@ export const GET_POSTS = gql`
       id
       description
       created_at
+      image_url
+      audio_url
       user {
         id
         name
@@ -22,6 +24,8 @@ export const GET_FIRST_POSTS = gql`
       id
       description
       created_at
+      image_url
+      audio_url
       user {
         id
         name
@@ -37,6 +41,8 @@ export const GET_NEXT_POSTS = gql`
       id
       description
       created_at
+      image_url
+      audio_url
       user {
         id
         name
@@ -52,6 +58,8 @@ export const GET_POST_BY_ID_PK = gql`
       id
       description
       created_at
+      image_url
+      audio_url
       user {
         name
         id
@@ -66,6 +74,8 @@ export const GET_USER_POSTS = gql`
       title
       description
       created_at
+      image_url
+      audio_url
     }
   }
 `

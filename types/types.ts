@@ -1,6 +1,8 @@
 export interface Post {
   title: string
   id: string
+  image_url: string
+  audio_url: string
   description: string
   created_at: string
   user: {
@@ -17,6 +19,8 @@ export interface User {
   posts: Array<{
     id: string
     title: string
+    image_url: string
+    audio_url: string
     created_at: string
     description: string
   }>
