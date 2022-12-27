@@ -6,6 +6,7 @@ import { LikeButton } from './LikeButton'
 import { PlayIcon } from '@heroicons/react/solid'
 import { useOnScreen } from '../hooks/useOnScreen'
 import Image from 'next/image'
+import DropdownPostmenu from './DropdownPostmenu'
 
 const PostItem = (props) => {
   const cookie = new Cookies()
@@ -30,7 +31,7 @@ const PostItem = (props) => {
   }, [targetViewPosition])
 
   return (
-    <div className="bg-backgroundGray mb-4 sm:rounded-lg">
+    <div className="bg-backgroundGray mb-4 sm:rounded-lg ">
       {targetViewPosition === 'VISIBLE' && <p>画面内に表示されています</p>}
       {targetViewPosition === 'ABOVE_VIEWPORT' && (
         <p>画面より上に表示されています</p>
@@ -64,22 +65,7 @@ const PostItem = (props) => {
             </Link>
           </div>
           <div className="ml-auto">
-            <Link href="/account/settings">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                />
-              </svg>
-            </Link>
+            <DropdownPostmenu id={props.post.id} />
           </div>
         </div>
         <div className="bg-cover bg-center w-full relative h-vw sm:max-h-[calc(544px)] cursor-pointer">

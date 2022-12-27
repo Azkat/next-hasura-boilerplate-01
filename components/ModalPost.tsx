@@ -7,12 +7,14 @@ import Image from 'next/image'
 import { Post } from '../types/types'
 import { useQueryPostById } from '../hooks/useQueryPostById'
 import { formatDistance, format } from 'date-fns'
+import { useRouter } from 'next/router'
 
 const ModalPost = (props) => {
   const [userIconSrc, setUserIconSrc] = useState(``)
   const [audioHost, setAudioHost] = useState(``)
   const [imageHost, setImageHost] = useState(``)
   const { status, data }: any = useQueryPostById(props.id)
+  const router = useRouter()
 
   useEffect(() => {
     if (status == 'success') {
@@ -28,11 +30,10 @@ const ModalPost = (props) => {
         setImageHost(imageUrlText.host)
       }
     }
-    console.log(audioHost)
   }, [status])
 
   return (
-    <div className="bg-backgroundGray sm:rounded-lg flex h-full">
+    <div className="bg-backgroundGray hidden sm:flex sm:rounded-lg  h-full">
       <div className="bg-black w-4/6  relative">
         <Image
           src={`https://vmedia.droptune.net/post_image/${props.id}.jpg`}
@@ -40,6 +41,19 @@ const ModalPost = (props) => {
           objectFit="contain"
           alt=""
         />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="w-8 h-8 absolute top-4 left-4 cursor-pointer"
+          onClick={() => router.push('/')}
+        >
+          <path
+            fillRule="evenodd"
+            d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+            clipRule="evenodd"
+          />
+        </svg>
       </div>
       {status == 'success' ? (
         <div className="w-2/6 relative">
@@ -92,10 +106,10 @@ const ModalPost = (props) => {
             <div className="text-sm dark:text-white ">{data.description}</div>
           </div>
           <div className="p-4 pt-2 ">
-            <a href={data.audio_url} target="_blank">
+            <a href={data.audio_url} target="_blank" rel="noreferrer">
               <div className="text-sm text-gray-500 break-all">{audioHost}</div>
             </a>
-            <a href={data.image_url} target="_blank">
+            <a href={data.image_url} target="_blank" rel="noreferrer">
               <div className="text-sm text-gray-500 break-all">{imageHost}</div>
             </a>
           </div>
@@ -108,7 +122,23 @@ const ModalPost = (props) => {
           </div>
         </div>
       ) : (
-        <div className="w-[496px]">&nbsp;</div>
+        <div className="w-[496px]">
+          <div className="flex items-center p-4 pt-3 animate-pulse">
+            <div className="w-8 h-8 mr-2  relative ">
+              <div className="rounded-full bg-slate-700 h-8 w-8"></div>
+            </div>
+            <div className="w-40">
+              <div className="h-2 bg-slate-700 rounded"></div>
+            </div>
+          </div>
+          <div className="flex items-center p-4 animate-pulse">
+            <div className="w-full">
+              <div className="h-2 bg-slate-700 rounded "></div>
+              <div className="h-2 bg-slate-700 rounded mt-4"></div>
+              <div className="h-2 bg-slate-700 rounded mt-4"></div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )
