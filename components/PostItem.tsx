@@ -1,4 +1,10 @@
-import React, { useRef, useState, useEffect, useContext } from 'react'
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+} from 'react'
 import { Store } from '../reducer/reducer'
 import Link from 'next/link'
 import Cookies from 'universal-cookie'
@@ -7,6 +13,8 @@ import { PlayIcon } from '@heroicons/react/solid'
 import { useOnScreen } from '../hooks/useOnScreen'
 import Image from 'next/image'
 import DropdownPostmenu from './DropdownPostmenu'
+import PlayButton from './PlayButton'
+import WebAudio from './WebAudio'
 
 const PostItem = (props) => {
   const cookie = new Cookies()
@@ -17,6 +25,9 @@ const PostItem = (props) => {
   const [userIconSrc, setUserIconSrc] = useState(
     `https://vmedia.droptune.net/user_icon/${props.post.user.id}.jpg`
   )
+  let [playPauseCtrl, setPlayPauseCtrl] = useState(false)
+  let sound =
+    'https://vmedia.droptune.net/audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac'
 
   useEffect(() => {
     if (scrollEnough) {
@@ -84,7 +95,7 @@ const PostItem = (props) => {
             />
           </Link>
           <div className="playbutton absolute">
-            <PlayIcon className="h-8 w-8  text-gray-100 opacity-80" />
+            <PlayButton post={props.post} control={false} />
           </div>
           <div className="likebutton absolute">
             <LikeButton post={props.post} currentUser={props.currentUser} />

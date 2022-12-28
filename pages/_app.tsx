@@ -8,9 +8,11 @@ import { store } from '../app/store'
 import { AuthProvider } from '../lib/authProvider'
 import { Hydrate } from 'react-query/hydration'
 import UserChanged from '../components/UserChanged'
+import AudioControl from '../components/AudioControl'
 import Cookie from 'universal-cookie'
 import { ReducerProvider } from '../reducer/reducer'
 import NextNprogress from 'nextjs-progressbar'
+import WebAudio from '../components/WebAudio'
 
 const cookie = new Cookie()
 
@@ -42,7 +44,10 @@ function MyApp({ Component, pageProps }: AppProps) {
                 showOnShallow={true}
                 options={{ showSpinner: false }}
               />
+
               <Component {...pageProps} />
+              <AudioControl />
+              <WebAudio />
             </AuthProvider>
           </ReducerProvider>
         </Provider>

@@ -10,6 +10,7 @@ module.exports = {
         baseNav: '#000',
         baseBody: '#151515',
         backgroundGray: '#1E1E1E',
+        backgroundPlayer: '#2F3234',
         border: '#2c2c2c',
       },
       maxWidth: {

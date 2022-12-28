@@ -13,6 +13,13 @@ const initialState = {
   audioFile: {},
   listViewLoadCount: 0,
   listViewData: [],
+  didPlay: false,
+  audioPlay: false,
+  sound:
+    'https://vmedia.droptune.net/audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac',
+  playingTitle: '',
+  playingUser: '',
+  playingId: '',
 }
 
 const Store = createContext()
@@ -36,6 +43,18 @@ function reducer(state, action) {
       return { ...state, listViewLoadCount: state.listViewLoadCount + 1 }
     case 'setListViewData':
       return { ...state, listViewData: action.payload }
+    case 'setDidPlay':
+      return { ...state, didPlay: action.payload }
+    case 'setAudioPlay':
+      return { ...state, audioPlay: action.payload }
+    case 'setSound':
+      return { ...state, sound: action.payload }
+    case 'setPlayingTitle':
+      return { ...state, playingTitle: action.payload }
+    case 'setPlayingUser':
+      return { ...state, playingUser: action.payload }
+    case 'setPlayingId':
+      return { ...state, playingId: action.payload }
     default:
       return state
   }
