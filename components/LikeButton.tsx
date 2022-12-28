@@ -77,7 +77,7 @@ export const LikeButton = (props) => {
     return (
       <span className="flex float-right relative">
         {lottie && liked ? (
-          <div className="absolute -bottom-[40px] -right-[37px] sm:-bottom-[40px] sm:-right-[37px]">
+          <div className="absolute -bottom-[40px] -right-[37px] sm:-bottom-[40px] sm:-right-[37px] overflow-hidden">
             <Lottie options={animationOptions} height={108} width={108} />
           </div>
         ) : (
@@ -120,7 +120,7 @@ export const LikeButton = (props) => {
         }}
       />
       {lottie ? (
-        <div className="absolute-bottom-[40px] -right-[37px] sm:-bottom-[41px] sm:-right-[38px">
+        <div className="absolute -bottom-[40px] -right-[37px] sm:-bottom-[40px] sm:-right-[37px] overflow-hidden">
           <Lottie options={animationOptions} height={108} width={108} />
         </div>
       ) : (

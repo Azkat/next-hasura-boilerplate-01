@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CogIcon } from '@heroicons/react/solid'
 import UserInfomation from './UserInfomation'
 import Link from 'next/link'
@@ -11,10 +11,15 @@ const cookie = new Cookie()
 const AvatarName = (props) => {
   const router = useRouter()
   const pagePath = router.pathname
+  const [src, setSrc] = useState(``)
 
-  const [src, setSrc] = useState(
-    `https://vmedia.droptune.net/user_icon/${cookie.get('user_id')}.jpg`
-  )
+  useEffect(() => {
+    router.pathname == '/account'
+      ? setSrc(
+          `https://vmedia.droptune.net/user_icon/${cookie.get('user_id')}.jpg`
+        )
+      : setSrc(`https://vmedia.droptune.net/user_icon/${props.data.id}.jpg`)
+  }, [props])
 
   return (
     <div className="flex items-center p-4 pt-7 sm:items-start">

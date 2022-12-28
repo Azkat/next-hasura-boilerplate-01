@@ -37,7 +37,7 @@ const ModalBase = (props) => {
       <Modal
         isOpen={!!router.query.postId}
         onRequestClose={() =>
-          router.push('/', undefined, {
+          router.push(props.aspath.split('?')[0], undefined, {
             scroll: false,
           })
         }

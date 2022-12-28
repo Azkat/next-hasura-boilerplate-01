@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Cookies from 'universal-cookie'
 import { LikeButton } from './LikeButton'
 import Image from 'next/image'
-import { Post } from '../types/types'
+import { PlayIcon } from '@heroicons/react/solid'
 import { useQueryPostById } from '../hooks/useQueryPostById'
 import { formatDistance, format } from 'date-fns'
 import { useRouter } from 'next/router'
@@ -52,9 +52,7 @@ const ModalPost = (props) => {
           viewBox="0 0 24 24"
           fill="currentColor"
           className="w-8 h-8 absolute top-4 left-4 cursor-pointer"
-          onClick={() =>
-            router.push('/user/4a22aa82-5ed9-4e59-9aad-87ce9519926b')
-          }
+          onClick={() => router.push(props.aspath.split('?')[0])}
         >
           <path
             fillRule="evenodd"
@@ -62,6 +60,12 @@ const ModalPost = (props) => {
             clipRule="evenodd"
           />
         </svg>
+        <div className="playbutton absolute">
+          <PlayIcon className="h-8 w-8  text-gray-100 opacity-80" />
+        </div>
+        <div className="likebutton absolute">
+          <LikeButton post={props} currentUser={props.currentUser} big={true} />
+        </div>
       </div>
       {status == 'success' ? (
         <div className="w-2/6 relative">
@@ -148,6 +152,16 @@ const ModalPost = (props) => {
           </div>
         </div>
       )}
+      <style jsx>{`
+        .likebutton {
+          bottom: 40px;
+          right: 16px;
+        }
+        .playbutton {
+          bottom: 40px;
+          left: 16px;
+        }
+      `}</style>
     </div>
   )
 }

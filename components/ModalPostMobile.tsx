@@ -41,7 +41,7 @@ const ModalPostMobile = (props) => {
         <div className="h-11 px-4 relative bg-baseBody border-b border-border">
           <ChevronLeftIcon
             className="h-8 w-8 text-gray-100 opacity-80 absolute left-4 top-1/2 -translate-y-1/2"
-            onClick={() => router.push(props.path)}
+            onClick={() => router.push(props.aspath.split('?')[0])}
           />
           <div className="justify-center items-center flex h-full">Post</div>
         </div>
