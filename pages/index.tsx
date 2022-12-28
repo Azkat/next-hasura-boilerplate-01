@@ -51,11 +51,16 @@ export default function Home(props) {
         style={windowWidth > 640 ? modalStyles : modalStylesMobile}
       >
         {windowWidth > 640 ? (
-          <ModalPost id={router.query.postId} pathname={router.pathname} />
+          <ModalPost
+            id={router.query.postId}
+            pathname={router.pathname}
+            currentUser={currentUser}
+          />
         ) : (
           <ModalPostMobile
             id={router.query.postId}
             pathname={router.pathname}
+            currentUser={currentUser}
           />
         )}
       </Modal>

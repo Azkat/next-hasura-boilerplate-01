@@ -16,7 +16,11 @@ const PostList = (props) => {
     dispatch({ type: 'setListViewData', value: props.postsData })
     if (postItemMap.length == 0) {
       postItemMap.push(
-        <PostItemMap postsData={props.postsData} listViewLoadCount={0} />
+        <PostItemMap
+          postsData={props.postsData}
+          listViewLoadCount={0}
+          currentUser={props.currentUser}
+        />
       )
     }
   }, [])
@@ -28,6 +32,7 @@ const PostList = (props) => {
         <PostItemMap
           postsData={props.postsData}
           listViewLoadCount={state.listViewLoadCount}
+          currentUser={props.currentUser}
         />
       )
     }
@@ -41,6 +46,7 @@ const PostItemMap = (props) => {
     10 * props.listViewLoadCount,
     10 * props.listViewLoadCount + 10
   )
+
   return (
     <>
       {data?.map((post, index) => (
