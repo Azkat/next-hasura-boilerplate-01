@@ -69,7 +69,10 @@ export const GET_POST_BY_ID_PK = gql`
 `
 export const GET_USER_POSTS = gql`
   query GetUserPosts($user_id: uuid!) {
-    posts(where: { user_id: { _eq: $user_id } }) {
+    posts(
+      order_by: { created_at: desc }
+      where: { user_id: { _eq: $user_id } }
+    ) {
       id
       title
       description
@@ -106,7 +109,7 @@ export const GET_USERBY_ID_PK = gql`
 
       website
       bio
-      posts {
+      posts(order_by: { created_at: desc }) {
         id
         title
         created_at
@@ -121,7 +124,7 @@ export const GET_USER_BY_FIREBASEID = gql`
     users(where: {firebase_id: {_eq: firebase_id: $firebase_id}}) {
       id
       name
-      posts {
+      posts(order_by: { created_at: desc }) {
         id
         title
         created_at

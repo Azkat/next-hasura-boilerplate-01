@@ -1,8 +1,6 @@
 import { useContext, useCallback, useState, useEffect } from 'react'
 import { AuthContext } from '../lib/authProvider'
 import { Layout } from '../components/Layout'
-import ModalPost from '../components/ModalPost'
-import ModalPostMobile from '../components/ModalPostMobile'
 import { GetStaticProps } from 'next'
 import { dehydrate } from 'react-query/hydration'
 import { fetchPosts, fetchFirstPosts } from '../hooks/useQueryPosts'
@@ -10,15 +8,15 @@ import { Post } from '../types/types'
 import { QueryClient, useQueryClient } from 'react-query'
 import Cookies from 'universal-cookie'
 import PostList from '../components/PostList'
-import Modal from 'react-modal'
 import { useRouter } from 'next/router'
 import { useWindowSize } from '../hooks/useWindowSize'
+import ModalBase from '../components/ModalBase'
 
 const modalStyles = {
   content: {
     backgroundColor: 'rgba(30, 30, 30, 1)',
     border: 'none',
-    inset: '170px 80px',
+    inset: '110px 80px',
     padding: '0px',
   },
   overlay: { backgroundColor: 'rgba(0, 0, 0, 0.7)' },
@@ -44,26 +42,7 @@ export default function Home(props) {
 
   return (
     <Layout title="Home">
-      <Modal
-        isOpen={!!router.query.postId}
-        onRequestClose={() => router.push('/', undefined, { scroll: false })}
-        contentLabel="Post modal"
-        style={windowWidth > 640 ? modalStyles : modalStylesMobile}
-      >
-        {windowWidth > 640 ? (
-          <ModalPost
-            id={router.query.postId}
-            pathname={router.pathname}
-            currentUser={currentUser}
-          />
-        ) : (
-          <ModalPostMobile
-            id={router.query.postId}
-            pathname={router.pathname}
-            currentUser={currentUser}
-          />
-        )}
-      </Modal>
+      <ModalBase aspath="/" />
       <PostList postsData={postsData} currentUser={currentUser} />
     </Layout>
   )

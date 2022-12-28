@@ -9,6 +9,8 @@ import AvatarName from '../../components/AvatarName'
 import UserInfomation from '../../components/UserInfomation'
 import { PlusSmIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
+import ModalBase from '../../components/ModalBase'
+import { useRouter } from 'next/router'
 
 export default function UserList(props) {
   const queryClient = useQueryClient()
@@ -18,10 +20,12 @@ export default function UserList(props) {
     `https://vmedia.droptune.net/post_image/`
   )
   const [hasImage, setHasImage] = useState(true)
+  const router = useRouter()
 
   return (
     <Layout title={data.name}>
       <>
+        <ModalBase aspath={router.asPath} />
         <AvatarName data={data} status={status} />
         <div className="block sm:hidden">
           <UserInfomation data={data} status={status} />
@@ -35,7 +39,13 @@ export default function UserList(props) {
               {data.posts?.map((post) => (
                 <div className="flex flex-wrap w-1/3" key={post.id}>
                   <div className="w-full p-1 md:p-2  aspect-square cursor-pointer relative">
-                    <Link href={`/post/${post.id}`} className="w-full">
+                    <Link
+                      key={post.id}
+                      href={`/user/${data.id}?postId=${post.id}`}
+                      as={`/user/${data.id}?postId=${post.id}`}
+                      scroll={false}
+                      className="w-full"
+                    >
                       <Image
                         src={postImageSrc + post.id + '.jpg'}
                         className="block object-cover object-center w-full h-full relative"

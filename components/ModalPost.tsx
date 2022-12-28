@@ -13,10 +13,16 @@ const ModalPost = (props) => {
   const [userIconSrc, setUserIconSrc] = useState(``)
   const [audioHost, setAudioHost] = useState(``)
   const [imageHost, setImageHost] = useState(``)
+  const [closePath, setClosePath] = useState(``)
   const { status, data }: any = useQueryPostById(props.id)
   const router = useRouter()
 
+  console.log(props)
+
   useEffect(() => {
+    if (props.path == 'user') {
+      setClosePath('user/' + data.user.id)
+    }
     if (status == 'success') {
       setUserIconSrc(
         `https://vmedia.droptune.net/user_icon/${data.user.id}.jpg`
@@ -46,7 +52,9 @@ const ModalPost = (props) => {
           viewBox="0 0 24 24"
           fill="currentColor"
           className="w-8 h-8 absolute top-4 left-4 cursor-pointer"
-          onClick={() => router.push('/')}
+          onClick={() =>
+            router.push('/user/4a22aa82-5ed9-4e59-9aad-87ce9519926b')
+          }
         >
           <path
             fillRule="evenodd"
