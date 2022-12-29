@@ -94,7 +94,7 @@ const PostItem = (props) => {
               alt=""
             />
           </Link>
-          <div className="playbutton absolute">
+          <div className="playbutton absolute h-10 w-10">
             <PlayButton post={props.post} control={false} />
           </div>
           <div className="likebutton absolute h-8 w-8">
@@ -118,7 +118,7 @@ const PostItem = (props) => {
           right: 16px;
         }
         .playbutton {
-          bottom: 24px;
+          bottom: 22px;
           left: 16px;
         }
       `}</style>

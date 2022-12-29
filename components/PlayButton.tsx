@@ -84,12 +84,12 @@ const PlayButton = (props) => {
       <>
         {state.audioPlay && state.playingId == props.post.id ? (
           <PauseIcon
-            className="h-8 w-8 text-gray-100 opacity-80"
+            className="h-full w-full text-gray-100 opacity-80"
             onClick={playPause}
           />
         ) : (
           <PlayIcon
-            className="h-8 w-8  text-gray-100 opacity-80"
+            className="h-full w-full  text-gray-100 opacity-80"
             onClick={playPause}
           />
         )}
