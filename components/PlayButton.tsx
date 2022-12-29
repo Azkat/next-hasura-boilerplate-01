@@ -32,7 +32,9 @@ const PlayButton = (props) => {
       const audioElement = document.querySelector('audio')
       audioElement.play()
       dispatch({ type: 'setDidPlay', payload: true })
-      setTimeout(() => {}, 300)
+      setTimeout(() => {
+        dispatch({ type: 'setAudioPlay', payload: true })
+      }, 300)
     }
     if (state.audioPlay && state.playingId == props.post.id) {
       dispatch({ type: 'setAudioPlay', payload: false })
@@ -48,10 +50,39 @@ const PlayButton = (props) => {
     }
   }
 
+  const playPauseControl = () => {
+    if (state.audioPlay) {
+      console.log('4')
+      dispatch({ type: 'setAudioPlay', payload: false })
+    } else {
+      dispatch({ type: 'setAudioPlay', payload: true })
+    }
+  }
+
   if (props.control) {
     return (
       <>
         {state.audioPlay ? (
+          <PauseIcon
+            className="h-full w-full mr-3 text-gray-100 opacity-80 "
+            onClick={playPauseControl}
+          />
+        ) : (
+          <PlayIcon
+            className="h-full w-full mr-3  text-gray-100 opacity-80 "
+            onClick={playPauseControl}
+          />
+        )}
+
+        <audio src="https://vmedia.droptune.net/music/0.m4a"></audio>
+      </>
+    )
+  }
+
+  if (props.post != undefined) {
+    return (
+      <>
+        {state.audioPlay && state.playingId == props.post.id ? (
           <PauseIcon
             className="h-8 w-8 text-gray-100 opacity-80"
             onClick={playPause}
@@ -66,28 +97,9 @@ const PlayButton = (props) => {
         <audio src="https://vmedia.droptune.net/music/0.m4a"></audio>
       </>
     )
+  } else {
+    return <></>
   }
-
-  return (
-    <>
-      {/* <PlayPauseContext.Provider value={[playPauseCtrl, setPlayPauseCtrl]}>
-        <WebAudio src={sound} />
-      </PlayPauseContext.Provider> */}
-      {state.audioPlay && state.playingId == props.post.id ? (
-        <PauseIcon
-          className="h-8 w-8 text-gray-100 opacity-80"
-          onClick={playPause}
-        />
-      ) : (
-        <PlayIcon
-          className="h-8 w-8  text-gray-100 opacity-80"
-          onClick={playPause}
-        />
-      )}
-
-      <audio src="https://vmedia.droptune.net/music/0.m4a"></audio>
-    </>
-  )
 }
 
 export default PlayButton

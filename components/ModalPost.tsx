@@ -8,6 +8,7 @@ import { PlayIcon } from '@heroicons/react/solid'
 import { useQueryPostById } from '../hooks/useQueryPostById'
 import { formatDistance, format } from 'date-fns'
 import { useRouter } from 'next/router'
+import PlayButton from '../components/PlayButton'
 
 const ModalPost = (props) => {
   const [userIconSrc, setUserIconSrc] = useState(``)
@@ -16,8 +17,6 @@ const ModalPost = (props) => {
   const [closePath, setClosePath] = useState(``)
   const { status, data }: any = useQueryPostById(props.id)
   const router = useRouter()
-
-  console.log(props)
 
   useEffect(() => {
     if (props.path == 'user') {
@@ -61,9 +60,9 @@ const ModalPost = (props) => {
           />
         </svg>
         <div className="playbutton absolute">
-          <PlayIcon className="h-8 w-8  text-gray-100 opacity-80" />
+          <PlayButton post={data} control={false} />
         </div>
-        <div className="likebutton absolute">
+        <div className="likebutton absolute h-8 w-8">
           <LikeButton post={props} currentUser={props.currentUser} big={true} />
         </div>
       </div>
@@ -134,10 +133,10 @@ const ModalPost = (props) => {
           </div>
         </div>
       ) : (
-        <div className="w-[496px]">
+        <div className="w-2/6 relative">
           <div className="flex items-center p-4 pt-3 animate-pulse">
-            <div className="w-8 h-8 mr-2  relative ">
-              <div className="rounded-full bg-slate-700 h-8 w-8"></div>
+            <div className="w-100% h-8 mr-2  relative ">
+              <div className="rounded-full bg-slate-700 h-8 w-100%"></div>
             </div>
             <div className="w-40">
               <div className="h-2 bg-slate-700 rounded"></div>

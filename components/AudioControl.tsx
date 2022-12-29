@@ -9,27 +9,47 @@ import { LikeButton } from './LikeButton'
 import { useRouter } from 'next/router'
 import PlayButton from './PlayButton'
 import { Store } from '../reducer/reducer'
+import Image from 'next/image'
+import { AuthContext } from '../lib/authProvider'
 
 const AudioControl = (props) => {
   const router = useRouter()
   const { state, dispatch } = useContext(Store)
+  const { currentUser } = useContext(AuthContext)
+  const [post, setPost] = useState({})
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    setPost({ id: state.playingId })
+  }, [state.playingId])
 
   return (
     <>
       {state.didPlay ? (
-        <div className="absolute bottom-6 w-full grid place-items-center z-[100000] opacity-95">
-          <div className="sm:w-[768px] h-[74px] bg-backgroundPlayer rounded-lg flex px-3 sm:px-6 pt-1 items-center">
-            <div className="mr-3">
-              <PlayButton control={true} />
+        <div className="absolute bottom-4 w-full grid place-items-center z-[100000] opacity-95 px-2 sm:px-0 ">
+          <div className="w-full sm:w-[768px] h-[74px] bg-backgroundPlayer rounded-lg flex px-4 sm:px-6 py-1 items-center shadow-xl ">
+            <div className="mr-2 relative w-12 h-12 rounded-md overflow-hidden">
+              <Image
+                src={`https://vmedia.droptune.net/post_image/${state.playingId}.jpg`}
+                layout="fill"
+                objectFit="contain"
+                alt="state.playingTitle"
+              />
             </div>
             <div className=" flex flex-col">
               <div className=" text-sm mb-1">{state.playingTitle}</div>
               <div className=" text-sm font-bold">{state.playingUser}</div>
             </div>
-            <div className="ml-auto">
-              <LikeButton className="h-12 w-12  text-gray-100 opacity-80" />
+            <div className="ml-auto flex width-10 items-center">
+              <div className="h-12 w-12 mr-3">
+                <PlayButton control={true} />
+              </div>
+              <div className="h-10 w-10">
+                <LikeButton
+                  control={true}
+                  post={post}
+                  currentUser={currentUser}
+                />
+              </div>
             </div>
           </div>
         </div>

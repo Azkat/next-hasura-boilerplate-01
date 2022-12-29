@@ -11,6 +11,7 @@ import { useQueryPostById } from '../hooks/useQueryPostById'
 import { formatDistance, format } from 'date-fns'
 import { useRouter } from 'next/router'
 import DropdownPostmenu from './DropdownPostmenu'
+import PlayButton from '../components/PlayButton'
 
 const ModalPostMobile = (props) => {
   const [userIconSrc, setUserIconSrc] = useState(``)
@@ -88,9 +89,9 @@ const ModalPostMobile = (props) => {
               alt=""
             />
             <div className="playbutton absolute">
-              <PlayIcon className="h-8 w-8  text-gray-100 opacity-80" />
+              <PlayButton post={data} control={false} />
             </div>
-            <div className="likebutton absolute">
+            <div className="likebutton absolute h-8 w-8">
               <LikeButton post={props} currentUser={props.currentUser} />
             </div>
           </div>
