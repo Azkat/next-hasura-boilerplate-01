@@ -11,6 +11,8 @@ import { PlusSmIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
 import ModalBase from '../../components/ModalBase'
 import { useRouter } from 'next/router'
+import PlayButton from '../../components/PlayButton'
+import { useUserAgent } from 'next-useragent'
 
 export default function UserList(props) {
   const queryClient = useQueryClient()
@@ -21,6 +23,18 @@ export default function UserList(props) {
   )
   const [hasImage, setHasImage] = useState(true)
   const router = useRouter()
+  const ua = useUserAgent(window.navigator.userAgent)
+  const [isHovering, setIsHovered] = useState(false)
+  const [hoveredId, setHoveredId] = useState('')
+
+  const onMouseEnter = (id) => {
+    setHoveredId(id)
+    setIsHovered(true)
+  }
+  const onMouseLeave = (id) => {
+    setHoveredId('')
+    setIsHovered(false)
+  }
 
   return (
     <Layout title={data.name}>
@@ -38,7 +52,11 @@ export default function UserList(props) {
             <div className="flex flex-wrap -m-1 md:-m-2">
               {data.posts?.map((post) => (
                 <div className="flex flex-wrap w-1/3" key={post.id}>
-                  <div className="w-full p-1 md:p-2  aspect-square cursor-pointer relative">
+                  <div
+                    className="w-full p-1 md:p-2  aspect-square cursor-pointer relative "
+                    onMouseEnter={() => onMouseEnter(post.id)}
+                    onMouseLeave={onMouseLeave}
+                  >
                     <Link
                       key={post.id}
                       href={`/user/${data.id}?postId=${post.id}`}
@@ -54,6 +72,19 @@ export default function UserList(props) {
                         alt=""
                       />
                     </Link>
+                    {ua.isMobile ? (
+                      <div className="absolute h-10 w-10 bottom-2 left-2 sm:bottom-3 sm:left-3">
+                        <PlayButton post={post} user={data} control={false} />
+                      </div>
+                    ) : (
+                      <div className="absolute h-10 w-10 bottom-2 left-2 sm:bottom-3 sm:left-3 ">
+                        {isHovering && hoveredId == post.id ? (
+                          <PlayButton post={post} user={data} control={false} />
+                        ) : (
+                          ''
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

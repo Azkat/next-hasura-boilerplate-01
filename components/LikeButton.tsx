@@ -72,7 +72,7 @@ export const LikeButton = (props) => {
   if (status == 'loading') {
     return (
       <span className="flex float-right ml-4">
-        <HeartIconOutline className="h-full w-full  text-gray-100 opacity-10" />
+        <HeartIconOutline className="h-full w-full text-gray-100 opacity-10" />
       </span>
     )
   }
@@ -118,7 +118,7 @@ export const LikeButton = (props) => {
             className="h-full w-full text-white opacity-80 cursor-pointer"
             onClick={async () => {
               setLiked(false)
-              dispatch({ type: 'setDidPlay', payload: true })
+              //dispatch({ type: 'setDidPlay', payload: true })
               dispatch({ type: 'setJustDeleteLikeId', payload: props.post.id })
               const param = {
                 id: likeId,

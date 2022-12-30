@@ -19,6 +19,7 @@ const initialState = {
     'https://vmedia.droptune.net/audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac',
   playingTitle: '',
   playingUser: '',
+  playingUserId: '',
   playingId: '',
   justDeleteLikeId: 'test',
 }
@@ -54,6 +55,8 @@ function reducer(state, action) {
       return { ...state, playingTitle: action.payload }
     case 'setPlayingUser':
       return { ...state, playingUser: action.payload }
+    case 'setPlayingUserId':
+      return { ...state, playingUserId: action.payload }
     case 'setPlayingId':
       return { ...state, playingId: action.payload }
     case 'setJustDeleteLikeId':

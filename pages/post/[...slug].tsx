@@ -11,6 +11,8 @@ import { Store } from '../../reducer/reducer'
 import { formatDistance, format } from 'date-fns'
 import Image from 'next/image'
 import DropdownPostmenu from '../../components/DropdownPostmenu'
+import PlayButton from '../../components/PlayButton'
+import { AuthContext } from '../../lib/authProvider'
 
 export default function UserList(props) {
   const queryClient = useQueryClient()
@@ -21,6 +23,7 @@ export default function UserList(props) {
   )
   const [audioHost, setAudioHost] = useState(``)
   const [imageHost, setImageHost] = useState(``)
+  const { currentUser } = useContext(AuthContext)
 
   useEffect(() => {
     if (data.audio_url) {
@@ -66,11 +69,11 @@ export default function UserList(props) {
               objectFit="contain"
               alt=""
             />
-            <div className="playbutton absolute">
-              <PlayIcon className="h-8 w-8  text-gray-100 opacity-80" />
+            <div className="playbutton absolute h-10 w-10">
+              <PlayButton post={data} control={false} />
             </div>
-            <div className="likebutton absolute">
-              <LikeButton />
+            <div className="likebutton absolute h-8 w-8">
+              <LikeButton post={data} currentUser={currentUser} />
             </div>
           </div>
           <div className="flex items-center p-4 pt-4">

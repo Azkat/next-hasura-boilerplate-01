@@ -59,7 +59,7 @@ const ModalPost = (props) => {
             clipRule="evenodd"
           />
         </svg>
-        <div className="playbutton absolute">
+        <div className="playbutton absolute h-10 w-10">
           <PlayButton post={data} control={false} />
         </div>
         <div className="likebutton absolute h-8 w-8">

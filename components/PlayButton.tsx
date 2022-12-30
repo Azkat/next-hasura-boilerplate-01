@@ -45,6 +45,7 @@ const PlayButton = (props) => {
       })
       dispatch({ type: 'setPlayingTitle', payload: props.post.title })
       dispatch({ type: 'setPlayingUser', payload: props.post.user.name })
+      dispatch({ type: 'setPlayingUserId', payload: props.post.user.id })
       dispatch({ type: 'setPlayingId', payload: props.post.id })
       dispatch({ type: 'setAudioPlay', payload: true })
     }
@@ -59,17 +60,41 @@ const PlayButton = (props) => {
     }
   }
 
+  const playPauseUser = () => {
+    if (!state.didPlay) {
+      const audioElement = document.querySelector('audio')
+      audioElement.play()
+      dispatch({ type: 'setDidPlay', payload: true })
+      setTimeout(() => {
+        dispatch({ type: 'setAudioPlay', payload: true })
+      }, 300)
+    }
+    if (state.audioPlay && state.playingId == props.post.id) {
+      dispatch({ type: 'setAudioPlay', payload: false })
+    } else {
+      dispatch({
+        type: 'setSound',
+        payload: 'https://vmedia.droptune.net/audio/' + props.post.id + '.aac',
+      })
+      dispatch({ type: 'setPlayingTitle', payload: props.post.title })
+      dispatch({ type: 'setPlayingUser', payload: props.user.name })
+      dispatch({ type: 'setPlayingUserId', payload: props.user.id })
+      dispatch({ type: 'setPlayingId', payload: props.post.id })
+      dispatch({ type: 'setAudioPlay', payload: true })
+    }
+  }
+
   if (props.control) {
     return (
       <>
         {state.audioPlay ? (
           <PauseIcon
-            className="h-full w-full mr-3 text-gray-100 opacity-80 "
+            className="h-full w-full mr-3 text-gray-100 opacity-80 cursor-pointer"
             onClick={playPauseControl}
           />
         ) : (
           <PlayIcon
-            className="h-full w-full mr-3  text-gray-100 opacity-80 "
+            className="h-full w-full mr-3  text-gray-100 opacity-80 cursor-pointer"
             onClick={playPauseControl}
           />
         )}
@@ -79,18 +104,38 @@ const PlayButton = (props) => {
     )
   }
 
-  if (props.post != undefined) {
+  if (props.post != undefined && props.user == undefined) {
     return (
       <>
         {state.audioPlay && state.playingId == props.post.id ? (
           <PauseIcon
-            className="h-full w-full text-gray-100 opacity-80"
+            className="h-full w-full text-gray-100 opacity-80 cursor-pointer"
             onClick={playPause}
           />
         ) : (
           <PlayIcon
-            className="h-full w-full  text-gray-100 opacity-80"
+            className="h-full w-full  text-gray-100 opacity-80 cursor-pointer"
             onClick={playPause}
+          />
+        )}
+
+        <audio src="https://vmedia.droptune.net/music/0.m4a"></audio>
+      </>
+    )
+  }
+
+  if (props.user != undefined) {
+    return (
+      <>
+        {state.audioPlay && state.playingId == props.post.id ? (
+          <PauseIcon
+            className="h-full w-full text-gray-100 opacity-80 cursor-pointer"
+            onClick={playPauseUser}
+          />
+        ) : (
+          <PlayIcon
+            className="h-full w-full  text-gray-100 opacity-80 cursor-pointer"
+            onClick={playPauseUser}
           />
         )}
 
