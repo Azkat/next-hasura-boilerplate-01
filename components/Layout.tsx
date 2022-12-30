@@ -31,7 +31,7 @@ export const Layout = ({ children, title = 'Droptune' }) => {
   return (
     <div
       id="postList"
-      className="font-body flex flex-col justify-center min-h-screen text-white text-sm "
+      className="font-body flex flex-col justify-center  text-white text-sm "
     >
       <Head>
         <title>{title} - Droptune</title>
