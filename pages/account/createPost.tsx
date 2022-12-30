@@ -54,19 +54,6 @@ export default function CreatePost(props) {
     required: 'Select your file',
   }
 
-  /*   useEffect(() => {
-    const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
-      if (user) {
-        setIsUser(true)
-      } else {
-        router.push('/login')
-      }
-    })
-    return () => {
-      unSubUser()
-    }
-  }, []) */
-
   const uploadAudio = async (e, file) => {
     axios
       .get('/api/upload-url', {

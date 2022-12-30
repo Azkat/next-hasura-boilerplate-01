@@ -7,7 +7,7 @@ function upload(file) {
   aws.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_D,
     secretAccessKey: process.env.AWS_SECRET_KEY_D,
-    region: process.env.AWS_REGION,
+    region: process.env.AWS__EGION,
   })
 
   let prefix = 'post_image/'
