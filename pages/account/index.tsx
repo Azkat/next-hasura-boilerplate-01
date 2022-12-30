@@ -33,7 +33,7 @@ export default function Account(props) {
   const { status, data } = useQueryUserById(cookie.get('user_id'))
 
   const { currentUser } = useContext(AuthContext)
-  !currentUser ? router.push('/login') : ''
+  !currentUser ? router.replace('/login') : ''
 
   console.log(data)
 

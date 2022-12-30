@@ -79,10 +79,10 @@ export const LikeButton = (props) => {
 
   if (!props.currentUser) {
     return (
-      <span className="flex float-right ml-4">
+      <span className="h-full w-full flex float-right ml-4">
         <HeartIconOutline
           className="h-full w-full text-gray-100 opacity-90 cursor-pointer"
-          onClick={() => alert('ログインしてください')}
+          onClick={() => alert('Login to like.')}
         />
       </span>
     )
@@ -90,7 +90,7 @@ export const LikeButton = (props) => {
 
   if (liked) {
     return (
-      <span className="flex float-right relative">
+      <span className="h-full w-full flex float-right relative">
         {lottie && liked ? (
           <>
             {props.control ? (
