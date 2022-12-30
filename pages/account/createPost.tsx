@@ -13,7 +13,7 @@ interface IFormInput {
   title: string
 }
 
-export default function Create_post(props) {
+export default function CreatePost(props) {
   const router = useRouter()
   const [isUser, setIsUser] = useState(false)
   const [isAudioFile, setIsAudioFile] = useState(false)
