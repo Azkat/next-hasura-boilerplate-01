@@ -38,7 +38,7 @@ const ModalPostMobile = (props) => {
 
   return (
     <>
-      <div className="bg-backgroundGray mb-4 ">
+      <div className="bg-backgroundGray mb-4 pb-40">
         <div className="h-11 px-4 relative bg-baseBody border-b border-border">
           <ChevronLeftIcon
             className="h-8 w-8 text-gray-100 opacity-80 absolute left-4 top-1/2 -translate-y-1/2"
