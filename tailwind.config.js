@@ -12,6 +12,7 @@ module.exports = {
         backgroundGray: '#1E1E1E',
         backgroundPlayer: '#2F3234',
         border: '#2c2c2c',
+        borderLow: '#1c1c1c',
       },
       maxWidth: {
         main: '640px',

@@ -50,14 +50,10 @@ const PostItem = (props) => {
       {targetViewPosition === 'BELOW_VIEWPORT' && (
         <p>画面より下に表示されています</p>
       )}
-      <p className="font-bold my-3" key={props.post.id}>
+      <p className="font-bold my-3 " key={props.post.id}>
         <div className="flex items-center p-4 pt-3 ">
           <div className="w-8 h-8 mr-2  relative">
-            <Link
-              href={'/user/' + props.post.user.id}
-              className="contents"
-              scroll={false}
-            >
+            <Link href={'/user/' + props.post.user.id} className="contents">
               <Image
                 src={userIconSrc}
                 className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"

@@ -38,7 +38,9 @@ function DropdownPostmenu(props) {
                   </CopyToClipboard>
                 </li>
                 <li>
-                  <a onClick={close}>Cancel</a>
+                  <a className="text-gray-500" onClick={close}>
+                    Cancel
+                  </a>
                 </li>
               </ul>
             )}

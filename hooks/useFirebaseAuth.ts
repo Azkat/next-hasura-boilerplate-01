@@ -1,11 +1,16 @@
 import { useState, useCallback, ChangeEvent, FormEvent } from 'react'
 import firebase, { auth } from '../firebaseConfig'
+import { animateScroll as scroll } from 'react-scroll'
 
 export const useFirebaseAuth = () => {
   //const { createUserMutation } = useAppMutate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLogin, setIsLogin] = useState(true)
+
+  const scrollToTop = () => {
+    scroll.scrollToTop({ duration: 100 })
+  }
 
   const googleLogin = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
@@ -23,6 +28,7 @@ export const useFirebaseAuth = () => {
     setPassword('')
   }, [])
   const toggleMode = useCallback(() => {
+    scrollToTop()
     setIsLogin(!isLogin)
   }, [isLogin])
   const authUser = useCallback(

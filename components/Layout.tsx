@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Drawer } from './Drawer'
+import { Navbar } from './Navbar'
 import { useUser } from '../hooks/useUser'
 
 interface Props {
@@ -31,13 +32,17 @@ export const Layout = ({ children, title = 'Droptune' }) => {
   return (
     <div
       id="postList"
-      className="font-body flex flex-col justify-center  text-white text-sm "
+      className="font-body flex flex-col justify-center  text-white text-sm bg-baseBody"
     >
       <Head>
         <title>{title} - Droptune</title>
       </Head>
 
-      <Drawer content={<Content>{children}</Content>} />
+      <Navbar />
+
+      <Content>{children}</Content>
+
+      {/* <Drawer content={<Content>{children}</Content>} /> */}
     </div>
   )
 }

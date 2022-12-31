@@ -26,8 +26,8 @@ const AudioControl = (props) => {
   return (
     <>
       {state.didPlay ? (
-        <div className="absolute touch-none overflow-hidden bottom-4 w-full grid place-items-center z-[100000] opacity-95 px-2 sm:px-0 ">
-          <div className="w-full sm:w-[768px] h-[74px] bg-backgroundPlayer rounded-lg flex px-4 sm:px-6 py-1 items-center shadow-xl ">
+        <div className="fixed touch-none overflow-hidden bottom-4 w-full grid place-items-center z-[100000] opacity-95 px-2 sm:px-0 ">
+          <div className="w-full sm:w-[768px] h-[76px] h-[64px] bg-backgroundPlayer rounded-lg flex px-4 sm:px-6 py-0 sm:py-1 items-center shadow-xl ">
             <Link
               href={'/post/' + state.playingId}
               className="contents"

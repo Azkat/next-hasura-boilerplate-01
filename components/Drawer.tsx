@@ -25,6 +25,7 @@ export const Drawer = (props) => {
 
   return (
     <div className="drawer bg-baseBody">
+      <label htmlFor="my-drawer-3">Search</label>
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         <div className="w-full navbar bg-baseNav">
