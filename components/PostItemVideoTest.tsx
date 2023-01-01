@@ -16,7 +16,7 @@ import DropdownPostmenu from './DropdownPostmenu'
 import PlayButton from './PlayButton'
 import WebAudio from './WebAudio'
 
-const PostItem = (props) => {
+const PostItemVideoTest = (props) => {
   const cookie = new Cookies()
   const [scrollEnough, setScrollEnough] = useState(false)
   const targetRef = useRef<HTMLDivElement>(null)
@@ -29,31 +29,15 @@ const PostItem = (props) => {
   let sound =
     'https://vmedia.droptune.net/audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac'
 
-  useEffect(() => {
-    if (scrollEnough) {
-      dispatch({ type: 'increment_listViewLoadCount' })
-    }
-  }, [scrollEnough])
+    const videoRef = useRef(null)
 
-  useEffect(() => {
-    if (targetViewPosition === 'VISIBLE') {
-      setScrollEnough(true)
-    }
-  }, [targetViewPosition])
 
   return (
     <div className="bg-backgroundGray mb-4 sm:rounded-lg ">
-      {/* {targetViewPosition === 'VISIBLE' && <p>画面内に表示されています</p>}
-      {targetViewPosition === 'ABOVE_VIEWPORT' && (
-        <p>画面より上に表示されています</p>
-      )}
-      {targetViewPosition === 'BELOW_VIEWPORT' && (
-        <p>画面より下に表示されています</p>
-      )} */}
-      <p className="font-bold my-3 " key={props.post.id}>
+      <p className="font-bold my-3 " key='38a6b84e-f05f-46b6-b810-d2c9dd5cb6c2'>
         <div className="flex items-center p-4 pt-3 ">
           <div className="w-8 h-8 mr-2  relative">
-            <Link href={'/user/' + props.post.user.id} className="contents">
+            <Link href={'/user/4a22aa82-5ed9-4e59-9aad-87ce9519926b'} className="contents">
               <Image
                 src={userIconSrc}
                 className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
@@ -67,27 +51,41 @@ const PostItem = (props) => {
             </Link>
           </div>
           <div className="font-light dark:text-white">
-            <Link href={'/user/' + props.post.user.id}>
-              {props.post.user.name}
+            <Link href={'/user/4a22aa82-5ed9-4e59-9aad-87ce9519926b'}>
+              あああああ
             </Link>
           </div>
           <div className="ml-auto">
-            <DropdownPostmenu id={props.post.id} />
+            <DropdownPostmenu id='38a6b84e-f05f-46b6-b810-d2c9dd5cb6c2' />
           </div>
         </div>
-        <div className="bg-cover bg-center w-full relative h-vw sm:max-h-[calc(544px)] cursor-pointer">
-          {/*  <Link href={'/post/' + props.post.id}> */}
+        <div className="bg-cover bg-center w-full relative cursor-pointer flex">
           <Link
             key={props.post.id}
-            href={`/?postId=${props.post.id}`}
-            as={`/post/${props.post.id}`}
+            href={`/?postId=38a6b84e-f05f-46b6-b810-d2c9dd5cb6c2`}
+            as={`/post/38a6b84e-f05f-46b6-b810-d2c9dd5cb6c2`}
             scroll={false}
+            className='flex items-center w-full'
           >
-            <Image
-              src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
-              layout="fill" objectFit="contain"
-              alt=""
+            <div className='w-full flex items-center'><Image
+              src={`https://vmedia.droptune.net/post_image/Ay0TiCWzv1pTX5uaNqac.png`}
+              width={544}
+              height={544}
+              className='w-full h-full '
+              alt="absolute"
             />
+            </div>
+            {
+              state.audioPlay && state.playingId == props.post.id ? <video
+              ref={videoRef}
+              playsInline autoPlay loop muted
+              src='/audio/giphy.mp4'
+              src={'https://vmedia.droptune.net/video/Ay0TiCWzv1pTX5uaNqac.mp4'}
+              className="w-full absolute" 
+              >
+          </video> :''
+            }
+            
           </Link>
           <div className="playbutton absolute h-10 w-10">
             <PlayButton post={props.post} control={false} />
@@ -97,12 +95,9 @@ const PostItem = (props) => {
           </div>
         </div>
         <div className="p-4 pt-3">
-          <Link href={'/post/' + props.post.id}>{props.post.title}</Link>
+          <Link href={'/post/' + props.post.id}>あああ</Link>
         </div>
       </p>
-      {/* {props.index == 8 && (
-        <span ref={targetRef}>{state.listViewLoadCount}</span>
-      )} */}
 
       <style jsx>{`
         .h-vw {
@@ -121,4 +116,4 @@ const PostItem = (props) => {
   )
 }
 
-export default PostItem
+export default PostItemVideoTest

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Store } from '../reducer/reducer'
 import Cookies from 'universal-cookie'
 import PostItem from './PostItem'
+import PostItemVideoTest from './PostItemVideoTest'
 
 const postItemMap = []
 
@@ -49,6 +50,11 @@ const PostItemMap = (props) => {
 
   return (
     <>
+      <PostItemVideoTest
+          post={data[0]}
+          currentUser={props.currentUser}
+          key={props.id}
+        />
       {data?.map((post, index) => (
         <PostItem
           post={post}
