@@ -29,15 +29,17 @@ const PostItemVideoTest = (props) => {
   let sound =
     'https://vmedia.droptune.net/audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac'
 
-    const videoRef = useRef(null)
-
+  const videoRef = useRef(null)
 
   return (
     <div className="bg-backgroundGray mb-4 sm:rounded-lg ">
-      <p className="font-bold my-3 " key='38a6b84e-f05f-46b6-b810-d2c9dd5cb6c2'>
+      <p className="font-bold my-3 " key="38a6b84e-f05f-46b6-b810-d2c9dd5cb6c2">
         <div className="flex items-center p-4 pt-3 ">
           <div className="w-8 h-8 mr-2  relative">
-            <Link href={'/user/4a22aa82-5ed9-4e59-9aad-87ce9519926b'} className="contents">
+            <Link
+              href={'/user/4a22aa82-5ed9-4e59-9aad-87ce9519926b'}
+              className="contents"
+            >
               <Image
                 src={userIconSrc}
                 className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
@@ -56,7 +58,7 @@ const PostItemVideoTest = (props) => {
             </Link>
           </div>
           <div className="ml-auto">
-            <DropdownPostmenu id='38a6b84e-f05f-46b6-b810-d2c9dd5cb6c2' />
+            <DropdownPostmenu id="38a6b84e-f05f-46b6-b810-d2c9dd5cb6c2" />
           </div>
         </div>
         <div className="bg-cover bg-center w-full relative cursor-pointer flex">
@@ -65,27 +67,32 @@ const PostItemVideoTest = (props) => {
             href={`/?postId=38a6b84e-f05f-46b6-b810-d2c9dd5cb6c2`}
             as={`/post/38a6b84e-f05f-46b6-b810-d2c9dd5cb6c2`}
             scroll={false}
-            className='flex items-center w-full'
+            className="flex items-center w-full"
           >
-            <div className='w-full flex items-center'><Image
-              src={`https://vmedia.droptune.net/post_image/Ay0TiCWzv1pTX5uaNqac.png`}
-              width={544}
-              height={544}
-              className='w-full h-full '
-              alt="absolute"
-            />
+            <div className="w-full flex items-center">
+              <Image
+                src={`https://vmedia.droptune.net/post_image/Ay0TiCWzv1pTX5uaNqac.png`}
+                width={544}
+                height={544}
+                className="w-full h-full "
+                alt="absolute"
+              />
             </div>
-            {
-              state.audioPlay && state.playingId == props.post.id ? <video
-              ref={videoRef}
-              playsInline autoPlay loop muted
-              src='/audio/giphy.mp4'
-              src={'https://vmedia.droptune.net/video/Ay0TiCWzv1pTX5uaNqac.mp4'}
-              className="w-full absolute" 
-              >
-          </video> :''
-            }
-            
+            {state.audioPlay && state.playingId == props.post.id ? (
+              <video
+                ref={videoRef}
+                playsInline
+                autoPlay
+                loop
+                muted
+                src={
+                  'https://vmedia.droptune.net/video/Ay0TiCWzv1pTX5uaNqac.mp4'
+                }
+                className="w-full absolute"
+              ></video>
+            ) : (
+              ''
+            )}
           </Link>
           <div className="playbutton absolute h-10 w-10">
             <PlayButton post={props.post} control={false} />

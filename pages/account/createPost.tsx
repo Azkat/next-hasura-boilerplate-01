@@ -17,6 +17,7 @@ export default function CreatePost(props) {
   const router = useRouter()
   const [isUser, setIsUser] = useState(false)
   const [isAudioFile, setIsAudioFile] = useState(false)
+  const [selected, setSelected] = useState('')
   const { state, dispatch } = useContext(Store)
   const {
     title,
@@ -88,6 +89,10 @@ export default function CreatePost(props) {
     }
   }
 
+  const changeValue = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelected(event.target.value)
+  }
+
   return (
     <Layout title="Create new post">
       <div className="px-4 mb-32">
@@ -128,20 +133,55 @@ export default function CreatePost(props) {
 
               <h2 className="card-title mb-6">Image</h2>
 
-              <CropImage />
-
-              <div className="form-control w-full  mt-6">
-                <label className="label">
-                  <span className="label-text">Image URL (Optional)</span>
-                </label>
-                <input
-                  className="text-input-1"
-                  placeholder="Tumblr, Instagram, Flickr..."
-                  type="text"
-                  value={imageUrl}
-                  onChange={imageUrlChange}
-                />
+              <div className="flex">
+                <div className="form-control flex-row mr-8">
+                  <label className="label cursor-pointer">
+                    <input
+                      type="radio"
+                      name="radio-10"
+                      className="radio mr-2"
+                      value="Video"
+                      onChange={changeValue}
+                    />
+                    <span className="label-text">Video</span>
+                  </label>
+                </div>
+                <div className="form-control flex-row">
+                  <label className="label cursor-pointer">
+                    <input
+                      type="radio"
+                      name="radio-10"
+                      className="radio mr-2"
+                      value="Image"
+                      onChange={changeValue}
+                    />
+                    <span className="label-text">Image</span>
+                  </label>
+                </div>
               </div>
+
+              {selected == 'Image' ? <CropImage /> : ''}
+
+              {selected == 'Video' ? '' : ''}
+
+              {selected ? (
+                <div className="form-control w-full  mt-6">
+                  <label className="label">
+                    <span className="label-text">
+                      {selected} URL (Optional)
+                    </span>
+                  </label>
+                  <input
+                    className="text-input-1"
+                    placeholder="Tumblr, Instagram, Flickr..."
+                    type="text"
+                    value={imageUrl}
+                    onChange={imageUrlChange}
+                  />
+                </div>
+              ) : (
+                ''
+              )}
 
               <div className="divider "></div>
 
