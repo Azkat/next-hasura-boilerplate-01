@@ -11,6 +11,7 @@ const initialState = {
   isImageFile: false,
   canvasAdjust: false,
   audioFile: {},
+  videoFile: {},
   listViewLoadCount: 0,
   listViewData: [],
   didPlay: false,
@@ -41,6 +42,8 @@ function reducer(state, action) {
       return { ...state, canvasAdjust: action.payload }
     case 'setAudioFile':
       return { ...state, audioFile: action.payload }
+    case 'setVideoFile':
+      return { ...state, videoFile: action.payload }
     case 'increment_listViewLoadCount':
       return { ...state, listViewLoadCount: state.listViewLoadCount + 1 }
     case 'setListViewData':

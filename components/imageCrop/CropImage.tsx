@@ -184,7 +184,7 @@ export function CropImage() {
           file:text-sm file:font-medium
           file:bg-gray-300 file:text-secondary"
           type="file"
-          accept="image/*"
+          accept="image/jpeg, image/png, image/gif"
           onChange={onSelectFile}
         />
         {/* <div>

@@ -7,15 +7,17 @@ function upload(file) {
   aws.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_D,
     secretAccessKey: process.env.AWS_SECRET_KEY_D,
-    region: process.env.AWS__EGION,
+    region: process.env.AWS__REGION,
   })
 
   let prefix = 'post_image/'
-  if (file.filetype == 'image/jpeg') {
+  if (file.prefix == 'post_image') {
     if (file.width < 1280) {
       prefix = 'post_image_noresize/'
     }
-  } else {
+  } else if (file.prefix == 'post_video') {
+    prefix = 'video/'
+  } else if (file.prefix == 'audio') {
     prefix = 'audio/'
   }
 

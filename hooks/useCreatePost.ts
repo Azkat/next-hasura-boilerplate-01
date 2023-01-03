@@ -23,6 +23,8 @@ export const useCreatePost = () => {
   const [audioUrl, setAudioUrl] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [description, setDescription] = useState('')
+  const [videoData, setVideoData] = useState({})
+  const [visualFormat, setVisualFormat] = useState('')
 
   const { state, dispatch } = useContext(Store)
 
@@ -31,7 +33,13 @@ export const useCreatePost = () => {
     {
       onSuccess: (res) => {
         console.log(res.insert_posts_one.id)
-        uploadPhoto(res.insert_posts_one.id)
+
+        if (visualFormat == 'Image') {
+          uploadPhoto(res.insert_posts_one.id)
+        } else if (visualFormat == 'Video') {
+          uploadVideo(res.insert_posts_one.id)
+        }
+
         uploadAudio(res.insert_posts_one.id)
       },
       onError: (res) => {
@@ -59,6 +67,7 @@ export const useCreatePost = () => {
               filename: id + '.jpg',
               filetype: 'image/jpeg',
               width: state.canvasWidth,
+              prefix: 'post_image',
             },
           })
           .then((res) => {
@@ -76,14 +85,39 @@ export const useCreatePost = () => {
       })
   }
 
-  const uploadAudio = async (id) => {
-    const file = state.audioFile
-    const extention = file.name.split('.')[1]
+  const uploadVideo = async (id) => {
+    const file = state.videoFile
+    const extention = file.name.split('.').pop()
     axios
       .get('/api/upload-url', {
         params: {
           filename: id + '.' + extention,
           filetype: file.type,
+          prefix: 'post_video',
+        },
+      })
+      .then((res) => {
+        const options = {
+          headers: {
+            'Content-Type': file.type,
+          },
+        }
+        return axios.put(res.data.url, file, options)
+      })
+      .then((res) => {
+        console.log(res)
+      })
+  }
+
+  const uploadAudio = async (id) => {
+    const file = state.audioFile
+    const extention = file.name.split('.').pop()
+    axios
+      .get('/api/upload-url', {
+        params: {
+          filename: id + '.' + extention,
+          filetype: file.type,
+          prefix: 'audio',
         },
       })
       .then((res) => {
@@ -109,6 +143,17 @@ export const useCreatePost = () => {
 
   const imageUrlChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setImageUrl(e.target.value)
+  }, [])
+
+  const videoDataChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files && files[0]) {
+      setVideoData(files[0])
+    }
+  }, [])
+
+  const visualFormatChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setVisualFormat(e.target.value)
   }, [])
 
   const descriptionChange = useCallback(
@@ -141,11 +186,15 @@ export const useCreatePost = () => {
     audioUrl,
     imageUrl,
     description,
+    videoData,
+    visualFormat,
     titleChange,
     audioUrlChange,
     imageUrlChange,
     descriptionChange,
     resetInput,
+    videoDataChange,
+    visualFormatChange,
     createPost,
   }
 }

@@ -50,11 +50,11 @@ const PostItemMap = (props) => {
 
   return (
     <>
-      <PostItemVideoTest
+      {/* <PostItemVideoTest
           post={data[0]}
           currentUser={props.currentUser}
           key={props.id}
-        />
+        /> */}
       {data?.map((post, index) => (
         <PostItem
           post={post}

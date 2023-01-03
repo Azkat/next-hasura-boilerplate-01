@@ -29,6 +29,8 @@ const PostItem = (props) => {
   let sound =
     'https://vmedia.droptune.net/audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac'
 
+  const videoRef = useRef(null)
+
   useEffect(() => {
     if (scrollEnough) {
       dispatch({ type: 'increment_listViewLoadCount' })
@@ -83,11 +85,30 @@ const PostItem = (props) => {
             as={`/post/${props.post.id}`}
             scroll={false}
           >
-            <Image
-              src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
-              layout="fill" objectFit="contain"
-              alt=""
-            />
+            <div className="w-full flex items-center">
+              <Image
+                src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
+                layout="fill"
+                objectFit="contain"
+                alt=""
+              />
+            </div>
+
+            {state.audioPlay && state.playingId == props.post.id ? (
+              <div className="w-full h-full flex items-center">
+                <video
+                  ref={videoRef}
+                  playsInline
+                  autoPlay
+                  loop
+                  muted
+                  src={`https://vmedia.droptune.net/video/${props.post.id}.mp4`}
+                  className="w-full absolute"
+                ></video>
+              </div>
+            ) : (
+              ''
+            )}
           </Link>
           <div className="playbutton absolute h-10 w-10">
             <PlayButton post={props.post} control={false} />

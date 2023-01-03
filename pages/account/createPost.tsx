@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import { Store } from '../../reducer/reducer'
 import { Layout } from '../../components/Layout'
 import { useRouter } from 'next/router'
@@ -17,6 +17,7 @@ export default function CreatePost(props) {
   const router = useRouter()
   const [isUser, setIsUser] = useState(false)
   const [isAudioFile, setIsAudioFile] = useState(false)
+  const [isVideoFile, setIsVideoFile] = useState(false)
   const [selected, setSelected] = useState('')
   const { state, dispatch } = useContext(Store)
   const {
@@ -24,13 +25,19 @@ export default function CreatePost(props) {
     audioUrl,
     imageUrl,
     description,
+    videoData,
+    visualFormat,
     titleChange,
     imageUrlChange,
     audioUrlChange,
     descriptionChange,
     resetInput,
+    videoDataChange,
+    visualFormatChange,
     createPost,
   } = useCreatePost()
+
+  const videoRef = useRef(null)
 
   const { currentUser } = useContext(AuthContext)
   !currentUser ? router.push('/login') : ''
@@ -55,25 +62,6 @@ export default function CreatePost(props) {
     required: 'Select your file',
   }
 
-  const uploadAudio = async (e, file) => {
-    axios
-      .get('/api/upload-url', {
-        params: {
-          filename: file.name,
-          filetype: file.type,
-        },
-      })
-      .then((res) => {
-        const options = {
-          headers: {
-            'Content-Type': file.type,
-          },
-        }
-        return axios.put(res.data.url, file, options)
-      })
-      .then((res) => {})
-  }
-
   const checkAudioFile = async (e) => {
     const file = e.target.files
     if (file[0].size > 1500000) {
@@ -86,6 +74,24 @@ export default function CreatePost(props) {
     } else {
       dispatch({ type: 'setAudioFile', payload: file[0] })
       setIsAudioFile(true)
+    }
+  }
+
+  const checkVideoFile = async (e) => {
+    const file = e.target.files
+    if (file[0].size > 20000000) {
+      //20MB以下しかダメ
+      const videofile = document.getElementById(
+        'videofile'
+      ) as HTMLInputElement | null
+      alert('Too big file. Upload under 20MB video file.')
+      videofile.value = ''
+    } else {
+      dispatch({ type: 'setVideoFile', payload: file[0] })
+      dispatch({
+        type: 'setCanvasWidth',
+        payload: 300,
+      })
     }
   }
 
@@ -141,7 +147,7 @@ export default function CreatePost(props) {
                       name="radio-10"
                       className="radio mr-2"
                       value="Video"
-                      onChange={changeValue}
+                      onChange={visualFormatChange}
                     />
                     <span className="label-text">Video</span>
                   </label>
@@ -153,22 +159,46 @@ export default function CreatePost(props) {
                       name="radio-10"
                       className="radio mr-2"
                       value="Image"
-                      onChange={changeValue}
+                      onChange={visualFormatChange}
                     />
                     <span className="label-text">Image</span>
+                    {/* <video
+                      ref={videoRef}
+                      playsInline
+                      autoPlay
+                      loop
+                      muted
+                      src={videoData}
+                      className="w-full absolute"
+                    ></video> */}
                   </label>
                 </div>
               </div>
 
-              {selected == 'Image' ? <CropImage /> : ''}
+              {visualFormat == 'Image' ? <CropImage /> : ''}
 
-              {selected == 'Video' ? '' : ''}
+              {visualFormat == 'Video' ? (
+                <input
+                  id="videofile"
+                  title="imagefile"
+                  className="text-sm text-grey-500 file:cursor-pointer
+          file:mr-5 file:py-2 file:px-6
+          file:rounded-full file:border-0
+          file:text-sm file:font-medium
+          file:bg-gray-300 file:text-secondary"
+                  type="file"
+                  accept="image/gif, video/mp4, video/x-msvideo, video/webm, video/quicktime"
+                  onChange={checkVideoFile}
+                />
+              ) : (
+                ''
+              )}
 
-              {selected ? (
+              {visualFormat ? (
                 <div className="form-control w-full  mt-6">
                   <label className="label">
                     <span className="label-text">
-                      {selected} URL (Optional)
+                      {visualFormat} URL (Optional)
                     </span>
                   </label>
                   <input
