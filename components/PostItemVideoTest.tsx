@@ -15,6 +15,7 @@ import Image from 'next/image'
 import DropdownPostmenu from './DropdownPostmenu'
 import PlayButton from './PlayButton'
 import WebAudio from './WebAudio'
+import { VideoTag } from 'react-video-tag'
 
 const PostItemVideoTest = (props) => {
   const cookie = new Cookies()
@@ -30,6 +31,16 @@ const PostItemVideoTest = (props) => {
     'https://vmedia.droptune.net/audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac'
 
   const videoRef = useRef(null)
+
+  /*   useEffect(() => {
+    const { current: videoElement } = videoRef
+    videoElement.setAttribute('muted', '')
+  }, [])
+
+  if (process && videoRef.current !== null) {
+    const { current: videoElement } = videoRef
+    videoElement.setAttribute('muted', '')
+  } */
 
   return (
     <div className="bg-backgroundGray mb-4 sm:rounded-lg ">
@@ -78,6 +89,7 @@ const PostItemVideoTest = (props) => {
                 alt="absolute"
               />
             </div>
+
             {state.audioPlay && state.playingId == props.post.id ? (
               <video
                 ref={videoRef}
@@ -85,9 +97,7 @@ const PostItemVideoTest = (props) => {
                 autoPlay
                 loop
                 muted
-                src={
-                  'https://vmedia.droptune.net/video/Ay0TiCWzv1pTX5uaNqac.mp4'
-                }
+                src={'https://vmedia.droptune.net/video/sample-5soutput.mp4'}
                 className="w-full absolute"
               ></video>
             ) : (
