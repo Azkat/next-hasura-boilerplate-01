@@ -5,6 +5,13 @@ import {
 } from '@heroicons/react/solid'
 import { useFirebaseAuth } from '../hooks/useFirebaseAuth'
 import firebase from '../firebaseConfig'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { FormEvent } from 'react'
+
+interface IFormInput {
+  email: string
+  password: string
+}
 
 export const Auth = () => {
   const user = firebase.auth().currentUser
@@ -12,11 +19,40 @@ export const Auth = () => {
     isLogin,
     email,
     password,
+    rightPasswordFormat,
     emailChange,
     pwChange,
     authUser,
     toggleMode,
   } = useFirebaseAuth()
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<IFormInput>()
+
+  const emailRules = {
+    required: 'Required',
+    maxLength: { value: 2000, message: `Up to 2000 characters` },
+    pattern: {
+      value: /\S+@\S+\.\S+/,
+      message: 'Type Email Address',
+    },
+  }
+
+  const passwordRules = {
+    required: 'Required',
+    minLength: { value: 8, message: `More than 8 characters` },
+    maxLength: { value: 120, message: `Up to 120 characters` },
+    pattern: {
+      value: /^(?=.*?[a-z])(?=.*?\d)(?=.*?[!-\/:-@[-`{-~])[!-~]{8,120}$/i,
+      message:
+        'Contains at least one each of half-width alphanumeric characters and symbols',
+    },
+  }
+
   return (
     <>
       <h2 className="header-h2 text-center">{isLogin ? 'Login' : 'Singup'}</h2>
@@ -30,9 +66,13 @@ export const Auth = () => {
             className="text-input-1"
             placeholder="Email"
             type="text"
+            {...register('email', emailRules)}
             value={email}
             onChange={emailChange}
           />
+          <div className="text-red-500">
+            {errors.email && errors.email.message}
+          </div>
         </div>
 
         <div className="form-control w-full  mt-6">
@@ -40,13 +80,21 @@ export const Auth = () => {
             className="text-input-1"
             placeholder="Password"
             type="password"
+            {...register('password', passwordRules)}
             value={password}
             onChange={pwChange}
           />
+          <div className="text-gray-500 pl-2">
+            Contains at least one each of half-width alphanumeric characters and
+            symbols.
+          </div>
+          <div className="text-red-500">
+            {errors.password && errors.password.message}
+          </div>
         </div>
         <button
           className="disabled:bg-gray-600 btn btn-wide btn-primary px-4 py-1 mt-6"
-          disabled={!email || !password}
+          disabled={!email || !password || !rightPasswordFormat}
           type="submit"
         >
           {isLogin ? 'Login' : 'Singup'}

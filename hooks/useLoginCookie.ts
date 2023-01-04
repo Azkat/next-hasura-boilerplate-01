@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { GraphQLClient, gql } from 'graphql-request'
 import Cookie from 'universal-cookie'
 const cookie = new Cookie()
@@ -25,7 +25,6 @@ export default async function loginCookie(firebase_id) {
   }
 
   const data = await client.request(query, variables, requestHeaders)
-  console.log(data)
   cookie.set('user_id', data.users[0].id, {
     path: '/',
   })

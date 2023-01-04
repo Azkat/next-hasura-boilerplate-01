@@ -81,7 +81,7 @@ const PostItem = (props) => {
             <DropdownPostmenu id={props.post.id} />
           </div>
         </div>
-        <div className="bg-cover bg-center w-full relative cursor-pointer">
+        <div className="bg-cover bg-center w-full relative cursor-pointer overflow-hidden">
           {/*  <Link href={'/post/' + props.post.id}> */}
           <Link
             key={props.post.id}

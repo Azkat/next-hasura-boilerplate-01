@@ -6,6 +6,7 @@ export const useFirebaseAuth = () => {
   //const { createUserMutation } = useAppMutate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [rightPasswordFormat, setRightPasswordFormat] = useState(false)
   const [isLogin, setIsLogin] = useState(true)
 
   const scrollToTop = () => {
@@ -22,6 +23,16 @@ export const useFirebaseAuth = () => {
   }, [])
   const pwChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
+    if (
+      e.target.value.match(
+        /^(?=.*?[a-z])(?=.*?\d)(?=.*?[!-\/:-@[-`{-~])[!-~]{8,120}$/i
+      )
+    ) {
+      console.log(e.target.value)
+      setRightPasswordFormat(true)
+    } else {
+      setRightPasswordFormat(false)
+    }
   }, [])
   const resetInput = useCallback(() => {
     setEmail('')
@@ -33,6 +44,7 @@ export const useFirebaseAuth = () => {
   }, [isLogin])
   const authUser = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
+      console.log(e)
       e.preventDefault()
       if (isLogin) {
         try {
@@ -63,5 +75,6 @@ export const useFirebaseAuth = () => {
     isLogin,
     toggleMode,
     authUser,
+    rightPasswordFormat,
   }
 }

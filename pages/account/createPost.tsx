@@ -11,6 +11,9 @@ import { AuthContext } from '../../lib/authProvider'
 
 interface IFormInput {
   title: string
+  imageUrl: string
+  audioUrl: string
+  description: string
 }
 
 export default function CreatePost(props) {
@@ -55,11 +58,29 @@ export default function CreatePost(props) {
 
   const titleRules = {
     required: 'Required',
-    maxLength: { value: 40, message: `Up to 40 characters` },
+    maxLength: { value: 200, message: `Up to 200 characters` },
   }
 
   const fileRules = {
     required: 'Select your file',
+  }
+
+  const audioUrlRules = {
+    pattern: {
+      value: /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+/g,
+      message: 'Input URL',
+    },
+  }
+
+  const imageUrlRules = {
+    pattern: {
+      value: /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+/g,
+      message: 'Input URL',
+    },
+  }
+
+  const descriptionRules = {
+    maxLength: { value: 1000, message: `Up to 1000 characters` },
   }
 
   const checkAudioFile = async (e) => {
@@ -128,11 +149,15 @@ export default function CreatePost(props) {
                 </label>
                 <input
                   className="text-input-1"
+                  {...register('audioUrl', audioUrlRules)}
                   placeholder="Spotify, Soundcloud, Youtube..."
                   type="text"
                   value={audioUrl}
                   onChange={audioUrlChange}
                 />
+                <div className="text-red-500">
+                  {errors.audioUrl && errors.audioUrl.message}
+                </div>
               </div>
 
               <div className="divider "></div>
@@ -203,11 +228,15 @@ export default function CreatePost(props) {
                   </label>
                   <input
                     className="text-input-1"
+                    {...register('imageUrl', imageUrlRules)}
                     placeholder="Tumblr, Instagram, Flickr..."
                     type="text"
                     value={imageUrl}
                     onChange={imageUrlChange}
                   />
+                  <div className="text-red-500">
+                    {errors.imageUrl && errors.imageUrl.message}
+                  </div>
                 </div>
               ) : (
                 ''
@@ -224,7 +253,7 @@ export default function CreatePost(props) {
                 <input
                   className="text-input-1"
                   {...register('title', titleRules)}
-                  placeholder="title ?"
+                  placeholder="Title (Up to 200 characters)"
                   type="text"
                   value={title}
                   onChange={titleChange}
@@ -240,10 +269,14 @@ export default function CreatePost(props) {
                 </label>
                 <textarea
                   className="textarea-1"
-                  placeholder="description ?"
+                  {...register('description', descriptionRules)}
+                  placeholder="Description (Up to 100 characters)"
                   value={description}
                   onChange={descriptionChange}
                 />
+                <div className="text-red-500">
+                  {errors.description && errors.description.message}
+                </div>
               </div>
 
               <div className="mt-20">
