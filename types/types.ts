@@ -5,6 +5,7 @@ export interface Post {
   audio_url: string
   description: string
   created_at: string
+  visual_format: string
   user: {
     id: string
     name: string
@@ -23,6 +24,7 @@ export interface User {
     audio_url: string
     created_at: string
     description: string
+    visual_format: string
   }>
 }
 export interface UpdateProfile {
@@ -41,6 +43,7 @@ export interface CreatePost {
   audio_url: string
   image_url: string
   user_id: string
+  visual_format: string
 }
 export interface UpdateUserName {
   id: string

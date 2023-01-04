@@ -25,6 +25,10 @@ const PostItem = (props) => {
   const [userIconSrc, setUserIconSrc] = useState(
     `https://vmedia.droptune.net/user_icon/${props.post.user.id}.jpg`
   )
+  const [imageSize, setImageSize] = useState({
+    width: 1,
+    height: 1,
+  })
   let [playPauseCtrl, setPlayPauseCtrl] = useState(false)
   let sound =
     'https://vmedia.droptune.net/audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac'
@@ -77,7 +81,7 @@ const PostItem = (props) => {
             <DropdownPostmenu id={props.post.id} />
           </div>
         </div>
-        <div className="bg-cover bg-center w-full relative h-vw sm:max-h-[calc(544px)] cursor-pointer">
+        <div className="bg-cover bg-center w-full relative cursor-pointer">
           {/*  <Link href={'/post/' + props.post.id}> */}
           <Link
             key={props.post.id}
@@ -85,16 +89,26 @@ const PostItem = (props) => {
             as={`/post/${props.post.id}`}
             scroll={false}
           >
-            <div className="w-full flex items-center">
+            <div className="w-full flex items-center ">
               <Image
                 src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
-                layout="fill"
+                layout="responsive"
                 objectFit="contain"
                 alt=""
+                onLoadingComplete={(target) => {
+                  setImageSize({
+                    width: target.naturalWidth,
+                    height: target.naturalHeight,
+                  })
+                }}
+                width={imageSize.width}
+                height={imageSize.height}
               />
             </div>
 
-            {state.audioPlay && state.playingId == props.post.id ? (
+            {props.post.visual_format == 'Video' &&
+            state.audioPlay &&
+            state.playingId == props.post.id ? (
               <div className="w-full h-full flex items-center">
                 <video
                   ref={videoRef}
@@ -103,7 +117,7 @@ const PostItem = (props) => {
                   loop
                   muted
                   src={`https://vmedia.droptune.net/video/${props.post.id}.mp4`}
-                  className="w-full absolute"
+                  className="w-full absolute top-0 left-0"
                 ></video>
               </div>
             ) : (
@@ -126,6 +140,11 @@ const PostItem = (props) => {
       )} */}
 
       <style jsx>{`
+        .nextImage {
+          position: relative !important;
+          width: 100% !important;
+          height: unset !important;
+        }
         .h-vw {
           height: 100vw;
         }

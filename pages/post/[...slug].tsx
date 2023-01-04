@@ -1,4 +1,10 @@
-import React, { Component, useContext, useEffect, useState } from 'react'
+import React, {
+  Component,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+} from 'react'
 import { Layout } from '../../components/Layout'
 import { fetchPostById } from '../../hooks/useQueryPostById'
 import { QueryClient, useQueryClient } from 'react-query'
@@ -23,7 +29,12 @@ export default function UserList(props) {
   )
   const [audioHost, setAudioHost] = useState(``)
   const [imageHost, setImageHost] = useState(``)
+  const [imageSize, setImageSize] = useState({
+    width: 1,
+    height: 1,
+  })
   const { currentUser } = useContext(AuthContext)
+  const videoRef = useRef(null)
 
   useEffect(() => {
     if (data.audio_url) {
@@ -62,13 +73,38 @@ export default function UserList(props) {
               <DropdownPostmenu id={data.id} />
             </div>
           </div>
-          <div className="bg-cover bg-center w-full relative h-vw sm:max-h-[calc(544px)]">
+          <div className="bg-cover bg-center w-full relative ">
             <Image
               src={`https://vmedia.droptune.net/post_image/${data.id}.jpg`}
-              layout="fill"
+              layout="responsive"
               objectFit="contain"
               alt=""
+              onLoadingComplete={(target) => {
+                setImageSize({
+                  width: target.naturalWidth,
+                  height: target.naturalHeight,
+                })
+              }}
+              width={imageSize.width}
+              height={imageSize.height}
             />
+            {data.visual_format == 'Video' &&
+            state.audioPlay &&
+            state.playingId == data.id ? (
+              <div className="w-full h-full flex items-center">
+                <video
+                  ref={videoRef}
+                  playsInline
+                  autoPlay
+                  loop
+                  muted
+                  src={`https://vmedia.droptune.net/video/${data.id}.mp4`}
+                  className="w-full absolute top-0 left-0"
+                ></video>
+              </div>
+            ) : (
+              ''
+            )}
             <div className="playbutton absolute h-10 w-10">
               <PlayButton post={data} control={false} />
             </div>

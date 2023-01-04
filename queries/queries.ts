@@ -9,6 +9,7 @@ export const GET_POSTS = gql`
       created_at
       image_url
       audio_url
+      visual_format
       user {
         id
         name
@@ -26,6 +27,7 @@ export const GET_FIRST_POSTS = gql`
       created_at
       image_url
       audio_url
+      visual_format
       user {
         id
         name
@@ -43,6 +45,7 @@ export const GET_NEXT_POSTS = gql`
       created_at
       image_url
       audio_url
+      visual_format
       user {
         id
         name
@@ -60,6 +63,7 @@ export const GET_POST_BY_ID_PK = gql`
       created_at
       image_url
       audio_url
+      visual_format
       user {
         name
         id
@@ -79,6 +83,7 @@ export const GET_USER_POSTS = gql`
       created_at
       image_url
       audio_url
+      visual_format
     }
   }
 `
@@ -190,6 +195,7 @@ export const CREATE_POST = gql`
     $description: String
     $audio_url: String
     $image_url: String
+    $visual_format: String!
     $user_id: uuid!
   ) {
     insert_posts_one(
@@ -199,6 +205,7 @@ export const CREATE_POST = gql`
         audio_url: $audio_url
         image_url: $image_url
         user_id: $user_id
+        visual_format: $visual_format
       }
     ) {
       id

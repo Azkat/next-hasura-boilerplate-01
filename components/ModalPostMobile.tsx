@@ -15,16 +15,25 @@ import PlayButton from '../components/PlayButton'
 
 const ModalPostMobile = (props) => {
   const [userIconSrc, setUserIconSrc] = useState(``)
+  const [visualFormat, setVisualFormat] = useState(``)
   const [audioHost, setAudioHost] = useState(``)
   const [imageHost, setImageHost] = useState(``)
   const { status, data }: any = useQueryPostById(props.id)
+  const { state, dispatch } = useContext(Store)
   const router = useRouter()
+  const [imageSize, setImageSize] = useState({
+    width: 1,
+    height: 1,
+  })
+
+  const videoRef = useRef(null)
 
   useEffect(() => {
     if (status == 'success') {
       setUserIconSrc(
         `https://vmedia.droptune.net/user_icon/${data.user.id}.jpg`
       )
+      setVisualFormat(data.visual_format)
       if (data.audio_url) {
         const audioUrlText = new URL(data.audio_url)
         setAudioHost(audioUrlText.host)
@@ -81,13 +90,36 @@ const ModalPostMobile = (props) => {
               </div>
             </div>
           )}
-          <div className="bg-cover bg-center w-full relative h-vw sm:max-h-[calc(544px)]">
+          <div className="bg-cover bg-center w-full relative">
             <Image
               src={`https://vmedia.droptune.net/post_image/${props.id}.jpg`}
-              layout="fill"
+              layout="responsive"
               objectFit="contain"
               alt=""
+              onLoadingComplete={(target) => {
+                setImageSize({
+                  width: target.naturalWidth,
+                  height: target.naturalHeight,
+                })
+              }}
+              width={imageSize.width}
+              height={imageSize.height}
             />
+            {visualFormat == 'Video' &&
+            state.audioPlay &&
+            state.playingId == props.id ? (
+              <video
+                ref={videoRef}
+                playsInline
+                autoPlay
+                loop
+                muted
+                src={`https://vmedia.droptune.net/video/${props.id}.mp4`}
+                className="w-full video "
+              ></video>
+            ) : (
+              ''
+            )}
             <div className="playbutton absolute h-10 w-10">
               <PlayButton post={data} control={false} />
             </div>
@@ -150,6 +182,14 @@ const ModalPostMobile = (props) => {
           .playbutton {
             bottom: 24px;
             left: 16px;
+          }
+          .video {
+            object-fit: contain;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
           }
         `}</style>
       </div>

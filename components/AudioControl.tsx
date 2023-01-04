@@ -37,7 +37,7 @@ const AudioControl = (props) => {
                 <Image
                   src={`https://vmedia.droptune.net/post_image/${state.playingId}.jpg`}
                   layout="fill"
-                  objectFit="contain"
+                  objectFit="cover"
                   alt="state.playingTitle"
                 />
               </div>

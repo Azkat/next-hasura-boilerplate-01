@@ -176,6 +176,7 @@ export const useCreatePost = () => {
       description: description,
       audio_url: audioUrl,
       image_url: imageUrl,
+      visual_format: visualFormat,
       user_id: cookie.get('user_id'),
     }
     createPostMutation.mutate(param)

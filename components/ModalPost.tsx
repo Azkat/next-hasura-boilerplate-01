@@ -12,11 +12,18 @@ import PlayButton from '../components/PlayButton'
 
 const ModalPost = (props) => {
   const [userIconSrc, setUserIconSrc] = useState(``)
+  const [visualFormat, setVisualFormat] = useState(``)
   const [audioHost, setAudioHost] = useState(``)
   const [imageHost, setImageHost] = useState(``)
   const [closePath, setClosePath] = useState(``)
+  const { state, dispatch } = useContext(Store)
   const { status, data }: any = useQueryPostById(props.id)
   const router = useRouter()
+
+  const videoRef = useRef(null)
+
+  console.log(state)
+  console.log(props)
 
   useEffect(() => {
     if (props.path == 'user') {
@@ -26,6 +33,7 @@ const ModalPost = (props) => {
       setUserIconSrc(
         `https://vmedia.droptune.net/user_icon/${data.user.id}.jpg`
       )
+      setVisualFormat(data.visual_format)
       if (data.audio_url) {
         const audioUrlText = new URL(data.audio_url)
         setAudioHost(audioUrlText.host)
@@ -46,6 +54,21 @@ const ModalPost = (props) => {
           objectFit="contain"
           alt=""
         />
+        {visualFormat == 'Video' &&
+        state.audioPlay &&
+        state.playingId == props.id ? (
+          <video
+            ref={videoRef}
+            playsInline
+            autoPlay
+            loop
+            muted
+            src={`https://vmedia.droptune.net/video/${props.id}.mp4`}
+            className="w-full video "
+          ></video>
+        ) : (
+          ''
+        )}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -159,6 +182,14 @@ const ModalPost = (props) => {
         .playbutton {
           bottom: 40px;
           left: 16px;
+        }
+        .video {
+          object-fit: contain;
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          top: 0;
+          left: 0;
         }
       `}</style>
     </div>
