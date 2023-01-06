@@ -34,7 +34,7 @@ const PlayButton = (props) => {
       dispatch({ type: 'setDidPlay', payload: true })
       setTimeout(() => {
         dispatch({ type: 'setAudioPlay', payload: true })
-      }, 300)
+      }, 1000)
     }
     if (state.audioPlay && state.playingId == props.post.id) {
       dispatch({ type: 'setAudioPlay', payload: false })
@@ -53,7 +53,6 @@ const PlayButton = (props) => {
 
   const playPauseControl = () => {
     if (state.audioPlay) {
-      console.log('4')
       dispatch({ type: 'setAudioPlay', payload: false })
     } else {
       dispatch({ type: 'setAudioPlay', payload: true })
@@ -64,10 +63,10 @@ const PlayButton = (props) => {
     if (!state.didPlay) {
       const audioElement = document.querySelector('audio')
       audioElement.play()
-      dispatch({ type: 'setDidPlay', payload: true })
-      setTimeout(() => {
+      audioElement.addEventListener('play', () => {
         dispatch({ type: 'setAudioPlay', payload: true })
-      }, 300)
+      })
+      dispatch({ type: 'setDidPlay', payload: true })
     }
     if (state.audioPlay && state.playingId == props.post.id) {
       dispatch({ type: 'setAudioPlay', payload: false })

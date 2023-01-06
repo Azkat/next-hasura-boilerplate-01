@@ -22,9 +22,6 @@ const ModalPost = (props) => {
 
   const videoRef = useRef(null)
 
-  console.log(state)
-  console.log(props)
-
   useEffect(() => {
     if (props.path == 'user') {
       setClosePath('user/' + data.user.id)
@@ -86,7 +83,12 @@ const ModalPost = (props) => {
           <PlayButton post={data} control={false} />
         </div>
         <div className="likebutton absolute h-8 w-8">
-          <LikeButton post={props} currentUser={props.currentUser} big={true} />
+          <LikeButton
+            post={props}
+            currentUser={props.currentUser}
+            big={true}
+            control={false}
+          />
         </div>
       </div>
       {status == 'success' ? (

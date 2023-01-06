@@ -42,32 +42,45 @@ export const LikeButton = (props) => {
   }, [props])
 
   useEffect(() => {
-    setDeleteId(state.justDeleteLikeId)
-  }, [state.justDeleteLikeId])
-
-  useEffect(() => {
-    if (data) {
+    if (status == 'success') {
+      console.log(props)
       if (props.post) {
         data.forEach((item) => {
           if (item.post_id == props.post.id) {
+            console.log(
+              'data更新で入った ' +
+                props.post.id +
+                '   ' +
+                state.justDeleteLikeId
+            )
             setLiked(true)
             setLikeId(item.id)
-          } else {
+          } /* else {
+            console.log(
+              'data更新で外れた ' +
+                props.post.id +
+                '   ' +
+                state.justDeleteLikeId
+            )
             setLiked(false)
-          }
-        })
-      } else {
-        data.forEach((item) => {
-          if (item.post_id == props.id) {
-            setLiked(true)
-            setLikeId(item.id)
-          } else {
-            setLiked(false)
-          }
+          } */
         })
       }
     }
-  }, [data, state.justDeleteLikeId, state.playingId])
+  }, [data, props])
+
+  useEffect(() => {
+    console.log(state.justDeleteLikeId)
+    if (state.justDeleteLikeId == props.post.id) {
+      console.log(
+        'state.justDeleteLikeIdではずれた ' +
+          props.post.id +
+          '   ' +
+          state.justDeleteLikeId
+      )
+      setLiked(false)
+    }
+  }, [state.justDeleteLikeId])
 
   if (status == 'loading') {
     return (
@@ -117,8 +130,8 @@ export const LikeButton = (props) => {
           <HeartIcon
             className="h-full w-full text-white opacity-80 cursor-pointer"
             onClick={async () => {
+              console.log('クリックで外れた ' + props.post.id)
               setLiked(false)
-              //dispatch({ type: 'setDidPlay', payload: true })
               dispatch({ type: 'setJustDeleteLikeId', payload: props.post.id })
               const param = {
                 id: likeId,
@@ -148,6 +161,7 @@ export const LikeButton = (props) => {
           }
           await createLikeMutation.mutate(param, {
             onError: (res) => {
+              console.log('DB更新失敗で外れた ' + props.post.id)
               setLiked(false)
             },
             onSuccess: (res) => {},

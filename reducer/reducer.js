@@ -22,7 +22,8 @@ const initialState = {
   playingUser: '',
   playingUserId: '',
   playingId: '',
-  justDeleteLikeId: 'test',
+  justLikeId: '',
+  justDeleteLikeId: '',
 }
 
 const Store = createContext()
@@ -62,6 +63,8 @@ function reducer(state, action) {
       return { ...state, playingUserId: action.payload }
     case 'setPlayingId':
       return { ...state, playingId: action.payload }
+    case 'setJustLikeId':
+      return { ...state, justLikeId: action.payload }
     case 'setJustDeleteLikeId':
       return { ...state, justDeleteLikeId: action.payload }
     default:

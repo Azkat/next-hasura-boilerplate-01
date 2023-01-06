@@ -128,16 +128,18 @@ const PostItem = (props) => {
             <PlayButton post={props.post} control={false} />
           </div>
           <div className="likebutton absolute h-8 w-8">
-            <LikeButton post={props.post} currentUser={props.currentUser} />
+            <LikeButton
+              post={props.post}
+              currentUser={props.currentUser}
+              control={false}
+            />
           </div>
         </div>
         <div className="p-4 pt-3">
           <Link href={'/post/' + props.post.id}>{props.post.title}</Link>
         </div>
       </p>
-      {/* {props.index == 8 && (
-        <span ref={targetRef}>{state.listViewLoadCount}</span>
-      )} */}
+      {props.index == 8 && <span ref={targetRef}></span>}
 
       <style jsx>{`
         .nextImage {

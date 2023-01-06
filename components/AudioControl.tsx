@@ -62,13 +62,13 @@ const AudioControl = (props) => {
               <div className="h-12 w-12 mr-3">
                 <PlayButton control={true} />
               </div>
-              <div className="h-10 w-10">
+              {/* <div className="h-10 w-10">
                 <LikeButton
                   control={true}
                   post={post}
                   currentUser={currentUser}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
