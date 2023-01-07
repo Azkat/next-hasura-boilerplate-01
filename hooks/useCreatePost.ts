@@ -25,6 +25,9 @@ export const useCreatePost = () => {
   const [description, setDescription] = useState('')
   const [videoData, setVideoData] = useState({})
   const [visualFormat, setVisualFormat] = useState('')
+  const [doneCreatePost, setDoneCreatePost] = useState(false)
+  const [visualUploadStatus, setVisualUploadStatus] = useState('standby')
+  const [audioUploadStatus, setAudioUploadStatus] = useState('standby')
 
   const { state, dispatch } = useContext(Store)
 
@@ -52,6 +55,21 @@ export const useCreatePost = () => {
     })
   }, [cookie.get('token')])
 
+  /*** stop spin ***/
+  useEffect(() => {
+    if (visualFormat == 'Video' || visualFormat == 'Image') {
+      if (visualUploadStatus == 'success' && audioUploadStatus == 'success') {
+        dispatch({ type: 'setTryingCreatePost', payload: false })
+        setDoneCreatePost(true)
+      }
+    } else {
+      if (audioUploadStatus == 'success') {
+        dispatch({ type: 'setTryingCreatePost', payload: false })
+        setDoneCreatePost(true)
+      }
+    }
+  }, [visualUploadStatus, audioUploadStatus])
+
   const uploadPhoto = async (id) => {
     const dataURL = state.imageFile
     fetch(dataURL)
@@ -76,6 +94,7 @@ export const useCreatePost = () => {
           })
           .then((res) => {
             dispatch({ type: 'setImageFile', payload: '' })
+            setVisualUploadStatus('success')
           })
       })
   }
@@ -99,7 +118,9 @@ export const useCreatePost = () => {
         }
         return axios.put(res.data.url, file, options)
       })
-      .then((res) => {})
+      .then((res) => {
+        setVisualUploadStatus('success')
+      })
   }
 
   const uploadAudio = async (id) => {
@@ -121,7 +142,9 @@ export const useCreatePost = () => {
         }
         return axios.put(res.data.url, file, options)
       })
-      .then((res) => {})
+      .then((res) => {
+        setAudioUploadStatus('success')
+      })
   }
 
   const titleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -161,6 +184,13 @@ export const useCreatePost = () => {
 
   const createPost = useCallback(async () => {
     //e.preventDefault()
+    dispatch({ type: 'setTryingCreatePost', payload: true })
+
+    if (visualFormat == 'Video' || visualFormat == 'Image') {
+      setVisualUploadStatus('uploading')
+    }
+    setAudioUploadStatus('uploading')
+
     const param = {
       title: title,
       description: description,
@@ -179,6 +209,7 @@ export const useCreatePost = () => {
     description,
     videoData,
     visualFormat,
+    doneCreatePost,
     titleChange,
     audioUrlChange,
     imageUrlChange,
