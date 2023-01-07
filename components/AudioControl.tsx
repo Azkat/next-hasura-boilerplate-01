@@ -18,9 +18,11 @@ const AudioControl = (props) => {
   const { state, dispatch } = useContext(Store)
   const { currentUser } = useContext(AuthContext)
   const [post, setPost] = useState({})
+  const [imageError, setImageError] = useState(false)
 
   useEffect(() => {
     setPost({ id: state.playingId })
+    setImageError(false)
   }, [state.playingId])
 
   return (
@@ -33,14 +35,21 @@ const AudioControl = (props) => {
               className="contents"
               scroll={false}
             >
-              <div className="mr-2 relative w-12 h-12 rounded-md overflow-hidden">
-                <Image
-                  src={`https://vmedia.droptune.net/post_image/${state.playingId}.jpg`}
-                  layout="fill"
-                  objectFit="cover"
-                  alt="state.playingTitle"
-                />
-              </div>
+              {imageError ? (
+                ''
+              ) : (
+                <div className="mr-2 relative w-12 h-12 rounded-md overflow-hidden">
+                  <Image
+                    src={`https://vmedia.droptune.net/post_image/${state.playingId}.jpg`}
+                    layout="fill"
+                    objectFit="cover"
+                    alt="state.playingTitle"
+                    onError={() => {
+                      setImageError(true)
+                    }}
+                  />
+                </div>
+              )}
             </Link>
             <div className=" flex flex-col">
               <Link

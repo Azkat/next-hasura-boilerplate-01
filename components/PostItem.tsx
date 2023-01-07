@@ -30,6 +30,7 @@ const PostItem = (props) => {
   const [noAvatarImage, setNoAvatarImage] = useState(false)
   const [userImageLoadComplete, setUserImageLoadComplete] = useState(false)
   const [mainImageLoadComplete, setMainImageLoadComplete] = useState(false)
+  const [mainImageError, setMainImageError] = useState(false)
   const [imageSize, setImageSize] = useState({
     width: 1,
     height: 1,
@@ -110,82 +111,115 @@ const PostItem = (props) => {
               <DropdownPostmenu id={props.post.id} />
             </div>
           </div>
-          <div className="bg-cover bg-center w-full relative cursor-pointer overflow-hidden">
-            {/*  <Link href={'/post/' + props.post.id}> */}
-            <Link
-              key={props.post.id}
-              href={`/?postId=${props.post.id}`}
-              as={`/post/${props.post.id}`}
-              scroll={false}
-            >
-              {!mainImageLoadComplete ? (
-                <div className="absolute w-full h-80 flex items-center h-full animate-pulse">
-                  <div className="w-full h-80 bg-slate-700 "></div>
-                </div>
-              ) : (
-                ''
-              )}
+          {mainImageError ? (
+            ''
+          ) : (
+            <div className="bg-cover bg-center w-full relative cursor-pointer overflow-hidden">
+              <Link
+                key={props.post.id}
+                href={`/?postId=${props.post.id}`}
+                as={`/post/${props.post.id}`}
+                scroll={false}
+              >
+                {!mainImageLoadComplete ? (
+                  <div className="absolute w-full h-full flex items-center animate-pulse">
+                    <div className="w-full h-full bg-slate-700 "></div>
+                  </div>
+                ) : (
+                  ''
+                )}
 
-              <div className="w-full flex items-center ">
-                <Image
-                  src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
-                  layout="responsive"
-                  objectFit="contain"
-                  alt=""
-                  onLoadingComplete={(target) => {
-                    setImageSize({
-                      width: target.naturalWidth,
-                      height: target.naturalHeight,
-                    })
-                    setMainImageLoadComplete(true)
-                  }}
-                  width={imageSize.width}
-                  height={imageSize.height}
-                />
+                <div className="w-full flex items-center ">
+                  <Image
+                    src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
+                    layout="responsive"
+                    objectFit="contain"
+                    alt=""
+                    onLoadingComplete={(target) => {
+                      setImageSize({
+                        width: target.naturalWidth,
+                        height: target.naturalHeight,
+                      })
+                      setMainImageLoadComplete(true)
+                    }}
+                    onError={() => {
+                      setMainImageError(true)
+                    }}
+                    width={imageSize.width}
+                    height={imageSize.height}
+                  />
+                </div>
+
+                {props.post.visual_format == 'Video' &&
+                state.audioPlay &&
+                state.playingId == props.post.id ? (
+                  <div className="w-full h-full flex items-center">
+                    <video
+                      ref={videoRef}
+                      playsInline
+                      autoPlay
+                      loop
+                      muted
+                      src={`https://vmedia.droptune.net/video/${props.post.id}.mp4`}
+                      className="w-full absolute top-0 left-0"
+                    ></video>
+                  </div>
+                ) : (
+                  ''
+                )}
+              </Link>
+
+              <div className="playbutton absolute h-10 w-10">
+                <PlayButton post={props.post} control={false} />
               </div>
-
-              {props.post.visual_format == 'Video' &&
-              state.audioPlay &&
-              state.playingId == props.post.id ? (
-                <div className="w-full h-full flex items-center">
-                  <video
-                    ref={videoRef}
-                    playsInline
-                    autoPlay
-                    loop
-                    muted
-                    src={`https://vmedia.droptune.net/video/${props.post.id}.mp4`}
-                    className="w-full absolute top-0 left-0"
-                  ></video>
-                </div>
-              ) : (
-                ''
-              )}
-            </Link>
-            <div className="playbutton absolute h-10 w-10">
-              <PlayButton post={props.post} control={false} />
-            </div>
-            <div className="likebutton absolute h-8 w-8">
-              {/* <LikeButton
+              <div className="likebutton absolute h-8 w-8">
+                {/* <LikeButton
               post={props.post}
               currentUser={props.currentUser}
               control={false}
             /> */}
-              <LikeButton
-                post={props.post}
-                currentUser={props.currentUser}
-                like={props.like}
-                control={false}
-              />
+                <LikeButton
+                  post={props.post}
+                  currentUser={props.currentUser}
+                  like={props.like}
+                  control={false}
+                />
+              </div>
             </div>
-          </div>
-          <div className="p-4">
-            <Link href={'/post/' + props.post.id}>{props.post.title}</Link>
-            <div className="pt-1 text-xs font-normal text-gray-500">
-              {formatDistance(Date.parse(props.post.created_at), new Date(), {
-                addSuffix: true,
-              })}
+          )}
+
+          <div className="p-4 flex items-center">
+            <div>
+              <Link href={'/post/' + props.post.id}>{props.post.title}</Link>
+              <div className="pt-1 text-xs font-normal text-gray-500">
+                {formatDistance(Date.parse(props.post.created_at), new Date(), {
+                  addSuffix: true,
+                })}
+              </div>
             </div>
+
+            {mainImageError ? (
+              <div className="ml-auto flex items-center">
+                <div className="playbutton  h-10 w-10 mr-3">
+                  <PlayButton post={props.post} control={false} />
+                </div>
+                <div className="likebutton  h-8 w-8">
+                  {/* <LikeButton
+              post={props.post}
+              currentUser={props.currentUser}
+              control={false}
+            /> */}
+                  <LikeButton
+                    post={props.post}
+                    currentUser={props.currentUser}
+                    like={props.like}
+                    control={false}
+                  />
+                </div>
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         </p>
       )}

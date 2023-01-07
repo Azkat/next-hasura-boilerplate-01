@@ -64,7 +64,9 @@ const AvatarName = (props) => {
         <Link href="/account/changeProfileImage" className="contents">
           {noAvatarImage ? (
             <div className="relative inline-flex items-center justify-center w-14 h-14 sm:w-32 sm:h-32 overflow-hidden rounded-full bg-gray-600 mr-4 ">
-              <span className=" text-gray-300">{initial}</span>
+              <span className="text-2xl sm:text-5xl text-gray-300">
+                {initial}
+              </span>
             </div>
           ) : (
             <Image
