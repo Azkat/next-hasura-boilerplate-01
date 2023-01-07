@@ -15,7 +15,6 @@ export const Forms = () => {
     formState: { errors },
   } = useForm<IFormInput>()
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data)
-  console.log('watch:', watch('firstName'))
 
   const lastNameRules = {
     required: '入力してください',

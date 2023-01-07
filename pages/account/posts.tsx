@@ -35,7 +35,6 @@ export default function Posts(props) {
     e.preventDefault()
     alert(editedPost.title)
     dispatch(resetEditedPost())
-    console.log(editedPost)
     updatePostMutation.mutate(editedPost)
   }
 

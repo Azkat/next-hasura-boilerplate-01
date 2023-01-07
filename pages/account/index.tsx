@@ -35,8 +35,6 @@ export default function Account(props) {
   const { currentUser } = useContext(AuthContext)
   !currentUser ? router.replace('/login') : ''
 
-  console.log(data)
-
   useEffect(() => {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {

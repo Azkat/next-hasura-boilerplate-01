@@ -21,7 +21,6 @@ interface UserByIdRes {
 /* const storeUserIdCookie = async (firebase_id) => {
   const user = await firebase.auth().currentUser
   const { status, data } = useQueryUserByFirebaseId(firebase_id)
-  console.log(data)
 } */
 //const { getUserByFirebaseId } = useQueryUserByFirebaseId()
 
@@ -48,7 +47,6 @@ async function testQuery(firebase_id) {
   }
 
   const data = await client.request(query, variables, requestHeaders)
-  console.log(data)
   cookie.set('user_id', data.users[0].id, {
     path: '/',
   })
@@ -89,7 +87,6 @@ export const useUserChanged = async () => {
         if (hasuraClaims) {
           await cookie.set('token', token, { path: '/' })
           await loginCookie(user.uid)
-          console.log('login')
           //router.push('/account')
         } else {
           const userRef = firebase
@@ -107,7 +104,6 @@ export const useUserChanged = async () => {
                 email: user.email,
               }
               await createUser(param)
-              console.log('create user : ' + Date.now())
             }
           })
         }

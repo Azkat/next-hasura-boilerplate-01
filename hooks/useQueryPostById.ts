@@ -12,7 +12,6 @@ export const fetchPostById = async (id) => {
     document: GET_POST_BY_ID_PK,
     variables: { id: id },
   })
-  console.log(data)
   return data
 }
 export const useQueryPostById = (id) => {

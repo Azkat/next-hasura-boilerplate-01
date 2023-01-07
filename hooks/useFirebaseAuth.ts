@@ -28,7 +28,6 @@ export const useFirebaseAuth = () => {
         /^(?=.*?[a-z])(?=.*?\d)(?=.*?[!-\/:-@[-`{-~])[!-~]{8,120}$/i
       )
     ) {
-      console.log(e.target.value)
       setRightPasswordFormat(true)
     } else {
       setRightPasswordFormat(false)
@@ -44,7 +43,6 @@ export const useFirebaseAuth = () => {
   }, [isLogin])
   const authUser = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
-      console.log(e)
       e.preventDefault()
       if (isLogin) {
         try {

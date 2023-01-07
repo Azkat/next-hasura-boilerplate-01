@@ -19,9 +19,7 @@ export const ImageUploadTest = () => {
         }
         return axios.put(res.data.url, file, options)
       })
-      .then((res) => {
-        console.log(res)
-      })
+      .then((res) => {})
   }
 
   return (

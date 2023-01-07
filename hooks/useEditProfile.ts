@@ -37,9 +37,7 @@ export const useEditProfile = () => {
       onSuccess: (res) => {
         router.replace('/account')
       },
-      onError: (res) => {
-        console.log(res)
-      },
+      onError: (res) => {},
     }
   )
 
@@ -73,7 +71,6 @@ export const useEditProfile = () => {
 
   const updateProfile = useCallback(async () => {
     //e.preventDefault()
-    console.log('update profile')
     const param = {
       name: name,
       website: website,

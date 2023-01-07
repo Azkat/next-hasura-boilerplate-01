@@ -78,7 +78,6 @@ export function CropImage() {
           type: 'setCanvasWidth',
           payload: croppedImageWidth,
         })
-        console.log(croppedImage.getAttribute('width'))
       }
     }
   }, [completedCrop])
@@ -126,14 +125,11 @@ export function CropImage() {
             }
             return axios.put(res.data.url, blob, options)
           })
-          .then((res) => {
-            console.log(res)
-          })
+          .then((res) => {})
       })
   }
 
   const setAdjust = () => {
-    console.log(state.canvasAdjust)
     dispatch({
       type: 'setCanvasAdjust',
       payload: true,

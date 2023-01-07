@@ -20,7 +20,6 @@ export const DeleteUser = (props) => {
           setProviderId(userinfo.providerId)
         })
       }
-      console.log(providerId)
     })
     return () => {
       unSubUser()
@@ -41,7 +40,7 @@ export const DeleteUser = (props) => {
 
   const deleteAccount = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
-      console.log('deleteAccount発火 :' + Date.now())
+      //console.log('deleteAccount発火 :' + Date.now())
       e.preventDefault()
       const user = await firebase.auth().currentUser
       const credential = await firebase.auth.EmailAuthProvider.credential(
@@ -52,15 +51,12 @@ export const DeleteUser = (props) => {
         user
           .delete()
           .then(() => {
-            console.log('deleteAccount削除完了 :' + Date.now())
             cookie.remove('token')
             cookie.remove('user_id')
             cookie.remove('token_expire')
             deleteUser()
           })
-          .catch((error) => {
-            console.log(error)
-          })
+          .catch((error) => {})
       })
     },
     [password]
@@ -90,20 +86,14 @@ export const DeleteUser = (props) => {
         cookie.remove('token_expire')
       })
       .catch((error) => {
-        console.log(error)
         alert('Reauthenticate before delete account')
       })
   }
 
   const deleteUser = () => {
-    console.log('deleteUser発火 :' + Date.now())
     deleteAccountMutation.mutate(deleteAccountParam, {
-      onError: (res) => {
-        console.log(res)
-      },
-      onSuccess: (res) => {
-        console.log('deleteAccount成功 :' + Date.now())
-      },
+      onError: (res) => {},
+      onSuccess: (res) => {},
     })
   }
 

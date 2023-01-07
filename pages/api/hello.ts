@@ -6,6 +6,5 @@ import { useQuery } from 'react-query'
 import { request, GraphQLClient } from 'graphql-request'
 
 export default (req, res) => {
-  console.log('triggered')
   res.status(200).json({ name: 'John Doe' })
 }

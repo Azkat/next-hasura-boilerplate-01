@@ -86,9 +86,7 @@ export const useAppMutate = () => {
         }
         dispatch(resetEditedPost())
       },
-      onError: (res) => {
-        console.log(res)
-      },
+      onError: (res) => {},
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     }
   )
@@ -116,9 +114,7 @@ export const useAppMutate = () => {
       graphQLClient.request(UPDATE_USER_NAME, updateParam),
     {
       onSuccess: (res) => {},
-      onError: (res) => {
-        console.log(res)
-      },
+      onError: (res) => {},
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     }
   )
@@ -146,9 +142,7 @@ export const useAppMutate = () => {
     (param: DeleteUserProfile) =>
       graphQLClient.request(DELETE_USER_PROFILE, param),
     {
-      onSuccess: (res) => {
-        console.log(res)
-      },
+      onSuccess: (res) => {},
       onError: () => {},
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     }
@@ -158,7 +152,6 @@ export const useAppMutate = () => {
     (param: CreateLike) => graphQLClient.request(CREATE_LIKE, param),
     {
       onSuccess: (res, variables) => {
-        console.log(res)
         const previousLikes = queryClient.getQueryData<UserLikes[]>('likes')
         if (previousLikes) {
           queryClient.setQueryData('likes', [
@@ -167,9 +160,7 @@ export const useAppMutate = () => {
           ])
         }
       },
-      onError: (res) => {
-        console.log(res)
-      },
+      onError: (res) => {},
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     }
   )

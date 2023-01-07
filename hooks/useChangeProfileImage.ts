@@ -51,9 +51,7 @@ export const useChangeProfileImage = () => {
             }
             return axios.put(res.data.url, blob, options)
           })
-          .then((res) => {
-            console.log(res)
-          })
+          .then((res) => {})
       })
   }
 

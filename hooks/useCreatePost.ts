@@ -32,8 +32,6 @@ export const useCreatePost = () => {
     (createPost: CreatePost) => graphQLClient.request(CREATE_POST, createPost),
     {
       onSuccess: (res) => {
-        console.log(res.insert_posts_one.id)
-
         if (visualFormat == 'Image') {
           uploadPhoto(res.insert_posts_one.id)
         } else if (visualFormat == 'Video') {
@@ -42,9 +40,7 @@ export const useCreatePost = () => {
 
         uploadAudio(res.insert_posts_one.id)
       },
-      onError: (res) => {
-        console.log(res)
-      },
+      onError: (res) => {},
     }
   )
 
@@ -79,7 +75,6 @@ export const useCreatePost = () => {
             return axios.put(res.data.url, blob, options)
           })
           .then((res) => {
-            console.log(res)
             dispatch({ type: 'setImageFile', payload: '' })
           })
       })
@@ -104,9 +99,7 @@ export const useCreatePost = () => {
         }
         return axios.put(res.data.url, file, options)
       })
-      .then((res) => {
-        console.log(res)
-      })
+      .then((res) => {})
   }
 
   const uploadAudio = async (id) => {
@@ -128,9 +121,7 @@ export const useCreatePost = () => {
         }
         return axios.put(res.data.url, file, options)
       })
-      .then((res) => {
-        console.log(res)
-      })
+      .then((res) => {})
   }
 
   const titleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -170,7 +161,6 @@ export const useCreatePost = () => {
 
   const createPost = useCallback(async () => {
     //e.preventDefault()
-    console.log('createpost')
     const param = {
       title: title,
       description: description,

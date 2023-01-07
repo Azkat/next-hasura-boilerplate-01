@@ -60,9 +60,7 @@ export const useUpdateFirebaseEmail = () => {
             }
             updateUserProfileEmailMutaion.mutate(param)
           })
-          .catch((error) => {
-            console.log(error)
-          })
+          .catch((error) => {})
       })
     },
     [email, password]
