@@ -13,6 +13,7 @@ import ModalBase from '../../components/ModalBase'
 import { useRouter } from 'next/router'
 import PlayButton from '../../components/PlayButton'
 import { useUserAgent } from 'next-useragent'
+import dynamic from 'next/dynamic'
 
 export default function UserList(props) {
   const queryClient = useQueryClient()
@@ -36,6 +37,13 @@ export default function UserList(props) {
     setIsHovered(false)
   }
 
+  const DynamicUserPostList = dynamic(
+    () => import('../../components/UserPostList'),
+    {
+      //loading: () => 'Loading...',
+    }
+  )
+
   return (
     <Layout title={data.name}>
       <>
@@ -45,9 +53,9 @@ export default function UserList(props) {
           <UserInfomation data={data} status={status} />
         </div>
 
-        {/* <PostList postsData={postsData} currentUser={currentUser} /> */}
+        <DynamicUserPostList data={data} path={'user'} />
 
-        <section className="overflow-hidden mt-10 ">
+        {/*  <section className="overflow-hidden mt-10 ">
           <div className="container px-4 py-2 mx-auto ">
             <div className="flex flex-wrap -m-1 md:-m-2">
               {data.posts?.map((post) => (
@@ -90,7 +98,7 @@ export default function UserList(props) {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
       </>
     </Layout>
   )

@@ -13,6 +13,8 @@ import { PlusSmIcon } from '@heroicons/react/solid'
 import { useQueryUserById } from '../../hooks/useQueryUserById'
 import Link from 'next/link'
 import { QueryClient, useQueryClient } from 'react-query'
+import dynamic from 'next/dynamic'
+import ModalBase from '../../components/ModalBase'
 
 const cookie = new Cookie()
 
@@ -49,11 +51,19 @@ export default function Account(props) {
     }
   }, [])
 
+  const DynamicUserPostList = dynamic(
+    () => import('../../components/UserPostList'),
+    {
+      //loading: () => 'Loading...',
+    }
+  )
+
   if (!isUser) {
     return <></>
   } else {
     return (
       <Layout title="Account">
+        <ModalBase aspath={router.asPath} />
         <AvatarName data={data} status={status} />
         <div className="block sm:hidden">
           <UserInfomation data={data} status={status} />
@@ -68,7 +78,9 @@ export default function Account(props) {
           </Link>
         </div>
 
-        <section className="overflow-hidden mt-10 ">
+        {data ? <DynamicUserPostList data={data} path={'account'} /> : ''}
+
+        {/* <section className="overflow-hidden mt-10 ">
           <div className="container px-4 py-2 mx-auto ">
             {data ? (
               <div className="flex flex-wrap -m-1 md:-m-2">
@@ -90,7 +102,7 @@ export default function Account(props) {
               ''
             )}
           </div>
-        </section>
+        </section> */}
       </Layout>
     )
   }

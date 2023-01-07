@@ -4,8 +4,6 @@ import { LinkIcon } from '@heroicons/react/solid'
 const UserInformation = (props) => {
   const [link, setLink] = useState(``)
 
-  console.log(props)
-
   useEffect(() => {
     if (props.status == 'success') {
       const urlText = new URL(props.data.website)

@@ -16,8 +16,6 @@ const AvatarName = (props) => {
   const [noAvatarImage, setNoAvatarImage] = useState(false)
   const [userImageLoadComplete, setUserImageLoadComplete] = useState(false)
 
-  console.log(props)
-
   useEffect(() => {
     if (router.pathname == '/account') {
       setSrc(
