@@ -77,7 +77,7 @@ export const Auth = () => {
 
         <div className="form-control w-full  mt-6">
           <input
-            className="text-input-1"
+            className="text-input-1 text-base"
             placeholder="Password"
             type="password"
             {...register('password', passwordRules)}

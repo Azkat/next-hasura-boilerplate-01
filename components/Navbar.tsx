@@ -25,7 +25,7 @@ export const Navbar = (props) => {
   }, [uid])
 
   return (
-    <div className="navbar bg-baseNav mb-5 ">
+    <div className="navbar bg-baseNav ">
       <div className="max-w-3xl mx-auto w-full ">
         <div className="navbar-start">
           <DropdownHeaderMenu />

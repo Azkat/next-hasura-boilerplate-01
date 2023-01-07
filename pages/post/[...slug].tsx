@@ -33,6 +33,8 @@ export default function UserList(props) {
     width: 1,
     height: 1,
   })
+  const [noAvatarImage, setNoAvatarImage] = useState(false)
+  const [initial, setInitial] = useState(``)
   const { currentUser } = useContext(AuthContext)
   const videoRef = useRef(null)
 
@@ -45,25 +47,35 @@ export default function UserList(props) {
       const imageUrlText = new URL(data.image_url)
       setImageHost(imageUrlText.host)
     }
+    setInitial(data.user.name.slice(0, 1).toUpperCase())
   }, [])
 
   return (
     <Layout title={data.title}>
-      <div className="bg-backgroundGray mt-8 mb-4 sm:rounded-lg">
+      <div className="bg-backgroundGray mt-0 mb-4 sm:rounded-lg sm:mt-8">
         <p className="font-normal my-3" key={data.id}>
           <div className="flex items-center p-4 pt-3">
             <div className="w-8 h-8 mr-2  relative">
               <Link href={'/user/' + data.user.id} className="contents">
-                <Image
-                  src={userIconSrc}
-                  className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
-                  layout="fill"
-                  objectFit="contain"
-                  onError={() => {
-                    setUserIconSrc(`/noImageYet.png`)
-                  }}
-                  alt=""
-                />
+                {noAvatarImage ? (
+                  <div className="relative inline-flex items-center justify-center w-8 h-8 sm:w-8 sm:h-8 overflow-hidden rounded-full bg-gray-600 mr-4 ">
+                    <span className="text-md sm:text-md text-gray-300">
+                      {initial}
+                    </span>
+                  </div>
+                ) : (
+                  <Image
+                    src={userIconSrc}
+                    className="w-8 h-8 mr-4 rounded-full sm:w-8 sm:h-8 relative"
+                    layout="fill"
+                    objectFit="contain"
+                    onError={() => {
+                      setNoAvatarImage(true)
+                    }}
+                    onLoadingComplete={(target) => {}}
+                    alt=""
+                  />
+                )}
               </Link>
             </div>
             <div className="font-light dark:text-white">

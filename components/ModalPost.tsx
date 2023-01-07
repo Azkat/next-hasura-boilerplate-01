@@ -9,6 +9,7 @@ import { useQueryPostById } from '../hooks/useQueryPostById'
 import { formatDistance, format } from 'date-fns'
 import { useRouter } from 'next/router'
 import PlayButton from '../components/PlayButton'
+import { LinkIcon } from '@heroicons/react/solid'
 
 const ModalPost = (props) => {
   const [userIconSrc, setUserIconSrc] = useState(``)
@@ -16,6 +17,8 @@ const ModalPost = (props) => {
   const [audioHost, setAudioHost] = useState(``)
   const [imageHost, setImageHost] = useState(``)
   const [closePath, setClosePath] = useState(``)
+  const [noAvatarImage, setNoAvatarImage] = useState(false)
+  const [initial, setInitial] = useState(``)
   const { state, dispatch } = useContext(Store)
   const { status, data }: any = useQueryPostById(props.id)
   const router = useRouter()
@@ -39,6 +42,7 @@ const ModalPost = (props) => {
         const imageUrlText = new URL(data.image_url)
         setImageHost(imageUrlText.host)
       }
+      setInitial(data.user.name.slice(0, 1).toUpperCase())
     }
   }, [status])
 
@@ -100,16 +104,25 @@ const ModalPost = (props) => {
                 className="contents"
                 scroll={false}
               >
-                <Image
-                  src={userIconSrc}
-                  className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
-                  layout="fill"
-                  objectFit="contain"
-                  onError={() => {
-                    setUserIconSrc(`/noImageYet.png`)
-                  }}
-                  alt=""
-                />
+                {noAvatarImage ? (
+                  <div className="relative inline-flex items-center justify-center w-8 h-8 sm:w-8 sm:h-8 overflow-hidden rounded-full bg-gray-600 mr-4 ">
+                    <span className="text-md sm:text-md text-gray-300">
+                      {initial}
+                    </span>
+                  </div>
+                ) : (
+                  <Image
+                    src={userIconSrc}
+                    className="w-8 h-8 mr-4 rounded-full sm:w-8 sm:h-8 relative"
+                    layout="fill"
+                    objectFit="contain"
+                    onError={() => {
+                      setNoAvatarImage(true)
+                    }}
+                    onLoadingComplete={(target) => {}}
+                    alt=""
+                  />
+                )}
               </Link>
             </div>
             <div className="font-light dark:text-white">
@@ -142,12 +155,41 @@ const ModalPost = (props) => {
             <div className="text-sm dark:text-white ">{data.description}</div>
           </div>
           <div className="p-4 pt-2 ">
-            <a href={data.audio_url} target="_blank" rel="noreferrer">
-              <div className="text-sm text-gray-500 break-all">{audioHost}</div>
-            </a>
-            <a href={data.image_url} target="_blank" rel="noreferrer">
-              <div className="text-sm text-gray-500 break-all">{imageHost}</div>
-            </a>
+            {audioHost ? (
+              <a
+                href={data.audio_url}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center"
+              >
+                <div className="h-4 w-4 mr-1 ">
+                  <LinkIcon className="h-full w-full  text-gray-100 opacity-80 cursor-pointer" />
+                </div>
+                <div className="text-sm text-gray-500 break-all">
+                  {audioHost}
+                </div>
+              </a>
+            ) : (
+              ''
+            )}
+
+            {imageHost ? (
+              <a
+                href={data.image_url}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center"
+              >
+                <div className="h-4 w-4 mr-1 ">
+                  <LinkIcon className="h-full w-full  text-gray-100 opacity-80 cursor-pointer" />
+                </div>
+                <div className="text-sm text-gray-500 break-all">
+                  {imageHost}
+                </div>
+              </a>
+            ) : (
+              ''
+            )}
           </div>
           <div className="flex items-center p-4 pt-2  absolute bottom-0">
             <div className="text-sm text-gray-500">

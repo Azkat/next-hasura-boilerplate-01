@@ -16,6 +16,7 @@ import DropdownPostmenu from './DropdownPostmenu'
 import PostItemSkelton from './PostItemSkelton'
 import PlayButton from './PlayButton'
 import WebAudio from './WebAudio'
+import { formatDistance, format } from 'date-fns'
 
 const PostItem = (props) => {
   const cookie = new Cookies()
@@ -26,6 +27,7 @@ const PostItem = (props) => {
   const [userIconSrc, setUserIconSrc] = useState(
     `https://vmedia.droptune.net/user_icon/${props.post.user.id}.jpg`
   )
+  const [noAvatarImage, setNoAvatarImage] = useState(false)
   const [userImageLoadComplete, setUserImageLoadComplete] = useState(false)
   const [mainImageLoadComplete, setMainImageLoadComplete] = useState(false)
   const [imageSize, setImageSize] = useState({
@@ -74,19 +76,29 @@ const PostItem = (props) => {
                   ''
                 )}
 
-                <Image
-                  src={userIconSrc}
-                  className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
-                  layout="fill"
-                  objectFit="contain"
-                  onError={() => {
-                    setUserIconSrc(`/noImageYet.png`)
-                  }}
-                  onLoadingComplete={(target) => {
-                    setUserImageLoadComplete(true)
-                  }}
-                  alt=""
-                />
+                {noAvatarImage ? (
+                  <div className="relative inline-flex items-center justify-center w-8 h-8 overflow-hidden rounded-full bg-gray-600">
+                    <span className="font-medium text-gray-300">
+                      {props.post.user.name.slice(0, 1).toUpperCase()}
+                    </span>
+                  </div>
+                ) : (
+                  <Image
+                    src={userIconSrc}
+                    className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
+                    layout="fill"
+                    objectFit="contain"
+                    onError={() => {
+                      //setUserIconSrc(`/noImageYet.png`)
+                      setNoAvatarImage(true)
+                      setUserImageLoadComplete(true)
+                    }}
+                    onLoadingComplete={(target) => {
+                      setUserImageLoadComplete(true)
+                    }}
+                    alt=""
+                  />
+                )}
               </Link>
             </div>
             <div className="font-light dark:text-white">
@@ -167,8 +179,13 @@ const PostItem = (props) => {
               />
             </div>
           </div>
-          <div className="p-4 pt-3">
+          <div className="p-4">
             <Link href={'/post/' + props.post.id}>{props.post.title}</Link>
+            <div className="pt-1 text-xs font-normal text-gray-500">
+              {formatDistance(Date.parse(props.post.created_at), new Date(), {
+                addSuffix: true,
+              })}
+            </div>
           </div>
         </p>
       )}

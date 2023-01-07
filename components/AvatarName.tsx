@@ -12,36 +12,77 @@ const AvatarName = (props) => {
   const router = useRouter()
   const pagePath = router.pathname
   const [src, setSrc] = useState(``)
+  const [initial, setInitial] = useState(``)
+  const [noAvatarImage, setNoAvatarImage] = useState(false)
+  const [userImageLoadComplete, setUserImageLoadComplete] = useState(false)
+
+  console.log(props)
 
   useEffect(() => {
-    router.pathname == '/account'
-      ? setSrc(
-          `https://vmedia.droptune.net/user_icon/${cookie.get('user_id')}.jpg`
-        )
-      : setSrc(`https://vmedia.droptune.net/user_icon/${props.data.id}.jpg`)
+    if (router.pathname == '/account') {
+      setSrc(
+        `https://vmedia.droptune.net/user_icon/${cookie.get('user_id')}.jpg`
+      )
+      if (props.data != undefined) {
+        setInitial(props.data.name.slice(0, 1).toUpperCase())
+      }
+    } else {
+      setSrc(`https://vmedia.droptune.net/user_icon/${props.data.id}.jpg`)
+      setInitial(props.data.name.slice(0, 1).toUpperCase())
+    }
   }, [props])
 
   return (
     <div className="flex items-center p-4 pt-7 sm:items-start">
       {pagePath == '/user/[slug]' ? (
-        <img
-          className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32"
-          src={src}
-          alt=""
-          onError={() => {
-            setSrc(`/noImageYet.png`)
-          }}
-        />
+        <>
+          {noAvatarImage ? (
+            <div className="relative inline-flex items-center justify-center w-14 h-14 sm:w-32 sm:h-32 overflow-hidden rounded-full bg-gray-600 mr-4 ">
+              <span className="text-2xl sm:text-5xl text-gray-300">
+                {initial}
+              </span>
+            </div>
+          ) : (
+            <Image
+              src={src}
+              className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32 relative"
+              layout="fill"
+              objectFit="contain"
+              onError={() => {
+                //setUserIconSrc(`/noImageYet.png`)
+                setNoAvatarImage(true)
+                setUserImageLoadComplete(true)
+              }}
+              onLoadingComplete={(target) => {
+                setUserImageLoadComplete(true)
+              }}
+              alt=""
+            />
+          )}
+        </>
       ) : (
         <Link href="/account/changeProfileImage" className="contents">
-          <img
-            className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32 cursor-pointer"
-            src={src}
-            onError={() => {
-              setSrc(`/noImageYet.png`)
-            }}
-            alt=""
-          />
+          {noAvatarImage ? (
+            <div className="relative inline-flex items-center justify-center w-14 h-14 sm:w-32 sm:h-32 overflow-hidden rounded-full bg-gray-600 mr-4 ">
+              <span className=" text-gray-300">{initial}</span>
+            </div>
+          ) : (
+            <Image
+              src={src}
+              className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32 relative"
+              layout="fill"
+              objectFit="contain"
+              onError={() => {
+                //setUserIconSrc(`/noImageYet.png`)
+                setNoAvatarImage(true)
+                setUserImageLoadComplete(true)
+              }}
+              onLoadingComplete={(target) => {
+                setUserImageLoadComplete(true)
+              }}
+              alt=""
+            />
+          )}
         </Link>
       )}
 

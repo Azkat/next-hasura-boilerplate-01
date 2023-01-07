@@ -9,7 +9,9 @@ import { AuthContext } from '../../lib/authProvider'
 
 const cookie = new Cookie()
 interface IFormInput {
-  title: string
+  url: string
+  name: string
+  bio: string
 }
 
 export default function EditProfile(props) {
@@ -41,6 +43,22 @@ export default function EditProfile(props) {
     updateProfile()
   }
 
+  const nameRules = {
+    required: 'Required',
+    maxLength: { value: 100, message: `Up to 100 characters` },
+  }
+
+  const urlRules = {
+    pattern: {
+      value: /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+/g,
+      message: 'Input URL',
+    },
+  }
+
+  const bioRules = {
+    maxLength: { value: 2000, message: `Up to 2000 characters` },
+  }
+
   return (
     <Layout title="Create new post">
       <div className="px-4 mb-32">
@@ -51,15 +69,19 @@ export default function EditProfile(props) {
               <div className="card-body">
                 <div className="form-control w-full  mt-6">
                   <label className="label">
-                    <span className="label-text">Name</span>
+                    <span className="label-text">Name * </span>
                   </label>
                   <input
                     type="text"
+                    {...register('name', nameRules)}
                     placeholder="Name"
                     className="text-input-1"
                     value={name}
                     onChange={nameChange}
                   />
+                  <div className="text-red-500">
+                    {errors.name && errors.name.message}
+                  </div>
                 </div>
 
                 <div className="form-control w-full  mt-6">
@@ -68,11 +90,15 @@ export default function EditProfile(props) {
                   </label>
                   <input
                     type="text"
+                    {...register('url', urlRules)}
                     placeholder="Website URL"
                     className="text-input-1"
                     value={website}
                     onChange={websiteChange}
                   />
+                  <div className="text-red-500">
+                    {errors.url && errors.url.message}
+                  </div>
                 </div>
 
                 <div className="form-control  w-full mt-6">
@@ -80,11 +106,15 @@ export default function EditProfile(props) {
                     <span className="label-text">Bio</span>
                   </label>
                   <textarea
-                    className="textarea-1"
+                    className="textarea-1 text-base"
+                    {...register('bio', bioRules)}
                     placeholder="Bio"
                     value={bio}
                     onChange={bioChange}
                   ></textarea>
+                  <div className="text-red-500">
+                    {errors.bio && errors.bio.message}
+                  </div>
                 </div>
 
                 <div className="mt-20">

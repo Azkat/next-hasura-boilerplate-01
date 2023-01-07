@@ -64,7 +64,7 @@ export default function Settings(props) {
               <input
                 type="text"
                 placeholder="Type here"
-                className="text-input-1"
+                className="text-input-1 text-base"
               />
             </div>
 
