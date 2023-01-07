@@ -150,9 +150,11 @@ export default function CreatePost(props) {
           file:bg-gray-300 file:text-secondary"
                 type="file"
                 //accept="audio/m4a, audio/mp3, audio/wav, audio/aac"
-                accept=".mp3, .wav, .aac, .aif, .m4a"
+                accept=".mp3, .wav, .m4a"
                 onChange={checkAudioFile}
               />
+
+              <div className="text-gray-500">wav / mp3 / m4a</div>
               <div className="form-control w-full  mt-6">
                 <label className="label">
                   <span className="label-text">Audio URL (Optional)</span>
