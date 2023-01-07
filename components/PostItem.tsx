@@ -128,9 +128,15 @@ const PostItem = (props) => {
             <PlayButton post={props.post} control={false} />
           </div>
           <div className="likebutton absolute h-8 w-8">
+            {/* <LikeButton
+              post={props.post}
+              currentUser={props.currentUser}
+              control={false}
+            /> */}
             <LikeButton
               post={props.post}
               currentUser={props.currentUser}
+              like={props.like}
               control={false}
             />
           </div>

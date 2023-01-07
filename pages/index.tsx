@@ -11,6 +11,7 @@ import PostList from '../components/PostList'
 import { useRouter } from 'next/router'
 import { useWindowSize } from '../hooks/useWindowSize'
 import ModalBase from '../components/ModalBase'
+import { useQueryUserLikes } from '../hooks/useQueryPosts'
 
 const modalStyles = {
   content: {

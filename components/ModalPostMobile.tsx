@@ -123,8 +123,12 @@ const ModalPostMobile = (props) => {
             <div className="playbutton absolute h-10 w-10">
               <PlayButton post={data} control={false} />
             </div>
-            <div className="likebutton absolute h-8 w-8">
-              <LikeButton post={props} currentUser={props.currentUser} />
+            <div className="likebutton absolute h-8 w-8 overflow-hidden">
+              <LikeButton
+                post={props}
+                currentUser={props.currentUser}
+                control={false}
+              />
             </div>
           </div>
 

@@ -15,9 +15,9 @@ export const LikeButton = (props) => {
   const [likeId, setLikeId] = useState('')
   const [deleteId, setDeleteId] = useState('')
   const { createLikeMutation, deleteLikeMutation } = useAppMutate()
-  const { status, data } = useQueryUserLikes(cookie.get('user_id'))
   const [lottie, setLottie] = useState(false)
   const { state, dispatch } = useContext(Store)
+  const { status, data } = useQueryUserLikes(cookie.get('user_id'))
 
   const animationOptions = {
     loop: false,
@@ -36,59 +36,17 @@ export const LikeButton = (props) => {
   }
 
   useEffect(() => {
-    if (props.control != undefined) {
-      props = { post: { id: state.playingId } }
-    }
-  }, [props])
-
-  useEffect(() => {
-    if (status == 'success') {
-      console.log(props)
+    if (status == 'success' && props) {
       if (props.post) {
         data.forEach((item) => {
           if (item.post_id == props.post.id) {
-            console.log(
-              'data更新で入った ' +
-                props.post.id +
-                '   ' +
-                state.justDeleteLikeId
-            )
             setLiked(true)
             setLikeId(item.id)
-          } /* else {
-            console.log(
-              'data更新で外れた ' +
-                props.post.id +
-                '   ' +
-                state.justDeleteLikeId
-            )
-            setLiked(false)
-          } */
+          }
         })
       }
     }
-  }, [data, props])
-
-  useEffect(() => {
-    console.log(state.justDeleteLikeId)
-    if (state.justDeleteLikeId == props.post.id) {
-      console.log(
-        'state.justDeleteLikeIdではずれた ' +
-          props.post.id +
-          '   ' +
-          state.justDeleteLikeId
-      )
-      setLiked(false)
-    }
-  }, [state.justDeleteLikeId])
-
-  if (status == 'loading') {
-    return (
-      <span className="flex float-right ml-4">
-        <HeartIconOutline className="h-full w-full text-gray-100 opacity-10" />
-      </span>
-    )
-  }
+  }, [data])
 
   if (!props.currentUser) {
     return (
@@ -104,40 +62,26 @@ export const LikeButton = (props) => {
   if (liked) {
     return (
       <span className="h-full w-full flex float-right relative">
-        {lottie && liked ? (
+        {lottie ? (
           <>
-            {props.control ? (
-              <>
-                <div
-                  className={`absolute -right-[47px] -bottom-[50px]  overflow-hidden`}
-                >
-                  <Lottie options={animationOptions} height={136} width={136} />
-                </div>
-                <HeartIcon className="h-full w-full text-white opacity-0" />
-              </>
-            ) : (
-              <>
-                <div
-                  className={`absolute -right-[37px] -bottom-[40px]  overflow-hidden`}
-                >
-                  <Lottie options={animationOptions} height={108} width={108} />
-                </div>
-                <HeartIcon className="h-full w-full text-white opacity-0" />
-              </>
-            )}
+            <div
+              className={`absolute -right-[37px] -bottom-[40px]  overflow-hidden`}
+            >
+              <Lottie options={animationOptions} height={108} width={108} />
+            </div>
+            <HeartIcon className="h-full w-full text-white opacity-0" />
           </>
         ) : (
           <HeartIcon
-            className="h-full w-full text-white opacity-80 cursor-pointer"
+            className="h-full w-full  text-gray-100 opacity-50 cursor-pointer"
             onClick={async () => {
-              console.log('クリックで外れた ' + props.post.id)
               setLiked(false)
-              dispatch({ type: 'setJustDeleteLikeId', payload: props.post.id })
               const param = {
                 id: likeId,
               }
               await deleteLikeMutation.mutate(param, {
                 onError: (res) => {
+                  console.log('like delete error')
                   setLiked(true)
                 },
               })
@@ -146,28 +90,28 @@ export const LikeButton = (props) => {
         )}
       </span>
     )
+  } else {
+    return (
+      <span className="h-full w-full flex float-right relative">
+        <HeartIconOutline
+          className="h-full w-full  text-gray-100 opacity-50 cursor-pointer"
+          onClick={async () => {
+            setLiked(true)
+            lottiFire()
+            const param = await {
+              user_id: cookie.get('user_id'),
+              post_id: props.post.id,
+            }
+            await createLikeMutation.mutate(param, {
+              onError: (res) => {
+                console.log('like create error')
+                setLiked(false)
+              },
+              onSuccess: (res) => {},
+            })
+          }}
+        />
+      </span>
+    )
   }
-
-  return (
-    <span className="h-full w-full flex float-right relative">
-      <HeartIconOutline
-        className="h-full w-full  text-gray-100 opacity-50 cursor-pointer"
-        onClick={async () => {
-          setLiked(true)
-          lottiFire()
-          const param = await {
-            user_id: cookie.get('user_id'),
-            post_id: props.post.id,
-          }
-          await createLikeMutation.mutate(param, {
-            onError: (res) => {
-              console.log('DB更新失敗で外れた ' + props.post.id)
-              setLiked(false)
-            },
-            onSuccess: (res) => {},
-          })
-        }}
-      />
-    </span>
-  )
 }
