@@ -13,6 +13,7 @@ import { PlayIcon } from '@heroicons/react/solid'
 import { useOnScreen } from '../hooks/useOnScreen'
 import Image from 'next/image'
 import DropdownPostmenu from './DropdownPostmenu'
+import PostItemSkelton from './PostItemSkelton'
 import PlayButton from './PlayButton'
 import WebAudio from './WebAudio'
 
@@ -56,95 +57,100 @@ const PostItem = (props) => {
       {targetViewPosition === 'BELOW_VIEWPORT' && (
         <p>画面より下に表示されています</p>
       )} */}
-      <p className="font-bold my-3 " key={props.post.id}>
-        <div className="flex items-center p-4 pt-3 ">
-          <div className="w-8 h-8 mr-2  relative">
-            <Link href={'/user/' + props.post.user.id} className="contents">
-              <Image
-                src={userIconSrc}
-                className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
-                layout="fill"
-                objectFit="contain"
-                onError={() => {
-                  setUserIconSrc(`/noImageYet.png`)
-                }}
-                alt=""
-              />
-            </Link>
-          </div>
-          <div className="font-light dark:text-white">
-            <Link href={'/user/' + props.post.user.id}>
-              {props.post.user.name}
-            </Link>
-          </div>
-          <div className="ml-auto">
-            <DropdownPostmenu id={props.post.id} />
-          </div>
-        </div>
-        <div className="bg-cover bg-center w-full relative cursor-pointer overflow-hidden">
-          {/*  <Link href={'/post/' + props.post.id}> */}
-          <Link
-            key={props.post.id}
-            href={`/?postId=${props.post.id}`}
-            as={`/post/${props.post.id}`}
-            scroll={false}
-          >
-            <div className="w-full flex items-center ">
-              <Image
-                src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
-                layout="responsive"
-                objectFit="contain"
-                alt=""
-                onLoadingComplete={(target) => {
-                  setImageSize({
-                    width: target.naturalWidth,
-                    height: target.naturalHeight,
-                  })
-                }}
-                width={imageSize.width}
-                height={imageSize.height}
-              />
+      {!props.post ? (
+        <PostItemSkelton />
+      ) : (
+        <p className="font-bold my-3 " key={props.post.id}>
+          <div className="flex items-center p-4 pt-3 ">
+            <div className="w-8 h-8 mr-2  relative">
+              <Link href={'/user/' + props.post.user.id} className="contents">
+                <Image
+                  src={userIconSrc}
+                  className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
+                  layout="fill"
+                  objectFit="contain"
+                  onError={() => {
+                    setUserIconSrc(`/noImageYet.png`)
+                  }}
+                  alt=""
+                />
+              </Link>
             </div>
-
-            {props.post.visual_format == 'Video' &&
-            state.audioPlay &&
-            state.playingId == props.post.id ? (
-              <div className="w-full h-full flex items-center">
-                <video
-                  ref={videoRef}
-                  playsInline
-                  autoPlay
-                  loop
-                  muted
-                  src={`https://vmedia.droptune.net/video/${props.post.id}.mp4`}
-                  className="w-full absolute top-0 left-0"
-                ></video>
-              </div>
-            ) : (
-              ''
-            )}
-          </Link>
-          <div className="playbutton absolute h-10 w-10">
-            <PlayButton post={props.post} control={false} />
+            <div className="font-light dark:text-white">
+              <Link href={'/user/' + props.post.user.id}>
+                {props.post.user.name}
+              </Link>
+            </div>
+            <div className="ml-auto">
+              <DropdownPostmenu id={props.post.id} />
+            </div>
           </div>
-          <div className="likebutton absolute h-8 w-8">
-            {/* <LikeButton
+          <div className="bg-cover bg-center w-full relative cursor-pointer overflow-hidden">
+            {/*  <Link href={'/post/' + props.post.id}> */}
+            <Link
+              key={props.post.id}
+              href={`/?postId=${props.post.id}`}
+              as={`/post/${props.post.id}`}
+              scroll={false}
+            >
+              <div className="w-full flex items-center ">
+                <Image
+                  src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
+                  layout="responsive"
+                  objectFit="contain"
+                  alt=""
+                  onLoadingComplete={(target) => {
+                    setImageSize({
+                      width: target.naturalWidth,
+                      height: target.naturalHeight,
+                    })
+                  }}
+                  width={imageSize.width}
+                  height={imageSize.height}
+                />
+              </div>
+
+              {props.post.visual_format == 'Video' &&
+              state.audioPlay &&
+              state.playingId == props.post.id ? (
+                <div className="w-full h-full flex items-center">
+                  <video
+                    ref={videoRef}
+                    playsInline
+                    autoPlay
+                    loop
+                    muted
+                    src={`https://vmedia.droptune.net/video/${props.post.id}.mp4`}
+                    className="w-full absolute top-0 left-0"
+                  ></video>
+                </div>
+              ) : (
+                ''
+              )}
+            </Link>
+            <div className="playbutton absolute h-10 w-10">
+              <PlayButton post={props.post} control={false} />
+            </div>
+            <div className="likebutton absolute h-8 w-8">
+              {/* <LikeButton
               post={props.post}
               currentUser={props.currentUser}
               control={false}
             /> */}
-            <LikeButton
-              post={props.post}
-              currentUser={props.currentUser}
-              like={props.like}
-              control={false}
-            />
+              <LikeButton
+                post={props.post}
+                currentUser={props.currentUser}
+                like={props.like}
+                control={false}
+              />
+            </div>
           </div>
-        </div>
-        <div className="p-4 pt-3">
-          <Link href={'/post/' + props.post.id}>{props.post.title}</Link>
-        </div>
-      </p>
+          <div className="p-4 pt-3">
+            <Link href={'/post/' + props.post.id}>{props.post.title}</Link>
+          </div>
+        </p>
+      )}
+
       {props.index == 8 && <span ref={targetRef}></span>}
 
       <style jsx>{`
