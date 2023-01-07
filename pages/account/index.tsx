@@ -69,7 +69,7 @@ export default function Account(props) {
           <UserInfomation data={data} status={status} />
         </div>
 
-        <div className="px-4">
+        <div className="px-4 mb-6">
           <Link href="/account/createPost">
             <button className="btn btn-block bg-gradient-to-r from-teal-300 to-violet-700 text-white">
               <PlusSmIcon className="h-5 w-5" />
