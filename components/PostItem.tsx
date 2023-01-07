@@ -26,6 +26,8 @@ const PostItem = (props) => {
   const [userIconSrc, setUserIconSrc] = useState(
     `https://vmedia.droptune.net/user_icon/${props.post.user.id}.jpg`
   )
+  const [userImageLoadComplete, setUserImageLoadComplete] = useState(false)
+  const [mainImageLoadComplete, setMainImageLoadComplete] = useState(false)
   const [imageSize, setImageSize] = useState({
     width: 1,
     height: 1,
@@ -64,6 +66,14 @@ const PostItem = (props) => {
           <div className="flex items-center p-4 pt-3 ">
             <div className="w-8 h-8 mr-2  relative">
               <Link href={'/user/' + props.post.user.id} className="contents">
+                {!userImageLoadComplete ? (
+                  <div className="w-8 h-8 mr-2  relative animate-pulse">
+                    <div className="rounded-full bg-slate-700 h-8 w-8"></div>
+                  </div>
+                ) : (
+                  ''
+                )}
+
                 <Image
                   src={userIconSrc}
                   className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8"
@@ -71,6 +81,9 @@ const PostItem = (props) => {
                   objectFit="contain"
                   onError={() => {
                     setUserIconSrc(`/noImageYet.png`)
+                  }}
+                  onLoadingComplete={(target) => {
+                    setUserImageLoadComplete(true)
                   }}
                   alt=""
                 />
@@ -93,6 +106,14 @@ const PostItem = (props) => {
               as={`/post/${props.post.id}`}
               scroll={false}
             >
+              {!mainImageLoadComplete ? (
+                <div className="absolute w-full h-80 flex items-center h-full animate-pulse">
+                  <div className="w-full h-80 bg-slate-700 "></div>
+                </div>
+              ) : (
+                ''
+              )}
+
               <div className="w-full flex items-center ">
                 <Image
                   src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
@@ -104,6 +125,7 @@ const PostItem = (props) => {
                       width: target.naturalWidth,
                       height: target.naturalHeight,
                     })
+                    setMainImageLoadComplete(true)
                   }}
                   width={imageSize.width}
                   height={imageSize.height}

@@ -121,7 +121,7 @@ function DropdownHeaderMenu(props) {
                         clipRule="evenodd"
                       />
                     </svg>
-                    Cancel
+                    Close
                   </a>
                 </li>
               </ul>
