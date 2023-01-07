@@ -28,6 +28,9 @@ const AvatarName = (props) => {
           className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32"
           src={src}
           alt=""
+          onError={() => {
+            setSrc(`/noImageYet.png`)
+          }}
         />
       ) : (
         <Link href="/account/changeProfileImage" className="contents">
