@@ -54,6 +54,7 @@ export const useFirebaseAuth = () => {
       } else {
         try {
           await firebase.auth().createUserWithEmailAndPassword(email, password)
+          await firebase.auth().currentUser.sendEmailVerification()
         } catch (e) {
           alert(e.message)
         }

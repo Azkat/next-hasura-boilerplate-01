@@ -45,7 +45,8 @@ export default function CreatePost(props) {
   const videoRef = useRef(null)
 
   const { currentUser } = useContext(AuthContext)
-  !currentUser ? router.push('/login') : ''
+  !currentUser ? router.replace('/login') : ''
+  !currentUser.emailVerified && router.replace('/account/verifyEmail')
 
   const {
     register,
