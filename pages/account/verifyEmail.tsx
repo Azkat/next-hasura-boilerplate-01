@@ -5,12 +5,8 @@ import { useRouter } from 'next/router'
 import firebase, { auth } from '../../firebaseConfig'
 import { AuthContext } from '../../lib/authProvider'
 
-export default function verifyEmail(props) {
+export default function VerifyEmail(props) {
   const router = useRouter()
-  const [isUser, setIsUser] = useState(false)
-  const [isAudioFile, setIsAudioFile] = useState(false)
-  const [isVideoFile, setIsVideoFile] = useState(false)
-  const [selected, setSelected] = useState('')
   const [sendEmail, setSendEmail] = useState(false)
   const { state, dispatch } = useContext(Store)
   const { currentUser } = useContext(AuthContext)
