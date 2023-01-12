@@ -64,10 +64,12 @@ export const Navbar = (props) => {
         </div>
         <div className="navbar-center">
           <Link href="/">
-            <span className="normal-case text-3xl font-bold">Droptune</span>
+            <span className="normal-case text-3xl font-bold opacity-95">
+              Droptune
+            </span>
           </Link>
         </div>
-        <div className="navbar-end mr-2 flex">
+        <div className="navbar-end flex">
           {/* <Link href="/account">
             {(() => {
               if (currentUser == undefined) {
