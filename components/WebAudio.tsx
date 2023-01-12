@@ -63,7 +63,7 @@ const WebAudio = (props) => {
 
   // 音源を取得しAudioBuffer形式に変換して返す関数
   async function setupSample() {
-    const response = await fetch(src, { mode: 'cors' })
+    const response = await fetch(src)
     const arrayBuffer = await response.arrayBuffer()
     const audioBuffer = await ctx.decodeAudioData(
       arrayBuffer,

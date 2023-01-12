@@ -148,10 +148,10 @@ const ModalPost = (props) => {
               </Link> */}
             </div>
           </div>
-          <div className="flex items-center p-4 pt-2">
+          <div className="flex items-center p-4 pt-2 border-b border-border">
             <div className="text-lg dark:text-white">{data.title}</div>
           </div>
-          <div className="flex items-center p-4 pt-2 w-full ">
+          <div className="flex items-center p-4  w-full ">
             <div className="text-sm dark:text-white ">{data.description}</div>
           </div>
           <div className="p-4 pt-2 ">
@@ -191,7 +191,7 @@ const ModalPost = (props) => {
               ''
             )}
           </div>
-          <div className="flex items-center p-4 pt-2  absolute bottom-0">
+          <div className="flex items-center p-4 absolute bottom-0 w-full border-t border-border">
             <div className="text-sm text-gray-500">
               {formatDistance(Date.parse(data.created_at), new Date(), {
                 addSuffix: true,

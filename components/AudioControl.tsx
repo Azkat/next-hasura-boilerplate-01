@@ -51,20 +51,24 @@ const AudioControl = (props) => {
                 </div>
               )}
             </Link>
-            <div className=" flex flex-col">
+            <div className=" flex flex-col w-[200px] sm:w-auto">
               <Link
                 href={'/post/' + state.playingId}
                 className="contents"
                 scroll={false}
               >
-                <div className=" text-sm mb-1">{state.playingTitle}</div>
+                <div className=" text-sm mb-1 overflow-hidden text-ellipsis whitespace-nowrap">
+                  {state.playingTitle}
+                </div>
               </Link>
               <Link
                 href={'/user/' + state.playingUserId}
                 className="contents"
                 scroll={false}
               >
-                <div className=" text-sm font-bold">{state.playingUser}</div>
+                <div className=" text-sm font-bold overflow-hidden text-ellipsis whitespace-nowrap">
+                  {state.playingUser}
+                </div>
               </Link>
             </div>
             <div className="ml-auto flex width-10 items-center">
