@@ -15,10 +15,7 @@ const nextConfig = {
   },
   async headers() {
     const headers = []
-    if (
-      process.env.NEXT_PUBLIC_VERCEL_ENV === 'staging' ||
-      process.env.NEXT_PUBLIC_VERCEL_ENV === 'dev'
-    ) {
+    if (process.env.NEXT_PUBLIC_VERCEL_ENV == 'staging') {
       headers.push({
         headers: [
           {
