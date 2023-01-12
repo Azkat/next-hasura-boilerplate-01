@@ -64,7 +64,7 @@ export const Navbar = (props) => {
         </div>
         <div className="navbar-center">
           <Link href="/">
-            <span className="normal-case text-3xl font-bold opacity-95">
+            <span className="normal-case text-3xl font-bold opacity-95 hover:opacity-85 active:opacity-80">
               Droptune
             </span>
           </Link>
