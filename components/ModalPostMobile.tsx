@@ -12,6 +12,7 @@ import { formatDistance, format } from 'date-fns'
 import { useRouter } from 'next/router'
 import DropdownPostmenu from './DropdownPostmenu'
 import PlayButton from '../components/PlayButton'
+import { LinkIcon } from '@heroicons/react/solid'
 
 const ModalPostMobile = (props) => {
   const [userIconSrc, setUserIconSrc] = useState(``)
@@ -147,7 +148,10 @@ const ModalPostMobile = (props) => {
           <div className="p-4 pt-3">
             {status == 'success' ? (
               <>
-                <Link className="font-bold " href={'/post/' + data.id}>
+                <Link
+                  className="font-bold text-lg dark:text-white"
+                  href={'/post/' + data.id}
+                >
                   {data.title}
                 </Link>
                 <div className="flex items-center pt-2 w-full ">
@@ -155,17 +159,37 @@ const ModalPostMobile = (props) => {
                     {data.description}
                   </div>
                 </div>
-                <div className="pt-2 ">
-                  <a href={data.audio_url} target="_blank" rel="noreferrer">
-                    <div className="text-sm text-gray-500 break-all">
-                      {audioHost}
-                    </div>
-                  </a>
-                  <a href={data.image_url} target="_blank" rel="noreferrer">
-                    <div className="text-sm text-gray-500 break-all">
-                      {imageHost}
-                    </div>
-                  </a>
+                <div className="pt-8 flex flex-col gap-1">
+                  {data.audio_url && (
+                    <a
+                      href={data.audio_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center"
+                    >
+                      <div className="h-4 w-4 mr-1">
+                        <LinkIcon className="h-full w-full  text-gray-100 opacity-80 cursor-pointer" />
+                      </div>
+                      <div className="text-sm text-gray-500 break-all">
+                        {audioHost}
+                      </div>
+                    </a>
+                  )}
+                  {data.image_url && (
+                    <a
+                      href={data.image_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center"
+                    >
+                      <div className="h-4 w-4 mr-1">
+                        <LinkIcon className="h-full w-full  text-gray-100 opacity-80 cursor-pointer" />
+                      </div>
+                      <div className="text-sm text-gray-500 break-all">
+                        {imageHost}
+                      </div>
+                    </a>
+                  )}
                 </div>
                 <div className="flex items-center pt-8">
                   <div className="text-xs text-gray-500">

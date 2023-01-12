@@ -154,7 +154,7 @@ const ModalPost = (props) => {
           <div className="flex items-center p-4  w-full ">
             <div className="text-sm dark:text-white ">{data.description}</div>
           </div>
-          <div className="p-4 pt-2 ">
+          <div className="p-4 pt-8 flex flex-col gap-1">
             {audioHost ? (
               <a
                 href={data.audio_url}

@@ -67,13 +67,18 @@ export const LikeButton = (props) => {
             <div
               className={`absolute -right-[37px] -bottom-[40px]  overflow-hidden`}
             >
-              <Lottie options={animationOptions} height={108} width={108} />
+              <Lottie
+                options={animationOptions}
+                height={108}
+                width={108}
+                className="text-white opacity-80"
+              />
             </div>
             <HeartIcon className="h-full w-full text-white opacity-0" />
           </>
         ) : (
           <HeartIcon
-            className="h-full w-full  text-gray-100 opacity-50 cursor-pointer"
+            className="h-full w-full  text-white opacity-80 cursor-pointer"
             onClick={async () => {
               setLiked(false)
               const param = {
