@@ -14,6 +14,10 @@ exports.handler = async (event, context) => {
   **********************************/
 
   const bucket = event.Records[0].s3.bucket.name
+  let destinationBucket = 'droptune-test01'
+  if (bucket == 'droptune-tmp-pd') {
+    destinationBucket = 'droptune-pd'
+  }
   const key = decodeURIComponent(
     event.Records[0].s3.object.key.replace(/\+/g, ' ')
   )
@@ -84,7 +88,7 @@ exports.handler = async (event, context) => {
 
   await s3
     .putObject({
-      Bucket: 'droptune-test01',
+      Bucket: destinationBucket,
       Key: 'post_image/' + filename + '.jpg',
       Body: jpgFileStream,
       ContentType: 'image/jpeg',
@@ -102,7 +106,7 @@ exports.handler = async (event, context) => {
 
   await s3
     .putObject({
-      Bucket: 'droptune-test01',
+      Bucket: destinationBucket,
       Key: 'video/' + filename + '.mp4',
       Body: mp4FileStream,
       ContentType: 'video/mp4',

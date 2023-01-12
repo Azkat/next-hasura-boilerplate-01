@@ -1,121 +1,141 @@
-console.log("Loading function");
+console.log('Loading function')
 
-const aws = require("aws-sdk");
-const s3 = new aws.S3({ apiVersion: "2006-03-01" });
-const fs = require("fs");
-const execSync = require("child_process").execSync;
-process.env.PATH += ":/var/task/bin";
+const aws = require('aws-sdk')
+const s3 = new aws.S3({ apiVersion: '2006-03-01' })
+const fs = require('fs')
+const execSync = require('child_process').execSync
+process.env.PATH += ':/var/task/bin'
 
 exports.handler = async (event, context) => {
-  console.log("Received event:", JSON.stringify(event));
+  console.log('Received event:', JSON.stringify(event))
 
-  const bucket = event.Records[0].s3.bucket.name;
+  const bucket = event.Records[0].s3.bucket.name
+  let destinationBucket = 'droptune-test01'
+  if (bucket == 'droptune-tmp-pd') {
+    destinationBucket = 'droptune-pd'
+  }
   const key = decodeURIComponent(
-    event.Records[0].s3.object.key.replace(/\+/g, " ")
-  );
-  const extension = key.split("/")[key.split("/").length - 1].split(".")[1];
-  const filename = key.split("/")[key.split("/").length - 1].split(".")[0];
+    event.Records[0].s3.object.key.replace(/\+/g, ' ')
+  )
+  const extension = key.split('/')[key.split('/').length - 1].split('.')[1]
+  const filename = key.split('/')[key.split('/').length - 1].split('.')[0]
   const params = {
     Bucket: bucket,
     Key: key,
-  };
+  }
   const message =
-    "extension : " +
+    'extension : ' +
     extension +
-    ", filename : " +
+    ', filename : ' +
     filename +
-    ", Bucket : " +
+    ', Bucket : ' +
     params.Bucket +
-    ", key : " +
-    params.Key;
-  console.log(message);
+    ', key : ' +
+    params.Key
+  console.log(message)
 
   const uploaded_data = await s3
     .getObject(params)
     .promise()
     .catch((err) => {
-      console.log(err);
-      const message = `Error getting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`;
-      console.log(message);
-      throw new Error(message);
-    });
+      console.log(err)
+      const message = `Error getting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`
+      console.log(message)
+      throw new Error(message)
+    })
 
-  fs.writeFileSync("/tmp/" + filename + "." + extension, uploaded_data.Body);
+  fs.writeFileSync('/tmp/' + filename + '.' + extension, uploaded_data.Body)
 
-  let ffmpegCommand = "";
-  if (extension == "png") {
+  let ffmpegCommand = ''
+  if (extension == 'png') {
     ffmpegCommand =
-      "ffmpeg -y -i /tmp/" + filename + ".png -q 3 -vf scale=1280:-1 /tmp/" + filename + ".jpg";
-  } else if (extension == "gif") {
+      'ffmpeg -y -i /tmp/' +
+      filename +
+      '.png -q 3 -vf scale=1280:-1 /tmp/' +
+      filename +
+      '.jpg'
+  } else if (extension == 'gif') {
     ffmpegCommand =
-      "ffmpeg -y -i /tmp/" + filename + ".gif -vf scale=1280:-1 /tmp/" + filename + ".jpg";
-  } else if (extension == "jpeg") {
+      'ffmpeg -y -i /tmp/' +
+      filename +
+      '.gif -vf scale=1280:-1 /tmp/' +
+      filename +
+      '.jpg'
+  } else if (extension == 'jpeg') {
     ffmpegCommand =
-      "ffmpeg -y -i /tmp/" + filename + ".jpeg -vf scale=1280:-1 /tmp/" + filename + ".jpg";
-  } else if (extension == "jpg") {
+      'ffmpeg -y -i /tmp/' +
+      filename +
+      '.jpeg -vf scale=1280:-1 /tmp/' +
+      filename +
+      '.jpg'
+  } else if (extension == 'jpg') {
     ffmpegCommand =
-      "ffmpeg -y -i /tmp/" + filename + ".jpg -vf scale=1280:-1 /tmp/" + filename + ".jpg";
-    execSync(ffmpegCommand);
-    const fileStream = fs.createReadStream("/tmp/" + filename + ".jpg");
-    fileStream.on("error", function (error) {
-      console.log(error);
-      throw new Error(error);
-    });
+      'ffmpeg -y -i /tmp/' +
+      filename +
+      '.jpg -vf scale=1280:-1 /tmp/' +
+      filename +
+      '.jpg'
+    execSync(ffmpegCommand)
+    const fileStream = fs.createReadStream('/tmp/' + filename + '.jpg')
+    fileStream.on('error', function (error) {
+      console.log(error)
+      throw new Error(error)
+    })
     await s3
       .putObject({
-        Bucket: "droptune-test01",
-        Key: key.replace(extension, "jpg"),
+        Bucket: destinationBucket,
+        Key: key.replace(extension, 'jpg'),
         Body: fileStream,
-        ContentType: "image/jpeg",
+        ContentType: 'image/jpeg',
       })
       .promise(() => {
-        const message = key.replace(extension, "jpg");
-        console.log(message);
+        const message = key.replace(extension, 'jpg')
+        console.log(message)
       })
       .catch((err) => {
-        console.log(err);
-        const message = `Error putting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`;
-        console.log(message);
-        throw new Error(message);
-      });
+        console.log(err)
+        const message = `Error putting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`
+        console.log(message)
+        throw new Error(message)
+      })
 
-    fs.unlinkSync("/tmp/" + filename + ".jpg", uploaded_data.Body);
+    fs.unlinkSync('/tmp/' + filename + '.jpg', uploaded_data.Body)
 
-    await s3.deleteObject(params).promise();
+    await s3.deleteObject(params).promise()
 
-    return `Success getting and putting object ${key} from bucket ${bucket}.`;
+    return `Success getting and putting object ${key} from bucket ${bucket}.`
   }
 
-  execSync(ffmpegCommand);
+  execSync(ffmpegCommand)
 
-  const fileStream = fs.createReadStream("/tmp/" + filename + ".jpg");
-  fileStream.on("error", function (error) {
-    console.log(error);
-    throw new Error(error);
-  });
+  const fileStream = fs.createReadStream('/tmp/' + filename + '.jpg')
+  fileStream.on('error', function (error) {
+    console.log(error)
+    throw new Error(error)
+  })
 
   await s3
     .putObject({
-      Bucket: "droptune-test01",
-      Key: key.replace(extension, "jpg"),
+      Bucket: destinationBucket,
+      Key: key.replace(extension, 'jpg'),
       Body: fileStream,
-      ContentType: "image/jpg",
+      ContentType: 'image/jpg',
     })
     .promise(() => {
-      const message = key.replace(extension, "jpg");
-      console.log(message);
+      const message = key.replace(extension, 'jpg')
+      console.log(message)
     })
     .catch((err) => {
-      console.log(err);
-      const message = `Error putting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`;
-      console.log(message);
-      throw new Error(message);
-    });
+      console.log(err)
+      const message = `Error putting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`
+      console.log(message)
+      throw new Error(message)
+    })
 
-  fs.unlinkSync("/tmp/" + filename + "." + extension, uploaded_data.Body);
-  fs.unlinkSync("/tmp/" + filename + ".jpg", uploaded_data.Body);
+  fs.unlinkSync('/tmp/' + filename + '.' + extension, uploaded_data.Body)
+  fs.unlinkSync('/tmp/' + filename + '.jpg', uploaded_data.Body)
 
-  await s3.deleteObject(params).promise();
+  await s3.deleteObject(params).promise()
 
-  return `Success getting and putting object ${key} from bucket ${bucket}.`;
-};
+  return `Success getting and putting object ${key} from bucket ${bucket}.`
+}

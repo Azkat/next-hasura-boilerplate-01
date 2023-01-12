@@ -50,11 +50,14 @@ export const useCreateUser = () => {
     {
       onSuccess: (res) => {
         updateUserName(res)
+        console.log(res)
         cookie.set('user_id', res.insert_users_one.id, {
           path: '/',
         })
       },
-      onError: () => {},
+      onError: (res) => {
+        console.log(res)
+      },
     }
   )
 

@@ -24,8 +24,6 @@ const UserPostList = (props) => {
     setIsHovered(false)
   }
 
-  console.log(props)
-
   return (
     <section className="overflow-hidden mt-2 ">
       <div className="container px-4 py-2 mx-auto ">

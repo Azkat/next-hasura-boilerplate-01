@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "hasura4-79b4a"
-  }
+    "default": "hasura4-79b4a",
+    "production": "droptune-pd"
+  },
+  "targets": {},
+  "etags": {}
 }

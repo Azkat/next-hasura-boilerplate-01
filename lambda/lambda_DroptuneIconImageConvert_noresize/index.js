@@ -10,6 +10,10 @@ exports.handler = async (event, context) => {
   console.log('Received event:', JSON.stringify(event))
 
   const bucket = event.Records[0].s3.bucket.name
+  let destinationBucket = 'droptune-test01'
+  if (bucket == 'droptune-tmp-pd') {
+    destinationBucket = 'droptune-pd'
+  }
   const key = decodeURIComponent(
     event.Records[0].s3.object.key.replace(/\+/g, ' ')
   )
@@ -63,7 +67,7 @@ exports.handler = async (event, context) => {
     })
     await s3
       .putObject({
-        Bucket: 'droptune-test01',
+        Bucket: destinationBucket,
         //Key: key.replace(extension, 'jpg'),
         Key: key
           .replace(extension, 'jpg')
@@ -102,7 +106,7 @@ exports.handler = async (event, context) => {
 
   await s3
     .putObject({
-      Bucket: 'droptune-test01',
+      Bucket: destinationBucket,
       //Key: key.replace(extension, 'jpg'),
       Key: key
         .replace(extension, 'jpg')
