@@ -40,7 +40,10 @@ const PlayButton = (props) => {
     } else {
       dispatch({
         type: 'setSound',
-        payload: `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}audio/' + props.post.id + '.aac`,
+        payload:
+          `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}audio/` +
+          props.post.id +
+          `.aac`,
       })
       dispatch({ type: 'setPlayingTitle', payload: props.post.title })
       dispatch({ type: 'setPlayingUser', payload: props.post.user.name })
