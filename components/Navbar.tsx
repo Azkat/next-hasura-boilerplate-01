@@ -64,7 +64,7 @@ export const Navbar = (props) => {
         </div>
         <div className="navbar-center">
           <Link href="/">
-            <span className="normal-case text-3xl font-bold">Droptune</span>
+            <span className="normal-case text-3xl">Droptune</span>
           </Link>
         </div>
         <div className="navbar-end mr-2 flex">
