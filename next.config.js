@@ -7,6 +7,7 @@ const nextConfig = {
   },
   images: {
     domains: ['vmedia.droptune.net'],
+    domains: ['media.droptune.net'],
   },
   async headers() {
     const headers = []
