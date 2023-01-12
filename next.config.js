@@ -6,8 +6,12 @@ const nextConfig = {
     scrollRestoration: true,
   },
   images: {
-    domains: ['media.droptune.net'],
-    domains: ['vmedia.droptune.net'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.droptune.net',
+      },
+    ],
   },
   async headers() {
     const headers = []
