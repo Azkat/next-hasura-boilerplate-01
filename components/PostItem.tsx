@@ -71,7 +71,7 @@ const PostItem = (props) => {
               <Link href={'/user/' + props.post.user.id} className="contents ">
                 {!userImageLoadComplete ? (
                   <div className="w-8 h-8 mr-2  relative animate-pulse">
-                    <div className="rounded-full bg-slate-700 h-8 w-8 hover:opacity-95 active:opacity-80"></div>
+                    <div className="rounded-full bg-slate-700 h-8 w-8 duration-200  hover:opacity-95 active:opacity-80"></div>
                   </div>
                 ) : (
                   ''
@@ -79,14 +79,14 @@ const PostItem = (props) => {
 
                 {noAvatarImage ? (
                   <div className="relative inline-flex items-center justify-center w-8 h-8 overflow-hidden rounded-full bg-gray-600">
-                    <span className="font-medium text-gray-300 hover:opacity-95 active:opacity-80">
+                    <span className="font-medium text-gray-300 duration-200  hover:opacity-95 active:opacity-80">
                       {props.post.user.name.slice(0, 1).toUpperCase()}
                     </span>
                   </div>
                 ) : (
                   <Image
                     src={userIconSrc}
-                    className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8 hover:opacity-95 active:opacity-80"
+                    className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8 duration-200  hover:opacity-95 active:opacity-80"
                     layout="fill"
                     objectFit="contain"
                     onError={() => {
@@ -102,7 +102,7 @@ const PostItem = (props) => {
                 )}
               </Link>
             </div>
-            <div className="font-light dark:text-white hover:opacity-95 active:opacity-80">
+            <div className="font-light dark:text-white duration-200  hover:opacity-95 active:opacity-80">
               <Link href={'/user/' + props.post.user.id}>
                 {props.post.user.name}
               </Link>
@@ -129,7 +129,7 @@ const PostItem = (props) => {
                   ''
                 )}
 
-                <div className="w-full flex items-center active:opacity-80">
+                <div className="w-full flex items-center duration-100  active:brightness-125 ">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${props.post.id}.jpg`}
                     layout="responsive"
@@ -192,7 +192,7 @@ const PostItem = (props) => {
             <div>
               <Link
                 href={'/post/' + props.post.id}
-                className="hover:opacity-95 active:opacity-80"
+                className="duration-200 hover:opacity-95 active:opacity-80"
               >
                 {props.post.title}
               </Link>
