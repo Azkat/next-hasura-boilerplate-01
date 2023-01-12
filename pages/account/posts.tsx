@@ -10,8 +10,8 @@ import { useRouter } from 'next/router'
 import { useCreatePost } from '../../hooks/useCreatePost'
 import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid'
 import { useAppMutate } from '../../hooks/useAppMutate'
-import { AccountPostListMemo } from '../../components/AccountPostList'
 import { AuthContext } from '../../lib/authProvider'
+import { AccountPostListMemo } from '../../components/AccountPostList'
 
 export default function Posts(props) {
   const dispatch = useDispatch()
