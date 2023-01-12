@@ -96,7 +96,7 @@ const ModalPost = (props) => {
         </div>
       </div>
       {status == 'success' ? (
-        <div className="w-2/6 relative">
+        <div className="w-2/6 relative break-words">
           <div className="flex items-center p-4 pt-3">
             <div className="w-8 h-8 mr-2  relative">
               <Link
@@ -234,6 +234,9 @@ const ModalPost = (props) => {
           width: 100%;
           top: 0;
           left: 0;
+        }
+        .wrap-anywhere {
+          overflow-wrap: anywhere;
         }
       `}</style>
     </div>

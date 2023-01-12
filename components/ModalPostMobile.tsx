@@ -50,7 +50,7 @@ const ModalPostMobile = (props) => {
 
   return (
     <>
-      <div className="bg-backgroundGray mb-4 pb-40">
+      <div className="bg-backgroundGray mb-4 pb-40 break-words">
         <div className="h-11 px-4 relative bg-baseBody border-b border-border">
           <ChevronLeftIcon
             className="h-8 w-8 text-gray-100 opacity-80 absolute left-4 top-1/2 -translate-y-1/2"
@@ -59,7 +59,7 @@ const ModalPostMobile = (props) => {
           <div className="justify-center items-center flex h-full">Post</div>
         </div>
 
-        <p className="my-3">
+        <p className="my-3 wrap-anywhere">
           {status == 'success' ? (
             <div className="flex items-center p-4 pt-3">
               <div className="w-8 h-8 mr-2  relative">
@@ -206,6 +206,9 @@ const ModalPostMobile = (props) => {
             width: 100%;
             top: 0;
             left: 0;
+          }
+          .wrap-anywhere {
+            overflow-wrap: anywhere;
           }
         `}</style>
       </div>

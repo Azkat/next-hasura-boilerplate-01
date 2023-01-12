@@ -52,7 +52,7 @@ export default function UserList(props) {
 
   return (
     <Layout title={data.title}>
-      <div className="bg-backgroundGray mt-0 mb-4 sm:rounded-lg sm:mt-8">
+      <div className="bg-backgroundGray mt-0 mb-4 sm:rounded-lg sm:mt-8 wrap-anywhere">
         <p className="font-normal my-3" key={data.id}>
           <div className="flex items-center p-4 pt-3">
             <div className="w-8 h-8 mr-2  relative">
@@ -160,6 +160,9 @@ export default function UserList(props) {
           .playbutton {
             bottom: 24px;
             left: 16px;
+          }
+          .wrap-anywhere {
+            overflow-wrap: anywhere;
           }
         `}</style>
       </div>
