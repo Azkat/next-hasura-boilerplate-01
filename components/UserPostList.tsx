@@ -11,7 +11,7 @@ const UserPostList = (props) => {
   const [isHovering, setIsHovered] = useState(false)
   const [hoveredId, setHoveredId] = useState('')
   const [postImageSrc, setPostImageSrc] = useState(
-    `https://vmedia.droptune.net/post_image/`
+    `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/`
   )
   const router = useRouter()
 

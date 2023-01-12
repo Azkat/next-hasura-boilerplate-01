@@ -79,30 +79,6 @@ export default function Account(props) {
         </div>
 
         {data ? <DynamicUserPostList data={data} path={'account'} /> : ''}
-
-        {/* <section className="overflow-hidden mt-10 ">
-          <div className="container px-4 py-2 mx-auto ">
-            {data ? (
-              <div className="flex flex-wrap -m-1 md:-m-2">
-                {data.posts?.map((post) => (
-                  <div className="flex flex-wrap w-1/3" key={post.id}>
-                    <div className="w-full p-1 md:p-2  aspect-square cursor-pointer">
-                      <Link href={`/post/${post.id}`}>
-                        <img
-                          alt={post.title}
-                          className="block object-cover object-center w-full h-full"
-                          src={`https://vmedia.droptune.net/post_image/${post.id}.jpg`}
-                        />
-                      </Link>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              ''
-            )}
-          </div>
-        </section> */}
       </Layout>
     )
   }

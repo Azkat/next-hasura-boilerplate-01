@@ -16,7 +16,9 @@ export default function Change_Profile_Image(props) {
   const { state, dispatch } = useContext(Store)
   const { uploadPhoto } = useChangeProfileImage()
   const [src, setSrc] = useState(
-    `https://vmedia.droptune.net/user_icon/${cookie.get('user_id')}.jpg`
+    `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}user_icon/${cookie.get(
+      'user_id'
+    )}.jpg`
   )
 
   const { currentUser } = useContext(AuthContext)

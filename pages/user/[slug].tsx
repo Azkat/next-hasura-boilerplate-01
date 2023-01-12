@@ -20,7 +20,7 @@ export default function UserList(props) {
   const data = queryClient.getQueryData<User>('user_by_id')
   const status = 'success'
   const [postImageSrc, setPostImageSrc] = useState(
-    `https://vmedia.droptune.net/post_image/`
+    `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/`
   )
   const [hasImage, setHasImage] = useState(true)
   const router = useRouter()

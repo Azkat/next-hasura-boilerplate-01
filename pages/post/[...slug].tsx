@@ -25,7 +25,7 @@ export default function UserList(props) {
   const data = queryClient.getQueryData<Post>('post')
   const { state, dispatch } = useContext(Store)
   const [userIconSrc, setUserIconSrc] = useState(
-    `https://vmedia.droptune.net/user_icon/${data.user.id}.jpg`
+    `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}user_icon/${data.user.id}.jpg`
   )
   const [audioHost, setAudioHost] = useState(``)
   const [imageHost, setImageHost] = useState(``)
@@ -87,7 +87,7 @@ export default function UserList(props) {
           </div>
           <div className="bg-cover bg-center w-full relative ">
             <Image
-              src={`https://vmedia.droptune.net/post_image/${data.id}.jpg`}
+              src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${data.id}.jpg`}
               layout="responsive"
               objectFit="contain"
               alt=""
@@ -110,7 +110,7 @@ export default function UserList(props) {
                   autoPlay
                   loop
                   muted
-                  src={`https://vmedia.droptune.net/video/${data.id}.mp4`}
+                  src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}video/${data.id}.mp4`}
                   className="w-full absolute top-0 left-0"
                 ></video>
               </div>

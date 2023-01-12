@@ -33,7 +33,7 @@ const ModalPostMobile = (props) => {
   useEffect(() => {
     if (status == 'success') {
       setUserIconSrc(
-        `https://vmedia.droptune.net/user_icon/${data.user.id}.jpg`
+        `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}user_icon/${data.user.id}.jpg`
       )
       setVisualFormat(data.visual_format)
       if (data.audio_url) {
@@ -104,7 +104,7 @@ const ModalPostMobile = (props) => {
           )}
           <div className="bg-cover bg-center w-full relative">
             <Image
-              src={`https://vmedia.droptune.net/post_image/${props.id}.jpg`}
+              src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${props.id}.jpg`}
               layout="responsive"
               objectFit="contain"
               alt=""
@@ -126,7 +126,7 @@ const ModalPostMobile = (props) => {
                 autoPlay
                 loop
                 muted
-                src={`https://vmedia.droptune.net/video/${props.id}.mp4`}
+                src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}video/${props.id}.mp4`}
                 className="w-full video "
               ></video>
             ) : (

@@ -22,8 +22,7 @@ const PlayButton = (props) => {
   const [scrollEnough, setScrollEnough] = useState(false)
   const { state, dispatch } = useContext(Store)
   let [playPauseCtrl, setPlayPauseCtrl] = useState(false)
-  let sound =
-    'https://vmedia.droptune.net/audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac'
+  let sound = `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac`
 
   useEffect(() => {}, [])
 
@@ -41,7 +40,7 @@ const PlayButton = (props) => {
     } else {
       dispatch({
         type: 'setSound',
-        payload: 'https://vmedia.droptune.net/audio/' + props.post.id + '.aac',
+        payload: `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}audio/' + props.post.id + '.aac`,
       })
       dispatch({ type: 'setPlayingTitle', payload: props.post.title })
       dispatch({ type: 'setPlayingUser', payload: props.post.user.name })
@@ -73,7 +72,7 @@ const PlayButton = (props) => {
     } else {
       dispatch({
         type: 'setSound',
-        payload: 'https://vmedia.droptune.net/audio/' + props.post.id + '.aac',
+        payload: `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}audio/' + props.post.id + '.aac`,
       })
       dispatch({ type: 'setPlayingTitle', payload: props.post.title })
       dispatch({ type: 'setPlayingUser', payload: props.user.name })

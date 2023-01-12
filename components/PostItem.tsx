@@ -26,7 +26,7 @@ const PostItem = (props) => {
   const targetViewPosition = useOnScreen(targetRef)
   const { state, dispatch } = useContext(Store)
   const [userIconSrc, setUserIconSrc] = useState(
-    `https://vmedia.droptune.net/user_icon/${props.post.user.id}.jpg`
+    `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}user_icon/${props.post.user.id}.jpg`
   )
   const [noAvatarImage, setNoAvatarImage] = useState(false)
   const [userImageLoadComplete, setUserImageLoadComplete] = useState(false)
@@ -37,8 +37,7 @@ const PostItem = (props) => {
     height: 1,
   })
   let [playPauseCtrl, setPlayPauseCtrl] = useState(false)
-  let sound =
-    'https://vmedia.droptune.net/audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac'
+  let sound = `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac`
 
   const videoRef = useRef(null)
 
@@ -132,7 +131,7 @@ const PostItem = (props) => {
 
                 <div className="w-full flex items-center ">
                   <Image
-                    src={`https://vmedia.droptune.net/post_image/${props.post.id}.jpg`}
+                    src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${props.post.id}.jpg`}
                     layout="responsive"
                     objectFit="contain"
                     alt=""
@@ -161,7 +160,7 @@ const PostItem = (props) => {
                       autoPlay
                       loop
                       muted
-                      src={`https://vmedia.droptune.net/video/${props.post.id}.mp4`}
+                      src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}video/${props.post.id}.mp4`}
                       className="w-full absolute top-0 left-0"
                     ></video>
                   </div>

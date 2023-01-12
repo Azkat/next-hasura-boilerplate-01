@@ -19,13 +19,17 @@ const AvatarName = (props) => {
   useEffect(() => {
     if (router.pathname == '/account') {
       setSrc(
-        `https://vmedia.droptune.net/user_icon/${cookie.get('user_id')}.jpg`
+        `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}user_icon/${cookie.get(
+          'user_id'
+        )}.jpg`
       )
       if (props.data != undefined) {
         setInitial(props.data.name.slice(0, 1).toUpperCase())
       }
     } else {
-      setSrc(`https://vmedia.droptune.net/user_icon/${props.data.id}.jpg`)
+      setSrc(
+        `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}user_icon/${props.data.id}.jpg`
+      )
       setInitial(props.data.name.slice(0, 1).toUpperCase())
     }
   }, [props])

@@ -31,7 +31,7 @@ const ModalPost = (props) => {
     }
     if (status == 'success') {
       setUserIconSrc(
-        `https://vmedia.droptune.net/user_icon/${data.user.id}.jpg`
+        `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}user_icon/${data.user.id}.jpg`
       )
       setVisualFormat(data.visual_format)
       if (data.audio_url) {
@@ -50,7 +50,7 @@ const ModalPost = (props) => {
     <div className="bg-backgroundGray hidden sm:flex sm:rounded-lg  h-full">
       <div className="bg-black w-4/6  relative">
         <Image
-          src={`https://vmedia.droptune.net/post_image/${props.id}.jpg`}
+          src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${props.id}.jpg`}
           layout="fill"
           objectFit="contain"
           alt=""
@@ -64,7 +64,7 @@ const ModalPost = (props) => {
             autoPlay
             loop
             muted
-            src={`https://vmedia.droptune.net/video/${props.id}.mp4`}
+            src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}video/${props.id}.mp4`}
             className="w-full video "
           ></video>
         ) : (
