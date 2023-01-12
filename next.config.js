@@ -6,8 +6,8 @@ const nextConfig = {
     scrollRestoration: true,
   },
   images: {
-    domains: ['vmedia.droptune.net'],
     domains: ['media.droptune.net'],
+    domains: ['vmedia.droptune.net'],
   },
   async headers() {
     const headers = []
