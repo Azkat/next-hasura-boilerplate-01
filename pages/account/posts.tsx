@@ -17,8 +17,8 @@ export default function Posts(props) {
   const dispatch = useDispatch()
   const editedPost = useSelector(selectPost)
   const router = useRouter()
-  const [isUser, setIsUser] = useState(false)
   const { updatePostMutation } = useAppMutate()
+  const [isUser, setIsUser] = useState(false)
   const {
     title,
     description,
