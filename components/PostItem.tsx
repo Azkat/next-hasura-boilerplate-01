@@ -17,7 +17,6 @@ import PostItemSkelton from './PostItemSkelton'
 import PlayButton from './PlayButton'
 import WebAudio from './WebAudio'
 import { formatDistance, format } from 'date-fns'
-import { current } from '@reduxjs/toolkit'
 
 const PostItem = (props) => {
   const cookie = new Cookies()
@@ -74,6 +73,7 @@ const PostItem = (props) => {
       {targetViewPosition === 'BELOW_VIEWPORT' && (
         <p>画面より下に表示されています</p>
       )} */}
+
       {!props.post ? (
         <PostItemSkelton />
       ) : (

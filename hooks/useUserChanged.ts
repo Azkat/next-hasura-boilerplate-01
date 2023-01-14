@@ -10,6 +10,7 @@ import loginCookie from './useLoginCookie'
 import { User } from '../types/types'
 import { GET_USER_BY_FIREBASEID } from '../queries/queries'
 import { useQuery } from 'react-query'
+import { Store } from '../reducer/reducer'
 
 export let unSubMeta: () => void
 const cookie = new Cookie()

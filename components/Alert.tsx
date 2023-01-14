@@ -23,12 +23,12 @@ const Alert = (props) => {
     if (state.alert.text !== '') {
       setShowAlert(true)
 
-      state.alert.type == 'info' ||
-        (state.alert.type == '' && setAlertStyle(alertStyleList.info))
+      state.alert.type == 'info' && setAlertStyle(alertStyleList.info)
       state.alert.type == 'danger' && setAlertStyle(alertStyleList.danger)
       state.alert.type == 'success' && setAlertStyle(alertStyleList.success)
       state.alert.type == 'warning' && setAlertStyle(alertStyleList.warning)
       state.alert.type == 'dark' && setAlertStyle(alertStyleList.dark)
+      state.alert.type == '' && setAlertStyle(alertStyleList.info)
 
       setTimeout(() => {
         setShowAlert(false)

@@ -8,12 +8,14 @@ import { UserCircleIcon } from '@heroicons/react/solid'
 import firebase from '../firebaseConfig'
 import { unSubMeta } from '../hooks/useUserChanged'
 import Cookie from 'universal-cookie'
+import { Store } from '../reducer/reducer'
 
 const cookie = new Cookie()
 
 function DropdownHeaderMenu(props) {
   const router = useRouter()
   const { currentUser } = useContext(AuthContext)
+  const { state, dispatch } = useContext(Store)
 
   const logout = async () => {
     if (unSubMeta) {
@@ -23,6 +25,10 @@ function DropdownHeaderMenu(props) {
     cookie.remove('token')
     cookie.remove('user_id')
     cookie.remove('token_expire')
+    dispatch({
+      type: 'setAlert',
+      payload: { text: 'Logged out', type: 'info' },
+    })
     router.push('/')
   }
 
@@ -48,7 +54,7 @@ function DropdownHeaderMenu(props) {
         <Menu.Items className="absolute top-[32px] left-[210px] ">
           <Menu.Item>
             {({ active }) => (
-              <ul className="dropdown-content menu p-2 shadow bg-baseBody rounded w-52 font-normal border border-borderLow shadow-xl">
+              <ul className="dropdown-content menu p-2  bg-baseBody rounded-box w-52 font-normal border border-borderLow shadow-xl">
                 {(() => {
                   if (currentUser == undefined) {
                     return (
