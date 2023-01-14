@@ -56,7 +56,7 @@ const ModalPost = (props) => {
         videoRef.current?.pause()
       }
     }
-  }, [state.audioPlay])
+  }, [state.audioPlay, visualFormat])
 
   return (
     <div className="bg-backgroundGray hidden sm:flex sm:rounded-lg  h-full">
