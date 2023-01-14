@@ -35,6 +35,7 @@ export default function UserList(props) {
   })
   const [noAvatarImage, setNoAvatarImage] = useState(false)
   const [initial, setInitial] = useState(``)
+  const [videoPlayed, setVideoPlayed] = useState(false)
   const { currentUser } = useContext(AuthContext)
   const videoRef = useRef(null)
 
@@ -49,6 +50,17 @@ export default function UserList(props) {
     }
     setInitial(data.user.name.slice(0, 1).toUpperCase())
   }, [])
+
+  useEffect(() => {
+    if (data.visual_format == 'Video') {
+      if (state.audioPlay && state.playingId == data.id) {
+        videoPlayed && videoRef.current?.play()
+        setVideoPlayed(true)
+      } else if (videoPlayed) {
+        videoRef.current?.pause()
+      }
+    }
+  }, [state.audioPlay])
 
   return (
     <Layout title={data.title}>
@@ -100,12 +112,11 @@ export default function UserList(props) {
               width={imageSize.width}
               height={imageSize.height}
             />
-            {data.visual_format == 'Video' &&
-            state.audioPlay &&
-            state.playingId == data.id ? (
+            {data.visual_format == 'Video' && videoPlayed ? (
               <div className="w-full h-full flex items-center">
                 <video
                   ref={videoRef}
+                  id="video"
                   playsInline
                   autoPlay
                   loop

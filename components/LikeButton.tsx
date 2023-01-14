@@ -50,7 +50,7 @@ export const LikeButton = (props) => {
 
   if (!props.currentUser) {
     return (
-      <span className="h-full w-full flex float-right ml-4">
+      <span className="h-full w-full flex float-right ml-4 hover:opacity-60 duration-200">
         <HeartIconOutline
           className="h-full w-full text-gray-100 opacity-90 cursor-pointer"
           onClick={() => alert('Login to like.')}
@@ -61,7 +61,7 @@ export const LikeButton = (props) => {
 
   if (liked) {
     return (
-      <span className="h-full w-full flex float-right relative">
+      <span className="h-full w-full flex float-right relative hover:opacity-60 duration-200">
         {lottie ? (
           <>
             <div
@@ -78,7 +78,7 @@ export const LikeButton = (props) => {
           </>
         ) : (
           <HeartIcon
-            className="h-full w-full  text-white opacity-80 cursor-pointer"
+            className="h-full w-full  text-white opacity-80 cursor-pointer hover:opacity-60 duration-200"
             onClick={async () => {
               setLiked(false)
               const param = {
@@ -97,7 +97,7 @@ export const LikeButton = (props) => {
     )
   } else {
     return (
-      <span className="h-full w-full flex float-right relative">
+      <span className="h-full w-full flex float-right relative hover:opacity-60 duration-200">
         <HeartIconOutline
           className="h-full w-full  text-gray-100 opacity-50 cursor-pointer"
           onClick={async () => {

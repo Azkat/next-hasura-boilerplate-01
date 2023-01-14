@@ -21,6 +21,7 @@ const ModalPostMobile = (props) => {
   const [imageHost, setImageHost] = useState(``)
   const [noAvatarImage, setNoAvatarImage] = useState(false)
   const [initial, setInitial] = useState(``)
+  const [videoPlayed, setVideoPlayed] = useState(false)
   const { status, data }: any = useQueryPostById(props.id)
   const { state, dispatch } = useContext(Store)
   const router = useRouter()
@@ -48,6 +49,17 @@ const ModalPostMobile = (props) => {
       setInitial(data.user.name.slice(0, 1).toUpperCase())
     }
   }, [status])
+
+  useEffect(() => {
+    if (visualFormat == 'Video') {
+      if (state.audioPlay && state.playingId == props.id) {
+        videoPlayed && videoRef.current?.play()
+        setVideoPlayed(true)
+      } else if (videoPlayed) {
+        videoRef.current?.pause()
+      }
+    }
+  }, [state.audioPlay])
 
   return (
     <>
@@ -118,11 +130,10 @@ const ModalPostMobile = (props) => {
               width={imageSize.width}
               height={imageSize.height}
             />
-            {visualFormat == 'Video' &&
-            state.audioPlay &&
-            state.playingId == props.id ? (
+            {visualFormat == 'Video' && videoPlayed ? (
               <video
                 ref={videoRef}
+                id="video"
                 playsInline
                 autoPlay
                 loop

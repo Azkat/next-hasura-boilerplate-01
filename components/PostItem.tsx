@@ -36,10 +36,11 @@ const PostItem = (props) => {
     width: 1,
     height: 1,
   })
+  const [videoPlayed, setVideoPlayed] = useState(false)
   let [playPauseCtrl, setPlayPauseCtrl] = useState(false)
   let sound = `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac`
 
-  const videoRef = useRef(null)
+  const videoRef: any = useRef(null)
 
   useEffect(() => {
     if (scrollEnough) {
@@ -52,6 +53,17 @@ const PostItem = (props) => {
       setScrollEnough(true)
     }
   }, [targetViewPosition])
+
+  useEffect(() => {
+    if (props.post.visual_format == 'Video') {
+      if (state.audioPlay && state.playingId == props.post.id) {
+        videoPlayed && videoRef.current.play()
+        setVideoPlayed(true)
+      } else if (videoPlayed) {
+        videoRef.current.pause()
+      }
+    }
+  }, [state.audioPlay])
 
   return (
     <div className="bg-backgroundGray mb-4 sm:rounded-lg ">
@@ -67,47 +79,52 @@ const PostItem = (props) => {
       ) : (
         <p className="font-bold my-3 " key={props.post.id}>
           <div className="flex items-center p-4 pt-3 ">
-            <div className="w-8 h-8 mr-2  relative">
-              <Link href={'/user/' + props.post.user.id} className="contents ">
-                {!userImageLoadComplete ? (
-                  <div className="w-8 h-8 mr-2  relative animate-pulse">
-                    <div className="rounded-full bg-slate-700 h-8 w-8 duration-200  hover:opacity-95 active:opacity-80"></div>
-                  </div>
-                ) : (
-                  ''
-                )}
+            <div className="flex items-center hover:opacity-80 active:opacity-60">
+              <div className="w-8 h-8 mr-2  relative ">
+                <Link
+                  href={'/user/' + props.post.user.id}
+                  className="contents "
+                >
+                  {!userImageLoadComplete ? (
+                    <div className="w-8 h-8 mr-2  relative animate-pulse">
+                      <div className="rounded-full bg-slate-700 h-8 w-8 duration-200  hover:opacity-95 active:opacity-80"></div>
+                    </div>
+                  ) : (
+                    ''
+                  )}
 
-                {noAvatarImage ? (
-                  <div className="relative inline-flex items-center justify-center w-8 h-8 overflow-hidden rounded-full bg-gray-600">
-                    <span className="font-medium text-gray-300 duration-200  hover:opacity-95 active:opacity-80">
-                      {props.post.user.name.slice(0, 1).toUpperCase()}
-                    </span>
-                  </div>
-                ) : (
-                  <Image
-                    src={userIconSrc}
-                    className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8 duration-200  hover:opacity-95 active:opacity-80"
-                    layout="fill"
-                    objectFit="contain"
-                    onError={() => {
-                      //setUserIconSrc(`/noImageYet.png`)
-                      setNoAvatarImage(true)
-                      setUserImageLoadComplete(true)
-                    }}
-                    onLoadingComplete={(target) => {
-                      setUserImageLoadComplete(true)
-                    }}
-                    alt=""
-                  />
-                )}
-              </Link>
+                  {noAvatarImage ? (
+                    <div className="relative inline-flex items-center justify-center w-8 h-8 overflow-hidden rounded-full bg-gray-600">
+                      <span className="font-medium text-gray-300 duration-200  hover:opacity-95 active:opacity-80">
+                        {props.post.user.name.slice(0, 1).toUpperCase()}
+                      </span>
+                    </div>
+                  ) : (
+                    <Image
+                      src={userIconSrc}
+                      className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8 duration-200  hover:opacity-95 active:opacity-80"
+                      layout="fill"
+                      objectFit="contain"
+                      onError={() => {
+                        //setUserIconSrc(`/noImageYet.png`)
+                        setNoAvatarImage(true)
+                        setUserImageLoadComplete(true)
+                      }}
+                      onLoadingComplete={(target) => {
+                        setUserImageLoadComplete(true)
+                      }}
+                      alt=""
+                    />
+                  )}
+                </Link>
+              </div>
+              <div className="font-light dark:text-white duration-200  ">
+                <Link href={'/user/' + props.post.user.id}>
+                  {props.post.user.name}
+                </Link>
+              </div>
             </div>
-            <div className="font-light dark:text-white duration-200  hover:opacity-95 active:opacity-80">
-              <Link href={'/user/' + props.post.user.id}>
-                {props.post.user.name}
-              </Link>
-            </div>
-            <div className="ml-auto">
+            <div className="ml-auto ">
               <DropdownPostmenu id={props.post.id} />
             </div>
           </div>
@@ -129,7 +146,7 @@ const PostItem = (props) => {
                   ''
                 )}
 
-                <div className="w-full flex items-center duration-100  active:brightness-125 ">
+                <div className="w-full flex items-center duration-100 hover:brightness-110 active:brightness-125 ">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${props.post.id}.jpg`}
                     layout="responsive"
@@ -150,12 +167,11 @@ const PostItem = (props) => {
                   />
                 </div>
 
-                {props.post.visual_format == 'Video' &&
-                state.audioPlay &&
-                state.playingId == props.post.id ? (
+                {props.post.visual_format == 'Video' && videoPlayed ? (
                   <div className="w-full h-full flex items-center">
                     <video
                       ref={videoRef}
+                      id="video"
                       playsInline
                       autoPlay
                       loop
@@ -169,10 +185,10 @@ const PostItem = (props) => {
                 )}
               </Link>
 
-              <div className="playbutton absolute h-10 w-10">
+              <div className="playbutton absolute h-10 w-10 ">
                 <PlayButton post={props.post} control={false} />
               </div>
-              <div className="likebutton absolute h-8 w-8">
+              <div className="likebutton absolute h-8 w-8 ">
                 {/* <LikeButton
               post={props.post}
               currentUser={props.currentUser}
@@ -192,7 +208,7 @@ const PostItem = (props) => {
             <div>
               <Link
                 href={'/post/' + props.post.id}
-                className="duration-200 hover:opacity-95 active:opacity-80"
+                className="duration-200 hover:opacity-80 active:opacity-60"
               >
                 {props.post.title}
               </Link>

@@ -29,10 +29,10 @@ function DropdownHeaderMenu(props) {
   return (
     <div className="dropdown dropdown-end relative">
       <Menu>
-        <Menu.Button className="">
+        <Menu.Button>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 ml-2"
+            className="h-6 w-6 ml-2 hover:opacity-60 duration-200"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

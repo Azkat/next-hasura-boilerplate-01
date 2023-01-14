@@ -90,7 +90,7 @@ const PlayButton = (props) => {
 
   if (props.control) {
     return (
-      <>
+      <div className="hover:opacity-60 duration-200">
         {state.audioPlay ? (
           <PauseIcon
             className="h-full w-full mr-3 text-gray-100 opacity-80 cursor-pointer"
@@ -104,13 +104,13 @@ const PlayButton = (props) => {
         )}
 
         <audio src="https://vmedia.droptune.net/music/0.m4a"></audio>
-      </>
+      </div>
     )
   }
 
   if (props.post != undefined && props.user == undefined) {
     return (
-      <>
+      <div className="hover:opacity-60 duration-200">
         {state.audioPlay && state.playingId == props.post.id ? (
           <PauseIcon
             className="h-full w-full text-gray-100 opacity-80 cursor-pointer"
@@ -124,13 +124,13 @@ const PlayButton = (props) => {
         )}
 
         <audio src="https://vmedia.droptune.net/music/0.m4a"></audio>
-      </>
+      </div>
     )
   }
 
   if (props.user != undefined) {
     return (
-      <>
+      <div className="hover:opacity-60 duration-200">
         {state.audioPlay && state.playingId == props.post.id ? (
           <PauseIcon
             className="h-full w-full text-gray-100 opacity-80 cursor-pointer"
@@ -144,7 +144,7 @@ const PlayButton = (props) => {
         )}
 
         <audio src="https://vmedia.droptune.net/music/0.m4a"></audio>
-      </>
+      </div>
     )
   } else {
     return <></>
