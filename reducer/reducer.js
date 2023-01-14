@@ -24,6 +24,7 @@ const initialState = {
   justLikeId: '',
   justDeleteLikeId: '',
   tryingCreatePost: false,
+  alert: { text: '', type: '' },
 }
 
 const Store = createContext()
@@ -67,8 +68,9 @@ function reducer(state, action) {
       return { ...state, justLikeId: action.payload }
     case 'setJustDeleteLikeId':
       return { ...state, justDeleteLikeId: action.payload }
-    case 'setTryingCreatePost':
-      return { ...state, tryingCreatePost: action.payload }
+
+    case 'setAlert':
+      return { ...state, alert: action.payload }
     default:
       return state
   }

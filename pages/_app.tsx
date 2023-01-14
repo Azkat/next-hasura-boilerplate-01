@@ -9,6 +9,7 @@ import { AuthProvider } from '../lib/authProvider'
 import { Hydrate } from 'react-query/hydration'
 import UserChanged from '../components/UserChanged'
 import AudioControl from '../components/AudioControl'
+import Alert from '../components/Alert'
 import Cookie from 'universal-cookie'
 import { ReducerProvider } from '../reducer/reducer'
 import NextNprogress from 'nextjs-progressbar'
@@ -47,6 +48,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
               <Component {...pageProps} />
               <AudioControl />
+              <Alert />
               <WebAudio />
             </AuthProvider>
           </ReducerProvider>

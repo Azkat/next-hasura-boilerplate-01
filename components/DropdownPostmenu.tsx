@@ -2,9 +2,18 @@ import { Menu } from '@headlessui/react'
 import React, { useRef, useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { Store } from '../reducer/reducer'
 
 function DropdownPostmenu(props) {
   const router = useRouter()
+  const { state, dispatch } = useContext(Store)
+
+  const showAlert = () => {
+    dispatch({
+      type: 'setAlert',
+      payload: { text: 'URL copied to clipboard!', type: 'success' },
+    })
+  }
 
   return (
     <div className="dropdown dropdown-end">
@@ -32,7 +41,7 @@ function DropdownPostmenu(props) {
                 <li>
                   <CopyToClipboard
                     text={`https://` + location.hostname + `/post/` + props.id}
-                    onCopy={() => alert('Link URL copied.')}
+                    onCopy={() => showAlert()}
                   >
                     <div className="ml-1">
                       <svg
