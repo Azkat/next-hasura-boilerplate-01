@@ -18,6 +18,7 @@ const AudioControl = (props) => {
   const { state, dispatch } = useContext(Store)
   const { currentUser } = useContext(AuthContext)
   const [post, setPost] = useState({})
+  const [translateY, setTranslateY] = useState('')
   const [imageError, setImageError] = useState(false)
 
   useEffect(() => {
@@ -25,10 +26,16 @@ const AudioControl = (props) => {
     setImageError(false)
   }, [state.playingId])
 
+  useEffect(() => {
+    state.didPlay && setTranslateY('-translate-y-[2rem]')
+  }, [state.didPlay])
+
   return (
     <>
       {state.didPlay ? (
-        <div className="fixed touch-none overflow-hidden bottom-4 w-full grid place-items-center z-[100000] opacity-95 px-2 sm:px-0 ">
+        <div
+          className={`fixed touch-none overflow-hidden ${translateY} bottom-[-1rem] w-full grid place-items-center z-[100000] opacity-95 px-2 sm:px-0 duration-300`}
+        >
           <div className="w-full sm:w-[768px] h-[64px] bg-backgroundPlayer rounded-lg flex px-4 sm:px-6 py-0 sm:py-1 items-center shadow-xl ">
             <Link
               href={'/post/' + state.playingId}
