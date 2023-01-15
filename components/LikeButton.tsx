@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import { HeartIcon } from '@heroicons/react/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/outline'
 import Cookies from 'universal-cookie'
@@ -8,6 +8,8 @@ import Lottie from 'react-lottie'
 import animationData from '../public/99800-heart-fav.json'
 import { setTimeout } from 'timers'
 import { Store } from '../reducer/reducer'
+import { Dialog, Transition } from '@headlessui/react'
+import Link from 'next/link'
 
 export const LikeButton = (props) => {
   const cookie = new Cookies()
@@ -18,6 +20,8 @@ export const LikeButton = (props) => {
   const [lottie, setLottie] = useState(false)
   const { state, dispatch } = useContext(Store)
   const { status, data } = useQueryUserLikes(cookie.get('user_id'))
+  const [isOpen, setIsOpen] = useState(false)
+  let completeButtonRef = useRef(null)
 
   const animationOptions = {
     loop: false,
@@ -53,15 +57,46 @@ export const LikeButton = (props) => {
       <span className="h-full w-full flex float-right ml-4 hover:opacity-60 duration-200">
         <HeartIconOutline
           className="h-full w-full text-gray-100 opacity-90 cursor-pointer"
-          onClick={() => alert('Login to like.')}
+          onClick={() => setIsOpen(true)}
         />
+
+        <Dialog
+          open={isOpen}
+          initialFocus={completeButtonRef}
+          onClose={() => setIsOpen(false)}
+          className="relative"
+        >
+          <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+          <div className="fixed inset-0 flex items-center justify-center rounded-box ">
+            <Dialog.Panel className=" max-w-sm rounded-box  bg-baseBody border border-borderLow shadow-xl p-6 w-[343px]">
+              <Dialog.Title className="font-bold text-lg">
+                Like this post?
+              </Dialog.Title>
+              <Dialog.Description className="py-4 text-gray-500">
+                Login to like. <span ref={completeButtonRef}></span>
+              </Dialog.Description>
+
+              <div className="pt-6 flex justify-end gap-8 items-center">
+                <div
+                  className="cursor-pointer"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Cancel
+                </div>
+                <Link href="/login">
+                  <div>Login</div>
+                </Link>
+              </div>
+            </Dialog.Panel>
+          </div>
+        </Dialog>
       </span>
     )
   }
 
   if (liked) {
     return (
-      <span className="h-full w-full flex float-right relative hover:opacity-60 duration-200">
+      <span className="h-full w-full flex float-right relative hover:opacity-60 duration-200  overflow-hidden">
         {lottie ? (
           <>
             <div

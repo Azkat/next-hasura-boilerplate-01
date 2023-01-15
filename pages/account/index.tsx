@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { Fragment, useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../lib/authProvider'
 import { Post } from '../../types/types'
 import { Layout } from '../../components/Layout'
@@ -33,7 +33,6 @@ export default function Account(props) {
   const postsData = queryClient.getQueryData<Post[]>('posts')
   const [isUser, setIsUser] = useState(false)
   const { status, data } = useQueryUserById(cookie.get('user_id'))
-
   const { currentUser } = useContext(AuthContext)
   !currentUser ? router.replace('/login') : ''
 
