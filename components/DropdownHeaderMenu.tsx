@@ -30,6 +30,7 @@ function DropdownHeaderMenu(props) {
       payload: { text: 'Logged out', type: 'info' },
     })
     router.push('/')
+    router.reload()
   }
 
   return (

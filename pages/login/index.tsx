@@ -20,7 +20,6 @@ export default function UserList(props) {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         setIsUser(true)
-
         dispatch({
           type: 'setAlert',
           payload: { text: 'Login succeeded', type: 'success' },

@@ -10,6 +10,7 @@ import { setTimeout } from 'timers'
 import { Store } from '../reducer/reducer'
 import { Dialog, Transition } from '@headlessui/react'
 import Link from 'next/link'
+import { AuthContext } from '../lib/authProvider'
 
 export const LikeButton = (props) => {
   const cookie = new Cookies()
@@ -22,6 +23,7 @@ export const LikeButton = (props) => {
   const { status, data } = useQueryUserLikes(cookie.get('user_id'))
   const [isOpen, setIsOpen] = useState(false)
   let completeButtonRef = useRef(null)
+  const { currentUser } = useContext(AuthContext)
 
   const animationOptions = {
     loop: false,
@@ -52,7 +54,7 @@ export const LikeButton = (props) => {
     }
   }, [data])
 
-  if (!props.currentUser) {
+  if (!currentUser) {
     return (
       <span className="h-full w-full flex float-right ml-4 hover:opacity-60 duration-200">
         <HeartIconOutline
