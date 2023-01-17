@@ -69,7 +69,7 @@ export const LikeButton = (props) => {
           className="relative"
         >
           <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-          <div className="fixed inset-0 flex items-center justify-center rounded-box ">
+          <div className="fixed flex inset-0 items-center justify-center rounded-box overflow-y-auto">
             <Dialog.Panel className=" max-w-sm rounded-box  bg-baseBody border border-borderLow shadow-xl p-6 w-[343px]">
               <Dialog.Title className="font-bold text-lg">
                 Like this post?
