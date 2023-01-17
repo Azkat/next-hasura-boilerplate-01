@@ -62,7 +62,7 @@ const PostItem = (props) => {
         videoRef.current.pause()
       }
     }
-  }, [state.audioPlay])
+  }, [state.audioPlay, state.playingId])
 
   return (
     <div className="bg-backgroundGray mb-4 sm:rounded-lg ">

@@ -60,7 +60,7 @@ export default function UserList(props) {
         videoRef.current?.pause()
       }
     }
-  }, [state.audioPlay])
+  }, [state.audioPlay, state.playingId])
 
   return (
     <Layout title={data.title}>

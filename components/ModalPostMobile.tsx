@@ -59,7 +59,7 @@ const ModalPostMobile = (props) => {
         videoRef.current?.pause()
       }
     }
-  }, [state.audioPlay, visualFormat])
+  }, [state.audioPlay, visualFormat, state.playingId])
 
   return (
     <>
