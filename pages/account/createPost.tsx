@@ -95,12 +95,12 @@ export default function CreatePost(props) {
 
   const checkAudioFile = async (e) => {
     const file = e.target.files
-    if (file[0].size > 1500000) {
+    if (file[0].size > 10000000) {
       //1.5MB以下しかダメ
       const audiofile = document.getElementById(
         'audiofile'
       ) as HTMLInputElement | null
-      alert('Too big file. Upload under 1.5MB audio file.')
+      alert('Too big file. Upload under 10MB audio file.')
       audiofile.value = ''
     } else {
       dispatch({ type: 'setAudioFile', payload: file[0] })
@@ -110,12 +110,12 @@ export default function CreatePost(props) {
 
   const checkVideoFile = async (e) => {
     const file = e.target.files
-    if (file[0].size > 20000000) {
+    if (file[0].size > 30000000) {
       //20MB以下しかダメ
       const videofile = document.getElementById(
         'videofile'
       ) as HTMLInputElement | null
-      alert('Too big file. Upload under 20MB video file.')
+      alert('Too big file. Upload under 30MB video file.')
       videofile.value = ''
     } else {
       dispatch({ type: 'setVideoFile', payload: file[0] })
