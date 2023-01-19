@@ -58,7 +58,7 @@ function DropdownPostmenu(props) {
                   </CopyToClipboard>
                 </li>
                 <li>
-                  <a className="text-gray-500" onClick={close}>
+                  <a className="text-gray-500">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
