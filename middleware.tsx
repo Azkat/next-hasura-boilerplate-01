@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export function middleware(req: NextRequest) {
+export function middleware(req) {
   if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'preview') return
 
-  const url = req.nextUrl
-  if (!url.pathname.startsWith('/')) return
-
   const basicAuth = req.headers.get('authorization')
+  const url = req.nextUrl
 
   if (basicAuth) {
     const authValue = basicAuth.split(' ')[1]
