@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { Buffer } from 'buffer'
 
 export function middleware(req) {
   if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'preview') return
@@ -17,7 +18,7 @@ export function middleware(req) {
       return NextResponse.next()
     }
   }
-  url.pathname = '/api/basicAuth'
+  url.pathname = '/api/basic'
 
   return NextResponse.rewrite(url)
 }
