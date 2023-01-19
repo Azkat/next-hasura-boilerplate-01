@@ -32,7 +32,27 @@ export const Layout = ({ children, title = 'Droptune' }) => {
   const env = process.env.NEXT_PUBLIC_VERCEL_ENV
   const router = useRouter()
 
-  console.log(router.pathname)
+  const Gatag = () => {
+    return (
+      <>
+        {/* Google Analytics */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-78DZ15WCWS"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+              
+                gtag('config', 'G-78DZ15WCWS');`,
+          }}
+        />
+      </>
+    )
+  }
 
   return (
     <div
@@ -46,6 +66,7 @@ export const Layout = ({ children, title = 'Droptune' }) => {
           <title>{title} - Droptune</title>
         )}
         {env == 'preview' && <meta name="robots" content="noindex" />}
+        {env == 'production' && <Gatag />}
       </Head>
 
       <Navbar />
