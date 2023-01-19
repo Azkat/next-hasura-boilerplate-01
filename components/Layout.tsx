@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Drawer } from './Drawer'
 import { Navbar } from './Navbar'
 import { useUser } from '../hooks/useUser'
+import { useRouter } from 'next/router'
 
 interface Props {
   children: ReactNode
@@ -28,6 +29,10 @@ const Content = ({ children }) => {
 
 export const Layout = ({ children, title = 'Droptune' }) => {
   const { uid } = useUser()
+  const env = process.env.NEXT_PUBLIC_VERCEL_ENV
+  const router = useRouter()
+
+  console.log(router.pathname)
 
   return (
     <div
@@ -35,7 +40,12 @@ export const Layout = ({ children, title = 'Droptune' }) => {
       className="font-body flex flex-col justify-center  text-white text-sm bg-baseBody"
     >
       <Head>
-        <title>{title} - Droptune</title>
+        {router.pathname == '/' ? (
+          <title>Droptune</title>
+        ) : (
+          <title>{title} - Droptune</title>
+        )}
+        {env == 'preview' && <meta name="robots" content="noindex" />}
       </Head>
 
       <Navbar />
