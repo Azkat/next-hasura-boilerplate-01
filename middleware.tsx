@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(req: NextRequest) {
-  if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'staging') return
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'preview') return
 
   const url = req.nextUrl
   if (!url.pathname.startsWith('/')) return
