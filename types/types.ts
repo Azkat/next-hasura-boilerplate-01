@@ -69,6 +69,21 @@ export interface UserLikes {
   created_at: string
 }
 
+export interface UserLikesShow {
+  id: string
+  post_id: string
+  user_id: string
+  created_at: string
+  posts: Array<{
+    id: string
+    title: string
+  }>
+  users: Array<{
+    id: string
+    name: string
+  }>
+}
+
 export interface DeleteLike {
   id: string
 }

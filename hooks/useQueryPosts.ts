@@ -1,7 +1,12 @@
 import { request } from 'graphql-request'
 import { useQuery } from 'react-query'
-import { Post, UserLikes } from '../types/types'
-import { GET_POSTS, GET_USER_LIKES, GET_FIRST_POSTS } from '../queries/queries'
+import { Post, UserLikes, UserLikesShow } from '../types/types'
+import {
+  GET_POSTS,
+  GET_USER_LIKES,
+  GET_FIRST_POSTS,
+  GET_USER_LIKES_SHOW,
+} from '../queries/queries'
 
 interface PostRes {
   posts: Post[]
@@ -9,6 +14,10 @@ interface PostRes {
 
 interface LikesRes {
   likes: UserLikes[]
+}
+
+interface LikesShowRes {
+  likes: UserLikesShow[]
 }
 
 export const fetchPosts = async () => {
@@ -31,7 +40,7 @@ export const useQueryPosts = () => {
   return useQuery<Post[], Error>({
     queryKey: 'posts',
     queryFn: fetchPosts,
-    staleTime: 10,
+    staleTime: 3000,
   })
 }
 
@@ -48,6 +57,23 @@ export const useQueryUserLikes = (user_id) => {
   return useQuery<UserLikes[], Error>({
     queryKey: 'likes',
     queryFn: () => fetchUserLikes(user_id),
-    staleTime: 10,
+    staleTime: 3000,
+  })
+}
+
+export const fetchUserLikesShow = async (user_id) => {
+  const { likes: likesData } = await request<LikesShowRes>({
+    url: process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
+    document: GET_USER_LIKES_SHOW,
+    variables: { user_id: user_id },
+  })
+
+  return likesData
+}
+export const useQueryUserLikesShow = (user_id) => {
+  return useQuery<UserLikesShow[], Error>({
+    queryKey: 'likesShow',
+    queryFn: () => fetchUserLikesShow(user_id),
+    staleTime: 3000,
   })
 }

@@ -24,12 +24,14 @@ const UserLikeList = (props) => {
     setIsHovered(false)
   }
 
+  console.log(props)
+
   return (
     <section className="overflow-hidden">
       <div className="container px-4 py-2 mx-auto ">
         <div className="flex flex-wrap -m-1 md:-m-2">
-          {props.data.posts?.map((post) => (
-            <div className="flex flex-wrap w-1/3" key={post.post_id}>
+          {props.data?.map((post) => (
+            <div className="flex flex-wrap w-1/3" key={post.post.id}>
               <div
                 className="w-full p-1 md:p-2  aspect-square cursor-pointer relative "
                 onMouseEnter={() => onMouseEnter(post.post_id)}
@@ -38,8 +40,8 @@ const UserLikeList = (props) => {
                 {props.path == 'user' && (
                   <Link
                     key={post.id}
-                    href={`/user/${props.data.id}?postId=${post.post_id}`}
-                    as={`/user/${props.data.id}?postId=${post.post_id}`}
+                    href={`/user/${props.user.data.id}?postId=${post.post_id}`}
+                    as={`/user/${props.user.data.id}?postId=${post.post_id}`}
                     scroll={false}
                     className="w-full"
                   >
@@ -55,7 +57,7 @@ const UserLikeList = (props) => {
 
                 {props.path == 'account' && (
                   <Link
-                    key={post.post_id}
+                    key={post.id}
                     href={`/account?postId=${post.post_id}`}
                     as={`/account?postId=${post.post_id}`}
                     scroll={false}
@@ -73,14 +75,18 @@ const UserLikeList = (props) => {
 
                 {ua.isMobile ? (
                   <div className="absolute h-10 w-10 bottom-2 left-2 sm:bottom-3 sm:left-3">
-                    <PlayButton post={post} user={props.data} control={false} />
+                    <PlayButton
+                      post={post.post}
+                      user={props.user.data}
+                      control={false}
+                    />
                   </div>
                 ) : (
                   <div className="absolute h-10 w-10 bottom-2 left-2 sm:bottom-3 sm:left-3 ">
                     {isHovering && hoveredId == post.post_id ? (
                       <PlayButton
-                        post={post}
-                        user={post.user_id}
+                        post={post.post}
+                        user={props.user.data}
                         control={false}
                       />
                     ) : (

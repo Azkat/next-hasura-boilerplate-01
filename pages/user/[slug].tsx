@@ -12,11 +12,14 @@ import ModalBase from '../../components/ModalBase'
 import { useRouter } from 'next/router'
 import { useUserAgent } from 'next-useragent'
 import dynamic from 'next/dynamic'
-import { useQueryUserLikes } from '../../hooks/useQueryPosts'
+import {
+  useQueryUserLikes,
+  useQueryUserLikesShow,
+} from '../../hooks/useQueryPosts'
 import { PlayIcon } from '@heroicons/react/solid'
 
 const Likes = (props) => {
-  const { status, data } = useQueryUserLikes(props.data.id)
+  const { status, data } = useQueryUserLikesShow(props.data.id)
   const [likeData, setLikeData] = useState({})
 
   const DynamicUserLikeList = dynamic(
@@ -35,7 +38,7 @@ const Likes = (props) => {
   return (
     <>
       {status == 'success' && (
-        <DynamicUserLikeList data={likeData} path={'user'} />
+        <DynamicUserLikeList data={data} user={props} path="user" />
       )}
     </>
   )
