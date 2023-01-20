@@ -135,7 +135,7 @@ const PostItem = (props) => {
               <Link
                 key={props.post.id}
                 href={`/?postId=${props.post.id}`}
-                as={`/post/${props.post.id}`}
+                //as={`/post/${props.post.id}`}
                 scroll={false}
               >
                 {!mainImageLoadComplete ? (
