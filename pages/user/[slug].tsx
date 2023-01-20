@@ -46,7 +46,7 @@ export default function UserList(props) {
 
   return (
     <Layout title={data.name}>
-      <>
+      <div className="bg-backgroundGray mt-4 sm:rounded-2xl pb-8">
         <ModalBase aspath={router.asPath} />
         <AvatarName data={data} status={status} />
         <div className="block sm:hidden">
@@ -99,7 +99,7 @@ export default function UserList(props) {
             </div>
           </div>
         </section> */}
-      </>
+      </div>
     </Layout>
   )
 }

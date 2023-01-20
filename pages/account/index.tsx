@@ -62,22 +62,24 @@ export default function Account(props) {
   } else {
     return (
       <Layout title="Account">
-        <ModalBase aspath={router.asPath} />
-        <AvatarName data={data} status={status} />
-        <div className="block sm:hidden">
-          <UserInfomation data={data} status={status} />
-        </div>
+        <div className="bg-backgroundGray mt-4 sm:rounded-2xl pb-8">
+          <ModalBase aspath={router.asPath} />
+          <AvatarName data={data} status={status} />
+          <div className="block sm:hidden">
+            <UserInfomation data={data} status={status} />
+          </div>
 
-        <div className="px-4 mb-6">
-          <Link href="/account/createPost">
-            <button className="btn btn-block bg-gradient-to-r from-teal-300 to-violet-700 text-white">
-              <PlusSmIcon className="h-5 w-5" />
-              New Post
-            </button>
-          </Link>
-        </div>
+          <div className="px-4 mb-6">
+            <Link href="/account/createPost">
+              <button className="btn btn-block bg-gradient-to-r from-teal-300 to-violet-700 text-white">
+                <PlusSmIcon className="h-5 w-5" />
+                New Post
+              </button>
+            </Link>
+          </div>
 
-        {data ? <DynamicUserPostList data={data} path={'account'} /> : ''}
+          {data ? <DynamicUserPostList data={data} path={'account'} /> : ''}
+        </div>
       </Layout>
     )
   }
