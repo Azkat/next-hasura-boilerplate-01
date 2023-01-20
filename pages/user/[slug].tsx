@@ -7,13 +7,39 @@ import Link from 'next/link'
 import { dehydrate } from 'react-query/hydration'
 import AvatarName from '../../components/AvatarName'
 import UserInfomation from '../../components/UserInfomation'
-import { PlusSmIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
 import ModalBase from '../../components/ModalBase'
 import { useRouter } from 'next/router'
-import PlayButton from '../../components/PlayButton'
 import { useUserAgent } from 'next-useragent'
 import dynamic from 'next/dynamic'
+import { useQueryUserLikes } from '../../hooks/useQueryPosts'
+import { PlayIcon } from '@heroicons/react/solid'
+
+const Likes = (props) => {
+  const { status, data } = useQueryUserLikes(props.data.id)
+  const [likeData, setLikeData] = useState({})
+
+  const DynamicUserLikeList = dynamic(
+    () => import('../../components/UserLikeList'),
+    {
+      //loading: () => 'Loading...',
+    }
+  )
+
+  useEffect(() => {
+    if (status == 'success') {
+      setLikeData({ posts: data })
+    }
+  }, [data])
+
+  return (
+    <>
+      {status == 'success' && (
+        <DynamicUserLikeList data={likeData} path={'user'} />
+      )}
+    </>
+  )
+}
 
 export default function UserList(props) {
   const queryClient = useQueryClient()
@@ -27,6 +53,7 @@ export default function UserList(props) {
   const ua = useUserAgent(window.navigator.userAgent)
   const [isHovering, setIsHovered] = useState(false)
   const [hoveredId, setHoveredId] = useState('')
+  const [like, setLike] = useState(false)
 
   const onMouseEnter = (id) => {
     setHoveredId(id)
@@ -52,57 +79,49 @@ export default function UserList(props) {
         <div className="block sm:hidden">
           <UserInfomation data={data} status={status} />
         </div>
-
-        <DynamicUserPostList data={data} path={'user'} />
-
-        {/*  <section className="overflow-hidden mt-10 ">
-          <div className="container px-4 py-2 mx-auto ">
-            <div className="flex flex-wrap -m-1 md:-m-2">
-              {data.posts?.map((post) => (
-                <div className="flex flex-wrap w-1/3" key={post.id}>
-                  <div
-                    className="w-full p-1 md:p-2  aspect-square cursor-pointer relative "
-                    onMouseEnter={() => onMouseEnter(post.id)}
-                    onMouseLeave={onMouseLeave}
-                  >
-                    <Link
-                      key={post.id}
-                      href={`/user/${data.id}?postId=${post.id}`}
-                      as={`/user/${data.id}?postId=${post.id}`}
-                      scroll={false}
-                      className="w-full"
-                    >
-                      <Image
-                        src={postImageSrc + post.id + '.jpg'}
-                        className="block object-cover object-center w-full h-full relative"
-                        layout="fill"
-                        objectFit="contain"
-                        alt=""
-                      />
-                    </Link>
-                    {ua.isMobile ? (
-                      <div className="absolute h-10 w-10 bottom-2 left-2 sm:bottom-3 sm:left-3">
-                        <PlayButton post={post} user={data} control={false} />
-                      </div>
-                    ) : (
-                      <div className="absolute h-10 w-10 bottom-2 left-2 sm:bottom-3 sm:left-3 ">
-                        {isHovering && hoveredId == post.id ? (
-                          <PlayButton post={post} user={data} control={false} />
-                        ) : (
-                          ''
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="flex justify-around px-[60px] border-t border-border pt-4 pb-2">
+          <div className="tabs gap-10">
+            <a
+              className={`tab ${!like && 'tab-active'}`}
+              onClick={() => setLike(false)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Posts
+            </a>
+            <a
+              className={`tab ${like && 'tab-active'}`}
+              onClick={() => setLike(true)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-6 h-6"
+              >
+                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+              </svg>
+              Likes
+            </a>
           </div>
-        </section> */}
+        </div>
+        {!like && <DynamicUserPostList data={data} path={'user'} />}
+        {like && <Likes data={data} />}
       </div>
     </Layout>
   )
 }
+
 export async function getServerSideProps(context) {
   const user_id = await context.params.slug
   const queryClient = new QueryClient()

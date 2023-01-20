@@ -111,7 +111,6 @@ export const GET_USERBY_ID_PK = gql`
     users_by_pk(id: $id) {
       id
       name
-
       website
       bio
       posts(order_by: { created_at: desc }) {
@@ -231,6 +230,7 @@ export const GET_USER_LIKES = gql`
       id
       post_id
       user_id
+      created_at
     }
   }
 `
