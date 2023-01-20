@@ -22,6 +22,9 @@ export default function CreatePost(props) {
   const [isAudioFile, setIsAudioFile] = useState(false)
   const [isVideoFile, setIsVideoFile] = useState(false)
   const [selected, setSelected] = useState('')
+  const [audioDuraion, setAudioDuration] = useState(0)
+  const audioRef: any = useRef(null)
+  const videoRef = useRef(null)
 
   const { state, dispatch } = useContext(Store)
   const {
@@ -41,8 +44,6 @@ export default function CreatePost(props) {
     visualFormatChange,
     createPost,
   } = useCreatePost()
-
-  const videoRef = useRef(null)
 
   const { currentUser } = useContext(AuthContext)
   !currentUser ? router.replace('/login') : ''
@@ -93,8 +94,37 @@ export default function CreatePost(props) {
     }
   }, [doneCreatePost])
 
+  const onLoadedMetadata = () => {
+    if (audioRef.current) {
+      console.log('test')
+      console.log(audioRef.current.duration)
+    }
+  }
+
   const checkAudioFile = async (e) => {
     const file = e.target.files
+
+    function computeLength(file) {
+      return new Promise(() => {
+        const objectURL: any = URL.createObjectURL(file[0])
+        const mySound = new Audio(objectURL)
+
+        mySound.oncanplaythrough = () => {
+          console.log(mySound.duration)
+          setAudioDuration(mySound.duration)
+          if (mySound.duration > 30) {
+            const audiofile = document.getElementById(
+              'audiofile'
+            ) as HTMLInputElement | null
+            alert('Too Long Audio. Upload audio of 30 seconds or less.')
+            audiofile.value = ''
+          }
+        }
+      })
+    }
+
+    await computeLength(file)
+
     if (file[0].size > 10000000) {
       //1.5MB以下しかダメ
       const audiofile = document.getElementById(
@@ -110,6 +140,7 @@ export default function CreatePost(props) {
 
   const checkVideoFile = async (e) => {
     const file = e.target.files
+
     if (file[0].size > 30000000) {
       //20MB以下しかダメ
       const videofile = document.getElementById(
@@ -154,6 +185,12 @@ export default function CreatePost(props) {
                 accept=".mp3, .wav, .m4a"
                 onChange={checkAudioFile}
               />
+              <audio
+                id="audio"
+                src=""
+                ref={audioRef}
+                onLoadedMetadata={onLoadedMetadata}
+              ></audio>
 
               <div className="text-gray-500">wav / mp3 / m4a</div>
               <div className="form-control w-full  mt-6">
