@@ -25,7 +25,7 @@ const UserPostList = (props) => {
   }
 
   return (
-    <section className="overflow-hidden ">
+    <section className="overflow-hidden min-h-[350px]">
       <div className="container px-4 py-2 mx-auto ">
         <div className="flex flex-wrap -m-1 md:-m-2">
           {props.data.posts?.map((post) => (
