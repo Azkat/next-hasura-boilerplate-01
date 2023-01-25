@@ -64,7 +64,8 @@ export const Navbar = (props) => {
         </div>
         <div className="navbar-center">
           <Link href="/">
-            <Image src={`/logo.svg`} width="50" height="35" alt="Droptune" />
+            {/* <Image src={`/logo.svg`} width="50" height="35" alt="Droptune" /> */}
+            <img src="/logo.png" alt="My Happy SVG" width="50" height="35" />
 
             {/* <span className="normal-case text-3xl font-bold  duration-200  opacity-95 hover:opacity-80 active:opacity-60">
               Droptune
