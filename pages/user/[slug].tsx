@@ -21,8 +21,8 @@ import { PlayIcon } from '@heroicons/react/solid'
 const Skelton = () => {
   return (
     <div className="flex flex-wrap -m-1 md:-m-2 animate-pulse">
-      {[...Array(6)].map(() => (
-        <div className="flex flex-wrap w-1/3">
+      {[...Array(6)].map((value, index) => (
+        <div className="flex flex-wrap w-1/3" key={index}>
           <div className="w-full p-1 md:p-2  aspect-square cursor-pointer relative ">
             <div className="bg-slate-700 w-full h-full"></div>
           </div>
