@@ -118,6 +118,7 @@ export default function CreatePost(props) {
             ) as HTMLInputElement | null
             alert('Too Long Audio. Upload audio of 30 seconds or less.')
             audiofile.value = ''
+            return
           }
         }
       })

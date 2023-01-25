@@ -18,6 +18,20 @@ import {
 } from '../../hooks/useQueryPosts'
 import { PlayIcon } from '@heroicons/react/solid'
 
+const Skelton = () => {
+  return (
+    <div className="flex flex-wrap -m-1 md:-m-2 animate-pulse">
+      {[...Array(6)].map(() => (
+        <div className="flex flex-wrap w-1/3">
+          <div className="w-full p-1 md:p-2  aspect-square cursor-pointer relative ">
+            <div className="bg-slate-700 w-full h-full"></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 const Likes = (props) => {
   const { status, data } = useQueryUserLikesShow(props.data.id)
   const [likeData, setLikeData] = useState({})
@@ -37,8 +51,10 @@ const Likes = (props) => {
 
   return (
     <>
-      {status == 'success' && (
+      {status == 'success' ? (
         <DynamicUserLikeList data={data} user={props} path="user" />
+      ) : (
+        <Skelton />
       )}
     </>
   )
