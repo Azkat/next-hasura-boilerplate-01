@@ -16,21 +16,7 @@ import {
   useQueryUserLikes,
   useQueryUserLikesShow,
 } from '../../hooks/useQueryPosts'
-import { PlayIcon } from '@heroicons/react/solid'
-
-const Skelton = () => {
-  return (
-    <div className="flex flex-wrap -m-1 md:-m-2 animate-pulse">
-      {[...Array(6)].map((value, index) => (
-        <div className="flex flex-wrap w-1/3" key={index}>
-          <div className="w-full p-1 md:p-2  aspect-square cursor-pointer relative ">
-            <div className="bg-slate-700 w-full h-full"></div>
-          </div>
-        </div>
-      ))}
-    </div>
-  )
-}
+import ListSkelton from '../../components/ListSkelton'
 
 const Likes = (props) => {
   const { status, data } = useQueryUserLikesShow(props.data.id)
@@ -39,7 +25,7 @@ const Likes = (props) => {
   const DynamicUserLikeList = dynamic(
     () => import('../../components/UserLikeList'),
     {
-      //loading: () => 'Loading...',
+      //loading: () => <ListSkelton />,
     }
   )
 
@@ -54,7 +40,7 @@ const Likes = (props) => {
       {status == 'success' ? (
         <DynamicUserLikeList data={data} user={props} path="user" />
       ) : (
-        <Skelton />
+        <ListSkelton />
       )}
     </>
   )
@@ -86,13 +72,13 @@ export default function UserList(props) {
   const DynamicUserPostList = dynamic(
     () => import('../../components/UserPostList'),
     {
-      //loading: () => 'Loading...',
+      loading: () => <ListSkelton />,
     }
   )
 
   return (
     <Layout title={data.name}>
-      <div className="bg-backgroundGray mt-4 sm:rounded-2xl pb-8">
+      <div className="bg-backgroundGray mt-4 sm:rounded-2xl pb-8 min-h-[628px]">
         <ModalBase aspath={router.asPath} />
         <AvatarName data={data} status={status} />
         <div className="block sm:hidden">

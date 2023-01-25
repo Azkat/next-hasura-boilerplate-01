@@ -5,6 +5,7 @@ import ModalBase from '../components/ModalBase'
 import { useRouter } from 'next/router'
 import PlayButton from '../components/PlayButton'
 import { useUserAgent } from 'next-useragent'
+import ListSkelton from '../components/ListSkelton'
 
 const UserPostList = (props) => {
   const ua = useUserAgent(window.navigator.userAgent)
@@ -22,6 +23,10 @@ const UserPostList = (props) => {
   const onMouseLeave = (id) => {
     setHoveredId('')
     setIsHovered(false)
+  }
+
+  if (!props.data) {
+    return <ListSkelton />
   }
 
   return (
