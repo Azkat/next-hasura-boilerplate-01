@@ -105,29 +105,29 @@ export default function CreatePost(props) {
     const file = e.target.files
 
     function computeLength(file) {
-      return new Promise(() => {
-        const objectURL: any = URL.createObjectURL(file[0])
-        const mySound = new Audio(objectURL)
+      const objectURL: any = URL.createObjectURL(file[0])
+      const mySound = new Audio(objectURL)
 
-        mySound.oncanplaythrough = () => {
-          console.log(mySound.duration)
-          setAudioDuration(mySound.duration)
-          if (mySound.duration > 30) {
-            const audiofile = document.getElementById(
-              'audiofile'
-            ) as HTMLInputElement | null
-            alert('Too Long Audio. Upload audio of 30 seconds or less.')
-            audiofile.value = ''
-            return
-          }
+      mySound.oncanplaythrough = () => {
+        setAudioDuration(mySound.duration)
+        if (mySound.duration > 30) {
+          const audiofile = document.getElementById(
+            'audiofile'
+          ) as HTMLInputElement | null
+          alert('Too Long Audio. Upload audio of 30 seconds or less.')
+          audiofile.value = ''
+          return
         }
-      })
+      }
     }
 
     await computeLength(file)
 
+    console.log('test')
+
     if (file[0].size > 10000000) {
-      //1.5MB以下しかダメ
+      //10MB以下しかダメ
+      console.log('isAudioFile')
       const audiofile = document.getElementById(
         'audiofile'
       ) as HTMLInputElement | null
@@ -136,6 +136,7 @@ export default function CreatePost(props) {
     } else {
       dispatch({ type: 'setAudioFile', payload: file[0] })
       setIsAudioFile(true)
+      console.log('else')
     }
   }
 
@@ -143,7 +144,7 @@ export default function CreatePost(props) {
     const file = e.target.files
 
     if (file[0].size > 30000000) {
-      //20MB以下しかダメ
+      //30MB以下しかダメ
       const videofile = document.getElementById(
         'videofile'
       ) as HTMLInputElement | null
