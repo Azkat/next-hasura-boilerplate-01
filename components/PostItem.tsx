@@ -10,6 +10,7 @@ import Link from 'next/link'
 import Cookies from 'universal-cookie'
 import { LikeButton } from './LikeButton'
 import { PlayIcon } from '@heroicons/react/solid'
+import { PickUpToggle } from './PickUpToggle'
 import { useOnScreen } from '../hooks/useOnScreen'
 import Image from 'next/image'
 import DropdownPostmenu from './DropdownPostmenu'
@@ -17,6 +18,7 @@ import PostItemSkelton from './PostItemSkelton'
 import PlayButton from './PlayButton'
 import WebAudio from './WebAudio'
 import { formatDistance, format } from 'date-fns'
+import { useRouter } from 'next/router'
 
 const PostItem = (props) => {
   const cookie = new Cookies()
@@ -38,6 +40,7 @@ const PostItem = (props) => {
   const [videoPlayed, setVideoPlayed] = useState(false)
   let [playPauseCtrl, setPlayPauseCtrl] = useState(false)
   let sound = `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}audio/ab85264e-af27-4e7b-8e39-709b4df85c86.aac`
+  const router = useRouter()
 
   const videoRef: any = useRef(null)
 
@@ -194,12 +197,16 @@ const PostItem = (props) => {
               currentUser={props.currentUser}
               control={false}
             /> */}
-                <LikeButton
-                  post={props.post}
-                  currentUser={props.currentUser}
-                  like={props.like}
-                  control={false}
-                />
+                {router.pathname !== '/zwj7x5tk-sfwzyzdpakcen6' ? (
+                  <LikeButton
+                    post={props.post}
+                    currentUser={props.currentUser}
+                    like={props.like}
+                    control={false}
+                  />
+                ) : (
+                  <PickUpToggle post={props.post} />
+                )}
               </div>
             </div>
           )}

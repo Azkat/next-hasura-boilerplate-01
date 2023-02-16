@@ -10,6 +10,7 @@ export const GET_POSTS = gql`
       image_url
       audio_url
       visual_format
+      pickedup
       user {
         id
         name
@@ -20,6 +21,29 @@ export const GET_POSTS = gql`
 
 export const GET_FIRST_POSTS = gql`
   query GetPosts {
+    posts(
+      order_by: { created_at: desc }
+      where: { pickedup: { _eq: true } }
+      limit: 100
+    ) {
+      title
+      id
+      description
+      created_at
+      image_url
+      audio_url
+      visual_format
+      pickedup
+      user {
+        id
+        name
+      }
+    }
+  }
+`
+
+export const GET_ALL_POSTS = gql`
+  query GetPosts {
     posts(order_by: { created_at: desc }, limit: 100) {
       title
       id
@@ -28,6 +52,7 @@ export const GET_FIRST_POSTS = gql`
       image_url
       audio_url
       visual_format
+      pickedup
       user {
         id
         name
@@ -308,6 +333,15 @@ export const DELETE_USER_PROFILE = gql`
         id
         user_id
       }
+    }
+  }
+`
+
+export const UPDATE_POST_PICKEDUP = gql`
+  mutation UpdatePostPickedup($id: uuid!, $pickedup: Boolean!) {
+    update_posts_by_pk(pk_columns: { id: $id }, _set: { pickedup: $pickedup }) {
+      pickedup
+      id
     }
   }
 `

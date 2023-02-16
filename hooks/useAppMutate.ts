@@ -12,6 +12,7 @@ import {
   DELETE_LIKE,
   DELETE_ACCOUNT,
   DELETE_USER_PROFILE,
+  UPDATE_POST_PICKEDUP,
 } from '../queries/queries'
 import {
   UpdateUserName,
@@ -22,6 +23,7 @@ import {
   DeleteLike,
   DeleteAccount,
   DeleteUserProfile,
+  UpdatePostPickedup,
 } from '../types/types'
 import { useSelector, useDispatch } from 'react-redux'
 import { resetEditedPost, selectPost } from '../slices/uiSlice'
@@ -181,6 +183,18 @@ export const useAppMutate = () => {
     }
   )
 
+  const updatePostPickedupMutaion = useMutation(
+    (updateParam: UpdatePostPickedup) =>
+      graphQLClient.request(UPDATE_POST_PICKEDUP, updateParam),
+    {
+      onSuccess: (res) => {
+        console.log(res)
+      },
+      onError: () => {},
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    }
+  )
+
   return {
     updateUserNameMutation,
     updateUserProfileEmailMutaion,
@@ -190,5 +204,6 @@ export const useAppMutate = () => {
     deleteLikeMutation,
     deleteAccountMutation,
     deleteUserProfileMutation,
+    updatePostPickedupMutaion,
   }
 }

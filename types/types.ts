@@ -6,6 +6,7 @@ export interface Post {
   description: string
   created_at: string
   visual_format: string
+  pickedup: boolean
   user: {
     id: string
     name: string
@@ -94,4 +95,9 @@ export interface DeleteAccount {
 
 export interface DeleteUserProfile {
   id: string
+}
+
+export interface UpdatePostPickedup {
+  id: string
+  pickedup: boolean
 }

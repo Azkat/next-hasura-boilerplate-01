@@ -6,6 +6,7 @@ import {
   GET_USER_LIKES,
   GET_FIRST_POSTS,
   GET_USER_LIKES_SHOW,
+  GET_ALL_POSTS,
 } from '../queries/queries'
 
 interface PostRes {
@@ -32,6 +33,14 @@ export const fetchFirstPosts = async () => {
   const { posts: data } = await request<PostRes>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
     GET_FIRST_POSTS
+  )
+  return data
+}
+
+export const fetchAllPosts = async () => {
+  const { posts: data } = await request<PostRes>(
+    process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
+    GET_ALL_POSTS
   )
   return data
 }
