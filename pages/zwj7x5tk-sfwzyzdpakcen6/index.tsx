@@ -36,8 +36,8 @@ export default function Home(props) {
   const cookie = new Cookies()
   const queryClient = useQueryClient()
   const postsData = queryClient.getQueryData<Post[]>('posts')
-  const router = useRouter()
   const { windowWidth, windowHeight } = useWindowSize()
+  const router = useRouter()
   const { currentUser } = useContext(AuthContext)
   !currentUser && router.replace('/')
   currentUser.uid !== process.env.NEXT_PUBLIC_ADMIN_FIREBASE_ID &&
