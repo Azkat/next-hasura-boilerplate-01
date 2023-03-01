@@ -47,6 +47,8 @@ const ModalPost = (props) => {
     }
   }, [status])
 
+  console.log(props)
+
   useEffect(() => {
     if (visualFormat == 'Video') {
       if (state.audioPlay && state.playingId == props.id) {
@@ -60,52 +62,85 @@ const ModalPost = (props) => {
 
   return (
     <div className="bg-backgroundGray hidden sm:flex sm:rounded-lg  h-full">
-      <div className="bg-black w-4/6  relative">
-        <Image
-          src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${props.id}.jpg`}
-          layout="fill"
-          objectFit="contain"
-          alt=""
-        />
-        {visualFormat == 'Video' && videoPlayed ? (
-          <video
-            ref={videoRef}
-            id="video"
-            playsInline
-            autoPlay
-            loop
-            muted
-            src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}video/${props.id}.mp4`}
-            className="w-full video "
-          ></video>
-        ) : (
-          ''
-        )}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="w-8 h-8 absolute top-4 left-4 cursor-pointer"
-          onClick={() => router.push(props.aspath.split('?')[0])}
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-            clipRule="evenodd"
-          />
-        </svg>
-        <div className="playbutton absolute h-10 w-10">
-          <PlayButton post={data} control={false} />
+      {visualFormat == 'None' ? (
+        <div className=" w-4/6 bg-black relative">
+          <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-gray-500">
+            no image
+          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-8 h-8 absolute top-4 left-4 cursor-pointer"
+            onClick={() => router.push(props.aspath.split('?')[0])}
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <div className="playbutton absolute h-10 w-10">
+            <PlayButton post={data} control={false} />
+          </div>
+          <div className="likebutton absolute h-8 w-8">
+            <LikeButton
+              post={props}
+              currentUser={props.currentUser}
+              big={true}
+              control={false}
+            />
+          </div>
         </div>
-        <div className="likebutton absolute h-8 w-8">
-          <LikeButton
-            post={props}
-            currentUser={props.currentUser}
-            big={true}
-            control={false}
+      ) : (
+        <div className="bg-black w-4/6  relative">
+          <Image
+            src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${props.id}.jpg`}
+            layout="fill"
+            objectFit="contain"
+            alt=""
           />
+          {visualFormat == 'Video' && videoPlayed ? (
+            <video
+              ref={videoRef}
+              id="video"
+              playsInline
+              autoPlay
+              loop
+              muted
+              src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}video/${props.id}.mp4`}
+              className="w-full video "
+            ></video>
+          ) : (
+            ''
+          )}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-8 h-8 absolute top-4 left-4 cursor-pointer"
+            onClick={() => router.push(props.aspath.split('?')[0])}
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <div className="playbutton absolute h-10 w-10">
+            <PlayButton post={data} control={false} />
+          </div>
+          <div className="likebutton absolute h-8 w-8">
+            <LikeButton
+              post={props}
+              currentUser={props.currentUser}
+              big={true}
+              control={false}
+            />
+          </div>
         </div>
-      </div>
+      )}
+
       {status == 'success' ? (
         <div className="w-2/6 relative break-words">
           <div className="flex items-center p-4 pt-3">

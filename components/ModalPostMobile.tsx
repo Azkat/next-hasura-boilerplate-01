@@ -115,56 +115,75 @@ const ModalPostMobile = (props) => {
               </div>
             </div>
           )}
-          <div className="bg-cover bg-center w-full relative">
-            <Image
-              src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${props.id}.jpg`}
-              layout="responsive"
-              objectFit="contain"
-              alt=""
-              onLoadingComplete={(target) => {
-                setImageSize({
-                  width: target.naturalWidth,
-                  height: target.naturalHeight,
-                })
-              }}
-              width={imageSize.width}
-              height={imageSize.height}
-            />
-            {visualFormat == 'Video' && videoPlayed ? (
-              <video
-                ref={videoRef}
-                id="video"
-                playsInline
-                autoPlay
-                loop
-                muted
-                src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}video/${props.id}.mp4`}
-                className="w-full video "
-              ></video>
-            ) : (
-              ''
-            )}
-            <div className="playbutton absolute h-10 w-10">
-              <PlayButton post={data} control={false} />
-            </div>
-            <div className="likebutton absolute h-8 w-8 overflow-hidden">
-              <LikeButton
-                post={props}
-                currentUser={props.currentUser}
-                control={false}
+
+          {visualFormat != 'None' && (
+            <div className="bg-cover bg-center w-full relative">
+              <Image
+                src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${props.id}.jpg`}
+                layout="responsive"
+                objectFit="contain"
+                alt=""
+                onLoadingComplete={(target) => {
+                  setImageSize({
+                    width: target.naturalWidth,
+                    height: target.naturalHeight,
+                  })
+                }}
+                width={imageSize.width}
+                height={imageSize.height}
               />
+              {visualFormat == 'Video' && videoPlayed ? (
+                <video
+                  ref={videoRef}
+                  id="video"
+                  playsInline
+                  autoPlay
+                  loop
+                  muted
+                  src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}video/${props.id}.mp4`}
+                  className="w-full video "
+                ></video>
+              ) : (
+                ''
+              )}
+              <div className="playbutton absolute h-10 w-10">
+                <PlayButton post={data} control={false} />
+              </div>
+              <div className="likebutton absolute h-8 w-8 overflow-hidden">
+                <LikeButton
+                  post={props}
+                  currentUser={props.currentUser}
+                  control={false}
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="p-4 pt-3">
             {status == 'success' ? (
               <>
-                <Link
-                  className="font-bold text-lg dark:text-white"
-                  href={'/post/' + data.id}
-                >
-                  {data.title}
-                </Link>
+                <div className="flex items-center pt-4">
+                  {visualFormat == 'None' && (
+                    <div className="playbutton ml-[-4px] mr-4 h-10 w-10">
+                      <PlayButton post={data} control={false} />
+                    </div>
+                  )}
+                  <Link
+                    className="font-bold text-lg dark:text-white"
+                    href={'/post/' + data.id}
+                  >
+                    {data.title}
+                  </Link>
+                  {visualFormat == 'None' && (
+                    <div className="likebutton  h-8 w-8 ml-auto">
+                      <LikeButton
+                        post={props}
+                        currentUser={props.currentUser}
+                        control={false}
+                      />
+                    </div>
+                  )}
+                </div>
                 <div className="flex items-center pt-2 w-full ">
                   <div className="text-sm dark:text-white ">
                     {data.description}

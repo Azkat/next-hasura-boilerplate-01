@@ -48,13 +48,17 @@ const UserPostList = (props) => {
                     scroll={false}
                     className="w-full"
                   >
-                    <Image
-                      src={postImageSrc + post.id + '.jpg'}
-                      className="block object-cover object-center w-full h-full relative"
-                      layout="fill"
-                      objectFit="contain"
-                      alt=""
-                    />
+                    {post.visual_format == 'None' ? (
+                      <div className="h-full w-full bg-baseBody"></div>
+                    ) : (
+                      <Image
+                        src={postImageSrc + post.id + '.jpg'}
+                        className="block object-cover object-center w-full h-full relative"
+                        layout="fill"
+                        objectFit="contain"
+                        alt=""
+                      />
+                    )}
                   </Link>
                 )}
 

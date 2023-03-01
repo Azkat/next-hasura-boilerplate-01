@@ -25,6 +25,7 @@ const initialState = {
   justDeleteLikeId: '',
   tryingCreatePost: false,
   alert: { text: '', type: '' },
+  playingVisual: 'Image',
 }
 
 const Store = createContext()
@@ -72,6 +73,8 @@ function reducer(state, action) {
       return { ...state, tryingCreatePost: action.payload }
     case 'setAlert':
       return { ...state, alert: action.payload }
+    case 'setPlayingVisual':
+      return { ...state, playingVisual: action.payload }
     default:
       return state
   }

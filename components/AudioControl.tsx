@@ -42,7 +42,7 @@ const AudioControl = (props) => {
               className="contents"
               scroll={false}
             >
-              {imageError ? (
+              {state.playingVisual == 'None' || imageError ? (
                 ''
               ) : (
                 <div className="mr-2 relative w-12 h-12 rounded-md overflow-hidden">

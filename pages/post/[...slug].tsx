@@ -97,48 +97,61 @@ export default function UserList(props) {
               <DropdownPostmenu id={data.id} />
             </div>
           </div>
-          <div className="bg-cover bg-center w-full relative ">
-            <Image
-              src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${data.id}.jpg`}
-              layout="responsive"
-              objectFit="contain"
-              alt=""
-              onLoadingComplete={(target) => {
-                setImageSize({
-                  width: target.naturalWidth,
-                  height: target.naturalHeight,
-                })
-              }}
-              width={imageSize.width}
-              height={imageSize.height}
-            />
-            {data.visual_format == 'Video' && videoPlayed ? (
-              <div className="w-full h-full flex items-center">
-                <video
-                  ref={videoRef}
-                  id="video"
-                  playsInline
-                  autoPlay
-                  loop
-                  muted
-                  src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}video/${data.id}.mp4`}
-                  className="w-full absolute top-0 left-0"
-                ></video>
+          {data.visual_format != 'None' && (
+            <div className="bg-cover bg-center w-full relative ">
+              <Image
+                src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${data.id}.jpg`}
+                layout="responsive"
+                objectFit="contain"
+                alt=""
+                onLoadingComplete={(target) => {
+                  setImageSize({
+                    width: target.naturalWidth,
+                    height: target.naturalHeight,
+                  })
+                }}
+                width={imageSize.width}
+                height={imageSize.height}
+              />
+              {data.visual_format == 'Video' && videoPlayed ? (
+                <div className="w-full h-full flex items-center">
+                  <video
+                    ref={videoRef}
+                    id="video"
+                    playsInline
+                    autoPlay
+                    loop
+                    muted
+                    src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}video/${data.id}.mp4`}
+                    className="w-full absolute top-0 left-0"
+                  ></video>
+                </div>
+              ) : (
+                ''
+              )}
+              <div className="playbutton absolute h-10 w-10">
+                <PlayButton post={data} control={false} />
               </div>
-            ) : (
-              ''
-            )}
-            <div className="playbutton absolute h-10 w-10">
-              <PlayButton post={data} control={false} />
+              <div className="likebutton absolute h-8 w-8">
+                <LikeButton post={data} currentUser={currentUser} />
+              </div>
             </div>
-            <div className="likebutton absolute h-8 w-8">
-              <LikeButton post={data} currentUser={currentUser} />
-            </div>
-          </div>
+          )}
           <div className="flex items-center p-4 pt-4">
+            {data.visual_format == 'None' && (
+              <div className="playbutton ml-[-4px] mr-4 h-10 w-10">
+                <PlayButton post={data} control={false} />
+              </div>
+            )}
+
             <div className="text-lg dark:text-white font-bold">
               {data.title}
             </div>
+            {data.visual_format == 'None' && (
+              <div className="likebutton  h-8 w-8 ml-auto">
+                <LikeButton post={data} currentUser={currentUser} />
+              </div>
+            )}
           </div>
           <div className="flex items-center p-4 pt-2 w-full ">
             <div className="text-sm dark:text-white ">{data.description}</div>

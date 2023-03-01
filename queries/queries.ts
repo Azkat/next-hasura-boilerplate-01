@@ -143,6 +143,7 @@ export const GET_USERBY_ID_PK = gql`
         title
         created_at
         description
+        visual_format
       }
     }
   }

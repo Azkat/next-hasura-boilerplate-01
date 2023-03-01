@@ -141,7 +141,8 @@ const PostItem = (props) => {
                 //as={`/post/${props.post.id}`}
                 scroll={false}
               >
-                {!mainImageLoadComplete ? (
+                {!mainImageLoadComplete &&
+                props.post.visual_format != 'None' ? (
                   <div className="absolute w-full h-full flex items-center animate-pulse">
                     <div className="w-full h-full bg-slate-700 "></div>
                   </div>
@@ -149,26 +150,30 @@ const PostItem = (props) => {
                   ''
                 )}
 
-                <div className="w-full flex items-center duration-100 hover:brightness-110 active:brightness-125 ">
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${props.post.id}.jpg`}
-                    layout="responsive"
-                    objectFit="contain"
-                    alt=""
-                    onLoadingComplete={(target) => {
-                      setImageSize({
-                        width: target.naturalWidth,
-                        height: target.naturalHeight,
-                      })
-                      setMainImageLoadComplete(true)
-                    }}
-                    onError={() => {
-                      setMainImageError(true)
-                    }}
-                    width={imageSize.width}
-                    height={imageSize.height}
-                  />
-                </div>
+                {props.post.visual_format == 'None' ? (
+                  ''
+                ) : (
+                  <div className="w-full flex items-center duration-100 hover:brightness-110 active:brightness-125 ">
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${props.post.id}.jpg`}
+                      layout="responsive"
+                      objectFit="contain"
+                      alt=""
+                      onLoadingComplete={(target) => {
+                        setImageSize({
+                          width: target.naturalWidth,
+                          height: target.naturalHeight,
+                        })
+                        setMainImageLoadComplete(true)
+                      }}
+                      onError={() => {
+                        setMainImageError(true)
+                      }}
+                      width={imageSize.width}
+                      height={imageSize.height}
+                    />
+                  </div>
+                )}
 
                 {props.post.visual_format == 'Video' && videoPlayed ? (
                   <div className="w-full h-full flex items-center">
@@ -211,7 +216,12 @@ const PostItem = (props) => {
             </div>
           )}
 
-          <div className="p-4 flex items-center">
+          <div className="p-4 flex items-center ">
+            {props.post.visual_format == 'None' && (
+              <div className="playbutton h-10 w-10 mr-3 ml-[-4px]">
+                <PlayButton post={props.post} control={false} />
+              </div>
+            )}
             <div>
               <Link
                 href={'/post/' + props.post.id}
@@ -225,6 +235,16 @@ const PostItem = (props) => {
                 })}
               </div>
             </div>
+            {props.post.visual_format == 'None' && (
+              <div className="likebutton ml-auto h-8 w-8">
+                <LikeButton
+                  post={props.post}
+                  currentUser={props.currentUser}
+                  like={props.like}
+                  control={false}
+                />
+              </div>
+            )}
 
             {mainImageError ? (
               <div className="ml-auto flex items-center">

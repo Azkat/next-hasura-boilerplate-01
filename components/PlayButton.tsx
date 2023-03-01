@@ -50,6 +50,7 @@ const PlayButton = (props) => {
       dispatch({ type: 'setPlayingUserId', payload: props.post.user.id })
       dispatch({ type: 'setPlayingId', payload: props.post.id })
       dispatch({ type: 'setAudioPlay', payload: true })
+      dispatch({ type: 'setPlayingVisual', payload: props.post.visual_format })
     }
   }
 
@@ -85,6 +86,7 @@ const PlayButton = (props) => {
       dispatch({ type: 'setPlayingUserId', payload: props.user.id })
       dispatch({ type: 'setPlayingId', payload: props.post.id })
       dispatch({ type: 'setAudioPlay', payload: true })
+      dispatch({ type: 'setPlayingVisual', payload: props.post.visual_format })
     }
   }
 
