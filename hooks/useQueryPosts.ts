@@ -23,27 +23,17 @@ interface LikesShowRes {
 }
 
 export const fetchPosts = async () => {
-  const { posts: data } = await request<PostRes>(
-    process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    GET_POSTS,
-    { variables: {} }
-  )
+  const { posts: data } = await graphQLClient.request(GET_POSTS)
   return data
 }
 
 export const fetchFirstPosts = async () => {
-  const { posts: data } = await request<PostRes>(
-    process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    GET_FIRST_POSTS
-  )
+  const { posts: data } = await graphQLClient.request(GET_FIRST_POSTS)
   return data
 }
 
 export const fetchAllPosts = async () => {
-  const { posts: data } = await request<PostRes>(
-    process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    GET_ALL_POSTS
-  )
+  const { posts: data } = await graphQLClient.request(GET_ALL_POSTS)
   return data
 }
 
@@ -56,14 +46,12 @@ export const useQueryPosts = () => {
 }
 
 export const fetchUserLikes = async (user_id) => {
-  const { likes: likesData } = await request<LikesRes>({
-    url: process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    document: GET_USER_LIKES,
-    variables: { user_id: user_id },
+  const { likes: likesData } = await graphQLClient.request(GET_USER_LIKES, {
+    user_id: user_id,
   })
-
   return likesData
 }
+
 export const useQueryUserLikes = (user_id) => {
   return useQuery<UserLikes[], Error>({
     queryKey: 'likes',
@@ -73,14 +61,12 @@ export const useQueryUserLikes = (user_id) => {
 }
 
 export const fetchUserLikesShow = async (user_id) => {
-  const { likes: likesData } = await request<LikesShowRes>({
-    url: process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    document: GET_USER_LIKES_SHOW,
-    variables: { user_id: user_id },
+  const { likes: likesData } = await graphQLClient.request(GET_USER_LIKES_SHOW, {
+    user_id: user_id,
   })
-
   return likesData
 }
+
 export const useQueryUserLikesShow = (user_id) => {
   return useQuery<UserLikesShow[], Error>({
     queryKey: 'likesShow',
