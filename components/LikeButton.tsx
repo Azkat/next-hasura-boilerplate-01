@@ -4,13 +4,19 @@ import { HeartIcon as HeartIconOutline } from '@heroicons/react/outline'
 import Cookies from 'universal-cookie'
 import { useAppMutate } from '../hooks/useAppMutate'
 import { useQueryUserLikes } from '../hooks/useQueryPosts'
-import Lottie from 'react-lottie'
+import dynamic from 'next/dynamic'
 import animationData from '../public/99800-heart-fav.json'
 import { setTimeout } from 'timers'
 import { Store } from '../reducer/reducer'
 import { Dialog, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { AuthContext } from '../lib/authProvider'
+import Lottie from 'react-lottie'
+
+// Lottieコンポーネントをクライアントサイドでのみ読み込むように設定
+const DynamicLottie = dynamic(() => import('react-lottie'), {
+  ssr: false // サーバーサイドレンダリングを無効化
+}) as typeof Lottie
 
 export const LikeButton = (props) => {
   const cookie = new Cookies()
@@ -101,31 +107,47 @@ export const LikeButton = (props) => {
       <span className="h-full w-full flex float-right relative hover:opacity-60 duration-200  overflow-hidden">
         {lottie ? (
           <>
-            <div
-              className={`absolute -right-[37px] -bottom-[40px]  overflow-hidden`}
-            >
-              <Lottie
-                options={animationOptions}
-                height={108}
-                width={108}
-                className="text-white opacity-80"
+            {props.control ? (
+              <>
+                <div className={`absolute -right-[47px] -bottom-[50px] overflow-hidden`}>
+                  <DynamicLottie options={animationOptions} height={136} width={136} />
+                </div>
+                <HeartIcon className="h-full w-full text-white opacity-0" />
+              </>
+            ) : (
+              <HeartIcon
+                className="h-full w-full  text-white opacity-80 cursor-pointer hover:opacity-60 duration-200"
+                onClick={async () => {
+                  setLiked(false)
+                  const param = {
+                    id: likeId,
+                  }
+                  await deleteLikeMutation.mutate(param, {
+                    onError: (res) => {
+                      console.log('like delete error')
+                      setLiked(true)
+                    },
+                  })
+                }}
               />
-            </div>
-            <HeartIcon className="h-full w-full text-white opacity-0" />
+            )}
           </>
         ) : (
-          <HeartIcon
-            className="h-full w-full  text-white opacity-80 cursor-pointer hover:opacity-60 duration-200"
+          <HeartIconOutline
+            className="h-full w-full  text-gray-100 opacity-50 cursor-pointer"
             onClick={async () => {
-              setLiked(false)
-              const param = {
-                id: likeId,
+              setLiked(true)
+              lottiFire()
+              const param = await {
+                user_id: cookie.get('user_id'),
+                post_id: props.post.id,
               }
-              await deleteLikeMutation.mutate(param, {
+              await createLikeMutation.mutate(param, {
                 onError: (res) => {
-                  console.log('like delete error')
-                  setLiked(true)
+                  console.log('like create error')
+                  setLiked(false)
                 },
+                onSuccess: (res) => {},
               })
             }}
           />
