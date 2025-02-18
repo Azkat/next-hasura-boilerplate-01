@@ -126,7 +126,7 @@ export const LikeButton = (props) => {
                     onError: (res) => {
                       console.log('like delete error')
                       setLiked(true)
-                    },
+                    }, 
                   })
                 }}
               />
