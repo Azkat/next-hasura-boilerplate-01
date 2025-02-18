@@ -11,14 +11,18 @@ import { Store } from '../reducer/reducer'
 import { Dialog, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { AuthContext } from '../lib/authProvider'
-import Lottie from 'react-lottie'
+//import Lottie from 'react-lottie'
 
-// Lottieコンポーネントをクライアントサイドでのみ読み込むように設定
-const DynamicLottie = dynamic(() => import('react-lottie'), {
-  ssr: false // サーバーサイドレンダリングを無効化
-}) as typeof Lottie
 
-export const LikeButton = (props) => {
+export const LikeButton = (props: {
+  post?: {
+    id: string
+  }
+  currentUser?: any
+  big?: boolean
+  control?: boolean
+  like?: any
+}) => {
   const cookie = new Cookies()
   const [liked, setLiked] = useState(false)
   const [likeId, setLikeId] = useState('')
@@ -107,10 +111,10 @@ export const LikeButton = (props) => {
       <span className="h-full w-full flex float-right relative hover:opacity-60 duration-200  overflow-hidden">
         {lottie ? (
           <>
-            {props.control ? (
+            {props.post ? (
               <>
                 <div className={`absolute -right-[47px] -bottom-[50px] overflow-hidden`}>
-                  <DynamicLottie options={animationOptions} height={136} width={136} />
+                  
                 </div>
                 <HeartIcon className="h-full w-full text-white opacity-0" />
               </>

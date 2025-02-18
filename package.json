@@ -31,7 +31,6 @@
     "react-hook-form": "^7.31.3",
     "react-hooks-use-modal": "3.2.0",
     "react-image-crop": "^10.0.1",
-    "npm install --legacy-peer-deps" : "1.2.3",
     "react-modal": "3.16.1",
     "react-query": "^3.35.0",
     "react-query-devtools": "^2.6.3",
@@ -41,7 +40,10 @@
     "react-video-tag": "0.0.10",
     "sharp": "0.30.4",
     "universal-cookie": "^4.0.4",
-    "lottie-web": "^5.9.4"
+    "lottie-web": "^5.9.4",
+    "firebase-functions": "^4.5.0",
+    "firebase-admin": "^11.11.0",
+    "react-lottie-player": "^1.5.6"
   },
   "devDependencies": {
     "@types/node": "^17.0.24",
