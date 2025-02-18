@@ -42,7 +42,7 @@ export const useQueryPosts = () => {
     queryKey: 'posts',
     queryFn: fetchPosts,
     staleTime: 3000,
-  })
+  }) 
 }
 
 export const fetchUserLikes = async (user_id) => {
