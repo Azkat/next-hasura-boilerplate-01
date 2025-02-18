@@ -8,6 +8,7 @@ import {
   GET_USER_LIKES_SHOW,
   GET_ALL_POSTS,
 } from '../queries/queries'
+import { graphQLClient } from '../lib/graphql-client'
 
 interface PostRes {
   posts: Post[]
@@ -24,7 +25,8 @@ interface LikesShowRes {
 export const fetchPosts = async () => {
   const { posts: data } = await request<PostRes>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    GET_POSTS
+    GET_POSTS,
+    { variables: {} }
   )
   return data
 }
