@@ -13,7 +13,6 @@ import Link from 'next/link'
 import { AuthContext } from '../lib/authProvider'
 //import Lottie from 'react-lottie'
 
-
 export const LikeButton = (props: {
   post?: {
     id: string
@@ -34,6 +33,8 @@ export const LikeButton = (props: {
   const [isOpen, setIsOpen] = useState(false)
   let completeButtonRef = useRef(null)
   const { currentUser } = useContext(AuthContext)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isChecked, setIsChecked] = useState(false)
 
   const animationOptions = {
     loop: false,
@@ -61,8 +62,13 @@ export const LikeButton = (props: {
           }
         })
       }
+      setIsChecked(true)
     }
   }, [data])
+
+  if (currentUser === undefined) {
+    return null
+  }
 
   if (!currentUser) {
     return (
@@ -79,7 +85,7 @@ export const LikeButton = (props: {
           className="relative"
         >
           <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-          <div className="fixed inset-0 flex items-center justify-center rounded-box ">
+          <div className="fixed flex inset-0 items-center justify-center rounded-box overflow-y-auto">
             <Dialog.Panel className=" max-w-sm rounded-box  bg-baseBody border border-borderLow shadow-xl p-6 w-[343px]">
               <Dialog.Title className="font-bold text-lg">
                 Like this post?
@@ -106,56 +112,28 @@ export const LikeButton = (props: {
     )
   }
 
+  if (!isChecked) {
+    return null
+  }
+
   if (liked) {
     return (
       <span className="h-full w-full flex float-right relative hover:opacity-60 duration-200  overflow-hidden">
-        {lottie ? (
-          <>
-            {props.post ? (
-              <>
-                <div className={`absolute -right-[47px] -bottom-[50px] overflow-hidden`}>
-                  
-                </div>
-                <HeartIcon className="h-full w-full text-white opacity-0" />
-              </>
-            ) : (
-              <HeartIcon
-                className="h-full w-full  text-white opacity-80 cursor-pointer hover:opacity-60 duration-200"
-                onClick={async () => {
-                  setLiked(false)
-                  const param = {
-                    id: likeId,
-                  }
-                  await deleteLikeMutation.mutate(param, {
-                    onError: (res) => {
-                      console.log('like delete error')
-                      setLiked(true)
-                    }, 
-                  })
-                }}
-              />
-            )}
-          </>
-        ) : (
-          <HeartIconOutline
-            className="h-full w-full  text-gray-100 opacity-50 cursor-pointer"
-            onClick={async () => {
-              setLiked(true)
-              lottiFire()
-              const param = await {
-                user_id: cookie.get('user_id'),
-                post_id: props.post.id,
-              }
-              await createLikeMutation.mutate(param, {
-                onError: (res) => {
-                  console.log('like create error')
-                  setLiked(false)
-                },
-                onSuccess: (res) => {},
-              })
-            }}
-          />
-        )}
+        <HeartIcon
+          className="h-full w-full  text-white opacity-80 cursor-pointer hover:opacity-60 duration-200"
+          onClick={async () => {
+            setLiked(false)
+            const param = {
+              id: likeId,
+            }
+            await deleteLikeMutation.mutate(param, {
+              onError: (res) => {
+                console.log('like delete error')
+                setLiked(true)
+              },
+            })
+          }}
+        />
       </span>
     )
   } else {
