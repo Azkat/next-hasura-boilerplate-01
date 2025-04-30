@@ -68,7 +68,7 @@ const PostItem = (props) => {
   }, [state.audioPlay, state.playingId])
 
   return (
-    <div className="bg-backgroundGray mb-4 sm:rounded-lg ">
+    <div className="bg-backgroundGray border border-stone-800  mb-4 sm:rounded-lg">
       {/* {targetViewPosition === 'VISIBLE' && <p>画面内に表示されています</p>}
       {targetViewPosition === 'ABOVE_VIEWPORT' && (
         <p>画面より上に表示されています</p>
@@ -80,7 +80,7 @@ const PostItem = (props) => {
       {!props.post ? (
         <PostItemSkelton />
       ) : (
-        <p className="font-bold my-3 " key={props.post.id}>
+        <p className="font-bold" key={props.post.id}>
           <div className="flex items-center p-4 pt-3 ">
             <div className="flex items-center hover:opacity-80 active:opacity-60">
               <div className="w-8 h-8 mr-2  relative ">

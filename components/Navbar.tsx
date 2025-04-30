@@ -26,7 +26,7 @@ export const Navbar = (props) => {
 
   return (
     <div className="navbar bg-baseNav ">
-      <div className="max-w-3xl mx-auto w-full ">
+      <div className="max-w-xl mx-auto w-full ">
         <div className="navbar-start">
           <DropdownHeaderMenu />
           {/* <div className="dropdown">

@@ -65,4 +65,5 @@
       "react-hooks/exhaustive-deps": "warn"
     },
     "root": true
-  }}
+  }
+}

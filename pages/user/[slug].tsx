@@ -84,7 +84,7 @@ export default function UserList(props) {
         <div className="block sm:hidden">
           <UserInfomation data={data} status={status} />
         </div>
-        <div className="flex justify-around px-[60px] border-y border-border pt-4 pb-2 mb-4">
+        <div className="flex justify-around px-[60px] border-y border-border pt-3 pb-3 mb-4">
           <div className="tabs gap-10">
             <a
               className={`tab ${!like && 'tab-active'}`}

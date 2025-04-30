@@ -36,7 +36,7 @@ const AudioControl = (props) => {
         <div
           className={`fixed touch-none overflow-hidden ${translateY} -bottom-4 w-full grid place-items-center z-[100000] opacity-95 px-2 sm:px-0 duration-300 `}
         >
-          <div className="w-full sm:w-[768px] h-[64px] bg-backgroundPlayer rounded-lg flex px-4 sm:px-6 py-0 sm:py-1 items-center shadow-xl ">
+          <div className="w-full sm:max-w-xl h-[64px] bg-stone-800/90 rounded-lg flex px-4 sm:px-6 py-0 sm:py-1 items-center shadow-xl ">
             <Link
               href={'/post/' + state.playingId}
               className="contents"

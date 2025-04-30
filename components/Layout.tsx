@@ -19,7 +19,7 @@ const Content = ({ children }) => {
   return (
     <div className="">
       {/* {uid ? 'ログイン済み' : '未ログイン'} */}
-      <main className="flex flex-1 flex-col w-screen max-w-3xl mx-auto min-h-[calc(100vh-240px)] sm:max-w-[calc(544px)] pb-[120px]">
+      <main className="flex flex-1 flex-col w-screen py-4 max-w-3xl mx-auto min-h-[calc(100vh-240px)] {/*sm:max-w-[calc(544px)]*/} sm:max-w-xl pb-[120px]">
         {children}
       </main>
       <footer className="w-full h-60 flex justify-center items-center bg-black"></footer>
