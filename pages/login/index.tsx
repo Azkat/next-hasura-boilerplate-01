@@ -37,7 +37,7 @@ export default function UserList(props) {
   if (!isUser) {
     return (
       <Layout title="Login">
-        <div className="px-4 mb-32">
+        <div className="px-4 mb-32 bg-backgroundGray border border-stone-800  mb-4 sm:rounded-lg px-8 pb-12">
           <>
             <Auth></Auth>
             <AuthGoogle></AuthGoogle>

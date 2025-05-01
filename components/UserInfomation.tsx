@@ -19,12 +19,12 @@ const UserInformation = (props) => {
   return (
     <>
       {props.status == 'success' ? (
-        <div className="px-4 mb-4 sm:px-0 sm:mt-6">
+        <div className="px-4 mb-1 sm:px-0 sm:mt-1 items-center text-center">
           <div className="text-sm mb-1">
             <div className="whitespace-pre">{props.data.bio}</div>
           </div>
           {link != '' && (
-            <div className="text-sm mb-2 text-secondary flex mt-3 items-center">
+            <div className="text-sm mb-2 text-secondary flex mt-3 items-center justify-center">
               <div className="h-4 w-4 mr-1">
                 <LinkIcon className="h-full w-full  text-gray-100 opacity-80 cursor-pointer" />
               </div>

@@ -35,12 +35,12 @@ const AvatarName = (props) => {
   }, [props])
 
   return (
-    <div className="flex items-center p-4 pt-7 sm:items-start">
+    <div className="flex flex-col items-center justify-center p-4 pt-7 rounded-2xl bg-backgroundGray border border-stone-800">
       {pagePath == '/user/[slug]' ? (
-        <div className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32  relative">
+        <div className="w-14 h-14 rounded-full sm:w-20 sm:h-20 relative">
           <Image
             src={src}
-            className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32 absolute"
+            className="w-14 h-14 mr-4 rounded-full sm:w-20 sm:h-20 absolute"
             layout="fill"
             objectFit="contain"
             onError={() => {
@@ -55,8 +55,8 @@ const AvatarName = (props) => {
             alt=""
           />
           {noAvatarImage && (
-            <div className="absolute inline-flex items-center justify-center w-14 h-14 sm:w-32 sm:h-32 overflow-hidden rounded-full bg-gray-600 mr-4 ">
-              <span className="text-2xl sm:text-5xl text-gray-300">
+            <div className="absolute inline-flex items-center justify-center w-14 h-14 sm:w-20 sm:h-20 overflow-hidden rounded-full bg-gray-600">
+              <span className="text-xl sm:text-2xl text-gray-300">
                 {initial}
               </span>
             </div>
@@ -64,10 +64,10 @@ const AvatarName = (props) => {
         </div>
       ) : (
         <Link href="/account/changeProfileImage" className="contents">
-          <div className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32  relative">
+          <div className="w-14 h-14 rounded-full sm:w-20 sm:h-20 relative">
             <Image
               src={src}
-              className="w-14 h-14 mr-4 rounded-full sm:w-32 sm:h-32 absolute"
+              className="w-14 h-14 rounded-full sm:w-20 sm:h-20 absolute"
               layout="fill"
               objectFit="contain"
               onError={() => {
@@ -82,8 +82,8 @@ const AvatarName = (props) => {
               alt=""
             />
             {noAvatarImage && (
-              <div className="absolute inline-flex items-center justify-center w-14 h-14 sm:w-32 sm:h-32 overflow-hidden rounded-full bg-gray-600 mr-4 ">
-                <span className="text-2xl sm:text-5xl text-gray-300">
+              <div className="absolute inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 overflow-hidden rounded-full bg-gray-600">
+                <span className="text-xl sm:text-2xl text-gray-300">
                   {initial}
                 </span>
               </div>
@@ -92,8 +92,8 @@ const AvatarName = (props) => {
         </Link>
       )}
 
-      <div className="">
-        <div className="font-light text-2xl sm:text-3xl">
+      <div className="flex flex-col items-center mt-2">
+        <div className="text-xl sm:text-xl font-bold">
           {props.status == 'success' ? props.data.name : ''}
         </div>
         {pagePath == '/user/[slug]' ? (
@@ -108,7 +108,7 @@ const AvatarName = (props) => {
           </div>
         )}
 
-        <div className="hidden sm:block">
+        <div className="sm:block">
           <UserInfomation data={props.data} status={props.status} />
         </div>
       </div>
@@ -116,7 +116,7 @@ const AvatarName = (props) => {
       {pagePath == '/user/[slug]' ? (
         ''
       ) : (
-        <div className="ml-auto">
+        <div className="mt-2">
           <Link href="/account/settings">
             <CogIcon className="h-5 w-5 cursor-pointer" />
           </Link>
