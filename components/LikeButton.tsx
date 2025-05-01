@@ -11,7 +11,35 @@ import { Store } from '../reducer/reducer'
 import { Dialog, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { AuthContext } from '../lib/authProvider'
+import { useQuery, useQueryClient } from 'react-query'
 //import Lottie from 'react-lottie'
+
+const fetchUserLikes = async (userId) => {
+  const res = await fetch(`/api/likes?userId=${userId}`)
+  if (!res.ok) throw new Error('Network response was not ok')
+  const data = await res.json()
+  return data.data.likes
+}
+
+const addLike = async (userId, postId) => {
+  const res = await fetch('/api/likes', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId, postId }),
+  })
+  if (!res.ok) throw new Error('Like追加に失敗しました')
+  return await res.json()
+}
+
+const deleteLike = async (likeId) => {
+  const res = await fetch('/api/likes', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: likeId }),
+  })
+  if (!res.ok) throw new Error('Like削除に失敗しました')
+  return await res.json()
+}
 
 export const LikeButton = (props: {
   post?: {
@@ -29,33 +57,29 @@ export const LikeButton = (props: {
   const { createLikeMutation, deleteLikeMutation } = useAppMutate()
   const [lottie, setLottie] = useState(false)
   const { state, dispatch } = useContext(Store)
-  const { status, data } = useQueryUserLikes(cookie.get('user_id'))
   const [isOpen, setIsOpen] = useState(false)
   let completeButtonRef = useRef(null)
   const { currentUser } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(true)
   const [isChecked, setIsChecked] = useState(false)
+  const [actionLoading, setActionLoading] = useState(false)
+  const queryClient = useQueryClient()
 
-  const animationOptions = {
-    loop: false,
-    autoplay: true,
-    animationData,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
-  }
-
-  const lottiFire = () => {
-    setLottie(true)
-    setTimeout(() => {
-      setLottie(false)
-    }, 700)
-  }
+  const {
+    data: likes = [],
+    isLoadingError,
+    error,
+  } = useQuery(
+    ['userLikes', cookie.get('user_id')],
+    () => fetchUserLikes(cookie.get('user_id')),
+    { enabled: !!cookie.get('user_id') }
+  )
+  const likedtest = likes.some((like) => like.post_id === props.post.id)
 
   useEffect(() => {
-    if (status == 'success' && props) {
+    if (likes && props) {
       if (props.post) {
-        data.forEach((item) => {
+        likes.forEach((item) => {
           if (item.post_id == props.post.id) {
             setLiked(true)
             setLikeId(item.id)
@@ -64,13 +88,9 @@ export const LikeButton = (props: {
       }
       setIsChecked(true)
     }
-  }, [data])
+  }, [likes])
 
-  if (currentUser === undefined) {
-    return null
-  }
-
-  if (!currentUser) {
+  if (!currentUser || currentUser === undefined) {
     return (
       <span className="h-full w-full flex float-right ml-4 hover:opacity-60 duration-200">
         <HeartIconOutline
@@ -112,26 +132,55 @@ export const LikeButton = (props: {
     )
   }
 
+  if (actionLoading) {
+    return (
+      <span className="h-full w-full flex float-right relative hover:opacity-60 duration-200  overflow-hidden">
+        <svg
+          className="animate-spin h-full w-full text-gray-400"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+            fill="none"
+          />
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+          />
+        </svg>
+      </span>
+    )
+  }
+
   if (!isChecked) {
     return null
   }
 
-  if (liked) {
+  if (likedtest) {
     return (
       <span className="h-full w-full flex float-right relative hover:opacity-60 duration-200  overflow-hidden">
         <HeartIcon
           className="h-full w-full  text-white opacity-80 cursor-pointer hover:opacity-60 duration-200"
           onClick={async () => {
-            setLiked(false)
-            const param = {
-              id: likeId,
+            setActionLoading(true)
+            console.log('さくじょします')
+            try {
+              await deleteLike(likeId)
+              queryClient.invalidateQueries([
+                'userLikes',
+                cookie.get('user_id'),
+              ])
+            } catch (e) {
+              alert('お気に入り削除に失敗しました')
             }
-            await deleteLikeMutation.mutate(param, {
-              onError: (res) => {
-                console.log('like delete error')
-                setLiked(true)
-              },
-            })
+            console.log('さくじょした')
+            setActionLoading(false)
           }}
         />
       </span>
@@ -142,19 +191,19 @@ export const LikeButton = (props: {
         <HeartIconOutline
           className="h-full w-full  text-gray-100 opacity-50 cursor-pointer"
           onClick={async () => {
-            setLiked(true)
-            lottiFire()
-            const param = await {
-              user_id: cookie.get('user_id'),
-              post_id: props.post.id,
+            setActionLoading(true)
+            console.log('追加します')
+            try {
+              await addLike(cookie.get('user_id'), props.post.id)
+              queryClient.invalidateQueries([
+                'userLikes',
+                cookie.get('user_id'),
+              ])
+            } catch (e) {
+              alert('お気に入り追加に失敗しました')
             }
-            await createLikeMutation.mutate(param, {
-              onError: (res) => {
-                console.log('like create error')
-                setLiked(false)
-              },
-              onSuccess: (res) => {},
-            })
+            console.log('追加した')
+            setActionLoading(false)
           }}
         />
       </span>

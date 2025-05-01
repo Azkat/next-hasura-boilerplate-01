@@ -105,6 +105,7 @@ const PostItem = (props) => {
                   ) : (
                     <Image
                       src={userIconSrc}
+                      priority
                       className="w-8 h-8 mr-2 rounded-full sm:w-8 sm:h-8 duration-200  hover:opacity-95 active:opacity-80"
                       layout="fill"
                       objectFit="contain"
@@ -156,6 +157,7 @@ const PostItem = (props) => {
                   <div className="w-full flex items-center duration-100 hover:brightness-110 active:brightness-125 ">
                     <Image
                       src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/${props.post.id}.jpg`}
+                      priority
                       layout="responsive"
                       objectFit="contain"
                       alt=""
