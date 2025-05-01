@@ -8,9 +8,9 @@ module.exports = {
     extend: {
       colors: {
         accentYellow: '#FFF133',
-        baseNav: '#000',
-        baseBody: '#151515',
-        backgroundGray: '#1E1E1E',
+        baseNav: '#121317',
+        baseBody: '#121317',
+        backgroundGray: '#16181D',
         backgroundPlayer: '#2F3234',
         border: '#2c2c2c',
         borderLow: '#1c1c1c',
