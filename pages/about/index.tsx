@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function About() {
   return (
@@ -21,18 +22,18 @@ export default function About() {
             短くてもずっと聞いていたくなる、気持ちいいフレーズを投稿してリスナーを楽しませましょう！
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
-            <a
+            <Link
               href="/"
               className="px-10 py-4 bg-white text-[#121317] font-bold rounded-full text-xl shadow-lg border border-white hover:bg-gray-100 transition h-14 flex items-center justify-center"
             >
               はじめる
-            </a>
-            <a
+            </Link>
+            <Link
               href="/login"
               className="px-10 py-4 bg-transparent text-white font-medium rounded-full text-xl border-2 border-white hover:bg-white/10 transition h-14 flex items-center justify-center"
             >
               ログイン
-            </a>
+            </Link>
           </div>
 
           <div className="w-full flex justify-center">
@@ -118,18 +119,18 @@ export default function About() {
           </h2>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
-            <a
+            <Link
               href="/"
               className="px-10 py-4 bg-white text-[#121317] font-bold rounded-full text-xl shadow-lg border border-white hover:bg-gray-100 transition h-14 flex items-center justify-center"
             >
               はじめる
-            </a>
-            <a
+            </Link>
+            <Link
               href="/login"
               className="px-10 py-4 bg-transparent text-white font-medium rounded-full text-xl border-2 border-white hover:bg-white/10 transition h-14 flex items-center justify-center"
             >
               ログイン
-            </a>
+            </Link>
           </div>
         </section>
       </div>
