@@ -8,7 +8,18 @@ export default function About() {
       <Head>
         <title>About - Cursor</title>
       </Head>
-      <div className="w-full min-h-screen bg-[#121317] pb-24">
+      <div className="navbar bg-baseNav border-b border-stone-800">
+        <div className="max-w-xl mx-auto w-full ">
+          <div className="navbar-start"></div>
+          <div className="navbar-center">
+            <Link href="/">
+              <img src="/logo.png" alt="Droptune" width="50" height="35" />
+            </Link>
+          </div>
+          <div className="navbar-end flex"></div>
+        </div>
+      </div>
+      <div className="w-full min-h-screen bg-[#121317]">
         {/* ヒーローセクション */}
         <section className="w-full flex flex-col items-center justify-center pt-16 pb-16 px-4">
           <h1 className="text-5xl md:text-8xl font-extrabold text-center drop-shadow-lg mb-10 tracking-tight text-white">
