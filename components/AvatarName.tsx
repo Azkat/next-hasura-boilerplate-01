@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { CogIcon } from '@heroicons/react/solid'
+import { PencilIcon } from '@heroicons/react/solid'
 import UserInfomation from './UserInfomation'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -82,7 +83,7 @@ const AvatarName = (props) => {
               alt=""
             />
             {noAvatarImage && (
-              <div className="absolute inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 overflow-hidden rounded-full bg-gray-600">
+              <div className="absolute inline-flex items-center justify-center w-14 h-14 sm:w-20 sm:h-20 overflow-hidden rounded-full bg-gray-600">
                 <span className="text-xl sm:text-2xl text-gray-300">
                   {initial}
                 </span>
@@ -96,17 +97,6 @@ const AvatarName = (props) => {
         <div className="text-xl sm:text-xl font-bold">
           {props.status == 'success' ? props.data.name : ''}
         </div>
-        {pagePath == '/user/[slug]' ? (
-          ''
-        ) : (
-          <div className="mt-2">
-            <Link href="/account/editprofile">
-              <button className="btn btn-sm btn-outline text-sm">
-                Edit Profile
-              </button>
-            </Link>
-          </div>
-        )}
 
         <div className="sm:block">
           <UserInfomation data={props.data} status={props.status} />
@@ -116,9 +106,18 @@ const AvatarName = (props) => {
       {pagePath == '/user/[slug]' ? (
         ''
       ) : (
-        <div className="mt-2">
-          <Link href="/account/settings">
-            <CogIcon className="h-5 w-5 cursor-pointer" />
+        <div className="flex flex-row gap-2 mt-2 w-full">
+          <Link href="/account/editprofile" className="flex-1">
+            <button className="btn btn-sm btn-outline text-sm w-full flex items-center justify-center">
+              <PencilIcon className="h-5 w-5 mr-1" />
+              Edit Profile
+            </button>
+          </Link>
+          <Link href="/account/settings" className="flex-1">
+            <button className="btn btn-sm btn-outline text-sm w-full flex items-center justify-center">
+              <CogIcon className="h-5 w-5 mr-1" />
+              Account Setting
+            </button>
           </Link>
         </div>
       )}

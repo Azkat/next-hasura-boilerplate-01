@@ -7,11 +7,15 @@ import { useFirebaseAuth } from '../hooks/useFirebaseAuth'
 import firebase from '../firebaseConfig'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { FormEvent } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
+import { useState } from 'react'
 
 interface IFormInput {
   email: string
   password: string
 }
+
+const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
 export const Auth = () => {
   const user = firebase.auth().currentUser
@@ -32,6 +36,12 @@ export const Auth = () => {
     watch,
     formState: { errors },
   } = useForm<IFormInput>()
+
+  const [verified, setVerified] = useState(false)
+
+  const handleRecaptcha = (token) => {
+    setVerified(!!token)
+  }
 
   const emailRules = {
     required: 'Required',
@@ -92,13 +102,24 @@ export const Auth = () => {
             {errors.password && errors.password.message}
           </div>
         </div>
-        <button
-          className="disabled:bg-gray-600 btn btn-wide btn-primary px-4 py-1 mt-6"
-          disabled={!email || !password || !rightPasswordFormat}
-          type="submit"
-        >
-          {isLogin ? 'Login' : 'Singup'}
-        </button>
+        <div className=" mt-6">
+          <ReCAPTCHA
+            sitekey={SITE_KEY}
+            onChange={handleRecaptcha}
+            theme="dark"
+          />
+          <div className="w-full flex justify-center">
+            <button
+              className="disabled:bg-gray-600 btn btn-wide btn-primary px-4 py-1 mt-6 mx-auto"
+              disabled={
+                !email || !password || !rightPasswordFormat || !verified
+              }
+              type="submit"
+            >
+              {isLogin ? 'Login' : 'Singup'}
+            </button>
+          </div>
+        </div>
       </form>
 
       <div className="mt-20 flex justify-center items-center flex-col">

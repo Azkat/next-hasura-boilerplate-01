@@ -17,64 +17,46 @@ import {
   useQueryUserLikesShow,
 } from '../../hooks/useQueryPosts'
 import ListSkelton from '../../components/ListSkelton'
-
-const fetchUserLikes = async (userId) => {
-  const res = await fetch(`/api/likes?userId=${userId}`)
-  if (!res.ok) throw new Error('Network response was not ok')
-  const data = await res.json()
-  return data.data.likes
-}
+import { useQuery } from 'react-query'
 
 const Likes = (props) => {
-  const { status, data } = useQueryUserLikesShow(props.data.id)
-  const [likeData, setLikeData] = useState({})
+  const userId = props.data.id
+  const {
+    data: likes = [],
+    isLoading,
+    error,
+  } = useQuery(
+    ['userLikes', userId],
+    async () => {
+      const res = await fetch(`/api/likes?userId=${userId}`)
+      if (!res.ok) throw new Error('Network response was not ok')
+      const data = await res.json()
+      return data.data.likes
+    },
+    { enabled: !!userId }
+  )
 
   const DynamicUserLikeList = dynamic(
     () => import('../../components/UserLikeList'),
-    {
-      //loading: () => <ListSkelton />,
-    }
+    {}
   )
-
-  useEffect(() => {
-    if (status == 'success') {
-      setLikeData({ posts: data })
-    }
-  }, [data])
 
   return (
     <>
-      {status == 'success' ? (
-        <DynamicUserLikeList data={data} user={props} path="user" />
-      ) : (
+      {isLoading ? (
         <ListSkelton />
+      ) : (
+        <DynamicUserLikeList data={likes} user={props} path="user" />
       )}
     </>
   )
 }
 
 export default function UserList(props) {
-  const queryClient = useQueryClient()
-  const data = queryClient.getQueryData<User>('user_by_id')
+  const { userData } = props
   const status = 'success'
-  const [postImageSrc, setPostImageSrc] = useState(
-    `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}post_image/`
-  )
-  const [hasImage, setHasImage] = useState(true)
   const router = useRouter()
-  const ua = useUserAgent(window.navigator.userAgent)
-  const [isHovering, setIsHovered] = useState(false)
-  const [hoveredId, setHoveredId] = useState('')
   const [like, setLike] = useState(false)
-
-  const onMouseEnter = (id) => {
-    setHoveredId(id)
-    setIsHovered(true)
-  }
-  const onMouseLeave = (id) => {
-    setHoveredId('')
-    setIsHovered(false)
-  }
 
   const DynamicUserPostList = dynamic(
     () => import('../../components/UserPostList'),
@@ -84,15 +66,15 @@ export default function UserList(props) {
   )
 
   return (
-    <Layout title={data.name}>
+    <Layout title={userData.name}>
       <div className="px-4">
         <div className="mt-4 rounded-2xl pb-8 min-h-[628px]">
           <ModalBase aspath={router.asPath} />
 
-          <AvatarName data={data} status={status} />
+          <AvatarName data={userData} status={status} />
 
           <div className="hidden">
-            <UserInfomation data={data} status={status} />
+            <UserInfomation data={userData} status={status} />
           </div>
           <div className="flex justify-around px-[60px] pt-4 pb-4">
             <div className="tabs gap-10">
@@ -130,8 +112,8 @@ export default function UserList(props) {
               </a>
             </div>
           </div>
-          {!like && <DynamicUserPostList data={data} path={'user'} />}
-          {like && <Likes data={data} />}
+          {!like && <DynamicUserPostList data={userData} path={'user'} />}
+          {like && <Likes data={userData} />}
         </div>
       </div>
     </Layout>
@@ -139,13 +121,11 @@ export default function UserList(props) {
 }
 
 export async function getServerSideProps(context) {
-  const user_id = await context.params.slug
-  const queryClient = new QueryClient()
-  await queryClient.prefetchQuery('user_by_id', () => fetchUserById(user_id))
-
+  const user_id = context.params.slug
+  const userData = await fetchUserById(user_id)
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
+      userData,
     },
   }
 }

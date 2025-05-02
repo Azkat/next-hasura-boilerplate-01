@@ -42,7 +42,7 @@ export const useQueryPosts = () => {
     queryKey: 'posts',
     queryFn: fetchPosts,
     staleTime: 3000,
-  }) 
+  })
 }
 
 export const fetchUserLikes = async (user_id) => {
@@ -61,9 +61,12 @@ export const useQueryUserLikes = (user_id) => {
 }
 
 export const fetchUserLikesShow = async (user_id) => {
-  const { likes: likesData } = await graphQLClient.request(GET_USER_LIKES_SHOW, {
-    user_id: user_id,
-  })
+  const { likes: likesData } = await graphQLClient.request(
+    GET_USER_LIKES_SHOW,
+    {
+      user_id: user_id,
+    }
+  )
   return likesData
 }
 

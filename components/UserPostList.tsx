@@ -31,7 +31,7 @@ const UserPostList = (props) => {
 
   return (
     <section className="overflow-hidden min-h-[350px] bg-backgroundGray rounded-2xl bg-backgroundGray border border-stone-800">
-      <div className="container px-4 py-8 mx-auto ">
+      <div className="container px-4 py-4 mx-auto ">
         <div className="flex flex-wrap -m-1 md:-m-2">
           {props.data.posts?.map((post) => (
             <div className="flex flex-wrap w-1/3" key={post.id}>
