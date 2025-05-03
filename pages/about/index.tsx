@@ -152,7 +152,7 @@ export default function About() {
         {isSp ? <HeroSp /> : <HeroPc />}
 
         {/* 特徴セクション */}
-        <section className="w-full py-16 px-4 bg-[#181a20]">
+        {/* <section className="w-full py-16 px-4 bg-[#181a20]">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-12">
             主な特徴
           </h2>
@@ -188,16 +188,40 @@ export default function About() {
               </p>
             </div>
           </div>
-          */}
-        </section>
+          
+        </section>*/}
 
         {/* イメージセクション */}
         <section className="w-full py-20 px-4 flex flex-col items-center bg-[#181a20]  ">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-8">
             開発者より
           </h2>
-          <div className="w-full flex justify-center min-h-[400px]">
-            （準備中）
+          <div className="w-full flex flex-col justify-center min-h-[400px] max-w-2xl mx-auto gap-2 text-lg  bg-backgroundGray border border-stone-800  mb-4 rounded-lg sm:px-12 sm:py-12 px-4 py-8">
+            <p className="mb-6">
+              音楽を作っていると、「これだ！」と感じるフレーズに出会える瞬間があります。
+            </p>
+
+            <p className="mb-6">
+              求めていた音にたどり着いたと同時に、まったく新しい何かに出会ったような不思議な感覚です。
+              決して頻繁にあるわけではないけれど、その感覚を求めて日々試行錯誤を続けています。
+            </p>
+
+            <p className="mb-6 font-bold">
+              そんな断片こそ、多くの人に気軽に聴いてもらえたら。
+              もっと自由で楽しい音楽体験が広がると思い、このサービスを作りました。
+            </p>
+
+            <p className="mb-6">
+              もちろん、音楽はループだけで完結しません。
+              ブレイクやドロップによって感情が動く。その構造美こそが本質です。
+              でも、短時間コンテンツが当たり前になった今、音楽の入り口として「フレーズそのものの快楽」にフォーカスするのも、ひとつの形だと思っています。
+            </p>
+
+            <p className="">
+              この場が、あなたのひらめきをシェアする場所になれば。
+              そして、それが誰かの心を動かすきっかけになれば。
+              そう願っています。
+            </p>
           </div>
         </section>
 
