@@ -15,7 +15,7 @@ function HeroPc() {
         <div
           style={{
             width: '100%',
-            backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient.svg)`,
+            backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient.webp)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center bottom',
             borderRadius: '1.5rem',
@@ -45,7 +45,7 @@ function HeroPc() {
             </Link>
           </div>
           <Image
-            src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/lpmainimg.png`}
+            src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/lpmainimg.webp`}
             alt="Droptune LPメインイメージ"
             width={1600}
             height={600}
@@ -69,7 +69,7 @@ function HeroSp() {
       <div
         className="py-10 flex flex-col items-center justify-center"
         style={{
-          backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient_sp.png)`,
+          backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient_sp.webp)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center bottom',
           padding: '0px',
@@ -81,7 +81,7 @@ function HeroSp() {
           短くてもずっと聞いていたくなる、気持ちいいフレーズを投稿してリスナーを楽しませましょう！
         </p>
         <Image
-          src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/lpmainimg_sp.png`}
+          src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/lpmainimg_sp.webp`}
           alt="Droptune SPイメージ"
           width={400}
           height={200}
@@ -122,17 +122,17 @@ export default function About() {
         <title>About Droptune</title>
         <link
           rel="preload"
-          href={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient.svg`}
+          href={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient.webp`}
           as="image"
         />
         <link
           rel="preload"
-          href={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/lpmainimg.png`}
+          href={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/lpmainimg.webp`}
           as="image"
         />
         <link
           rel="preload"
-          href={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/lpmainimg_sp.png`}
+          href={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/lpmainimg_sp.webp`}
           as="image"
         />
       </Head>
@@ -205,7 +205,7 @@ export default function About() {
         <section
           className="w-full py-20 px-4 flex flex-col items-center"
           style={{
-            backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient.svg)`,
+            backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient.webp)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center bottom',
           }}
@@ -214,7 +214,7 @@ export default function About() {
             今すぐ体験しよう
           </h2>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               href="/"
               className="px-10 py-4 bg-white text-[#121317] font-bold rounded-full text-xl shadow-lg border border-white hover:bg-gray-100 transition h-14 flex items-center justify-center"
