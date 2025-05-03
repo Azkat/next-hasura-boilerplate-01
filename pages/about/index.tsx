@@ -72,7 +72,7 @@ function HeroSp() {
           backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient_sp.png)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center bottom',
-          padding: '8px',
+          padding: '0px',
           boxShadow: '0 10px 32px 0 rgba(0,0,0,0.25)',
         }}
       >
@@ -85,7 +85,7 @@ function HeroSp() {
           alt="Droptune SPイメージ"
           width={400}
           height={200}
-          className="rounded-xl w-full h-auto"
+          className="rounded-xl w-full h-auto px-0"
           priority
         />
         <div className="flex gap-3 mt-8 px-4">
