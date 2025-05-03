@@ -24,7 +24,7 @@ function HeroPc() {
           }}
           className="w-full max-w-[1200px] mx-auto flex flex-col items-center justify-center py-12 relative overflow-hidden"
         >
-          <p className="text-xl md:text-xl text-center text-white max-w-5xl mb-6 mx-auto leading-relaxed font-normal tracking-wide antialiased drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
+          <p className="text-xl md:text-xl text-center text-white max-w-5xl mb-6 mx-auto leading-relaxed font-[500] tracking-wide antialiased drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
             Droptuneなら、サクッとできた音楽のループがそのまま作品になります。
             <br />
             短くてもずっと聞いていたくなる、気持ちいいフレーズを投稿してリスナーを楽しませましょう！
@@ -76,7 +76,7 @@ function HeroSp() {
           boxShadow: '0 10px 32px 0 rgba(0,0,0,0.25)',
         }}
       >
-        <p className="text-base text-center text-white mb-8 px-4 font-normal tracking-wide antialiased leading-tight">
+        <p className="text-base text-center text-white mb-8 px-4 font-[500] tracking-wide antialiased leading-tight">
           Droptuneなら、サクッとできた音楽のループがそのまま作品になります。
           短くてもずっと聞いていたくなる、気持ちいいフレーズを投稿してリスナーを楽しませましょう！
         </p>
