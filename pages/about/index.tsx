@@ -69,7 +69,7 @@ function HeroSp() {
       <div
         className="py-10 flex flex-col items-center justify-center"
         style={{
-          backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient.svg)`,
+          backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient_sp.png)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center bottom',
           padding: '8px',
