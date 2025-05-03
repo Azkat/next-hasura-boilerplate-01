@@ -72,9 +72,11 @@ function HeroSp() {
           backgroundImage: "url('/noisegradient.svg')",
           backgroundSize: 'cover',
           backgroundPosition: 'center bottom',
+          padding: '8px',
+          boxShadow: '0 10px 32px 0 rgba(0,0,0,0.25)',
         }}
       >
-        <p className="text-base text-center text-white mb-8 px-4 font-light tracking-wide antialiased leading-tight">
+        <p className="text-base text-center text-white mb-8 px-4 font-bold tracking-wide antialiased leading-tight">
           Droptuneなら、サクッとできた音楽のループがそのまま作品になります。
           短くてもずっと聞いていたくなる、気持ちいいフレーズを投稿してリスナーを楽しませましょう！
         </p>
@@ -84,6 +86,7 @@ function HeroSp() {
           width={400}
           height={200}
           className="rounded-xl w-full h-auto"
+          priority
         />
         <div className="flex gap-3 mt-8 px-4">
           <Link
@@ -117,6 +120,9 @@ export default function About() {
     <>
       <Head>
         <title>About Droptune</title>
+        <link rel="preload" href="/noisegradient.svg" as="image" />
+        <link rel="preload" href="/lpmainimg.png" as="image" />
+        <link rel="preload" href="/lpmainimg_sp.png" as="image" />
       </Head>
       <div className="navbar bg-baseNav border-b border-stone-800">
         <div className="max-w-xl mx-auto w-full ">
@@ -220,5 +226,8 @@ export default function About() {
 }
 
 export async function getStaticProps() {
-  return { props: {} }
+  return {
+    props: {},
+    // 全体のページをビルド時に生成することで初期表示を高速化
+  }
 }
