@@ -22,7 +22,7 @@ function HeroPc() {
             padding: '8px',
             boxShadow: '0 10px 32px 0 rgba(0,0,0,0.25)',
           }}
-          className="w-full max-w-[1200px] mx-auto flex flex-col items-center justify-center py-12 relative overflow-hidden"
+          className="w-full max-w-[1700px] mx-auto flex flex-col items-center justify-center py-12 relative overflow-hidden"
         >
           <p className="text-xl md:text-xl text-center text-white max-w-5xl mb-6 mx-auto leading-relaxed font-[500] tracking-wide antialiased drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
             Droptuneなら、サクッとできた音楽のループがそのまま作品になります。
@@ -49,7 +49,7 @@ function HeroPc() {
             alt="Droptune LPメインイメージ"
             width={1600}
             height={600}
-            className="rounded-2xl object-contain w-full h-auto z-10 relative px-4 sm:px-12"
+            className="rounded-2xl object-contain w-full h-auto z-10 relative px-4 sm:px-12 max-w-[1280px]"
             priority
           />
         </div>
