@@ -196,8 +196,8 @@ export default function About() {
           <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-8">
             開発者より
           </h2>
-          <div className="w-full flex flex-col justify-center min-h-[400px] max-w-2xl mx-auto gap-2 text-lg  bg-backgroundGray border border-stone-800  mb-4 rounded-lg sm:px-12 sm:py-12 px-4 py-8">
-            <p className="mb-6">
+          <div className="w-full flex flex-col justify-center min-h-[400px] max-w-2xl mx-auto gap-2 text-lg  bg-backgroundGray border border-stone-800  mb-4 rounded-lg sm:px-12 sm:py-12 px-4 py-8 font-light antialiased text-white">
+            <p className="mb-6 font-bold">
               音楽を作っていると、「これだ！」と感じるフレーズに出会える瞬間があります。
             </p>
 
@@ -206,9 +206,12 @@ export default function About() {
               決して頻繁にあるわけではないけれど、その感覚を求めて日々試行錯誤を続けています。
             </p>
 
-            <p className="mb-6 font-bold">
-              そんな断片こそ、多くの人に気軽に聴いてもらえたら。
-              もっと自由で楽しい音楽体験が広がると思い、このサービスを作りました。
+            <p className="mb-6">
+              <span className="font-bold">
+                そんな断片こそ、多くの人に気軽に聴いてもらえたら。
+              </span>
+              <br />
+              っと自由で楽しい音楽体験が広がると思い、このサービスを作りました。
             </p>
 
             <p className="mb-6">
@@ -218,8 +221,11 @@ export default function About() {
             </p>
 
             <p className="">
-              この場が、あなたのひらめきをシェアする場所になれば。
-              そして、それが誰かの心を動かすきっかけになれば。
+              <span className="font-bold">
+                この場が、あなたのひらめきをシェアする場所になれば。
+                そして、それが誰かの心を動かすきっかけになれば。
+              </span>
+              <br />
               そう願っています。
             </p>
           </div>
