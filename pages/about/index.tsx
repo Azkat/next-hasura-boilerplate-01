@@ -141,7 +141,7 @@ export default function About() {
           <div className="navbar-start"></div>
           <div className="navbar-center">
             <Link href="/">
-              <img src="/logo.png" alt="Droptune" width="50" height="35" />
+              <img src="/logomark_type.svg" alt="Droptune" width="160" />
             </Link>
           </div>
           <div className="navbar-end flex"></div>
