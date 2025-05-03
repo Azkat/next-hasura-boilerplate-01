@@ -6,8 +6,8 @@ import { useState, useEffect } from 'react'
 function HeroPc() {
   return (
     <section className="w-full flex flex-col items-center justify-center pt-16 pb-16 px-4">
-      <h1 className="text-5xl md:text-8xl font-extrabold text-center drop-shadow-lg mb-10 tracking-tight text-white">
-        <span className="text-white font-extrabold tracking-wide block text-4xl md:text-9xl">
+      <h1 className="font-extrabold text-center drop-shadow-lg mb-10 tracking-tight text-white">
+        <span className="text-white font-extrabold tracking-wide block text-9xl">
           ビートに没入する時間
         </span>
       </h1>
@@ -76,7 +76,7 @@ function HeroSp() {
           boxShadow: '0 10px 32px 0 rgba(0,0,0,0.25)',
         }}
       >
-        <p className="text-base text-center text-white mb-8 px-4 font-bold tracking-wide antialiased leading-tight">
+        <p className="text-base text-center text-white mb-8 px-4 font-normal tracking-wide antialiased leading-tight">
           Droptuneなら、サクッとできた音楽のループがそのまま作品になります。
           短くてもずっと聞いていたくなる、気持ちいいフレーズを投稿してリスナーを楽しませましょう！
         </p>
