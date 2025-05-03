@@ -120,9 +120,21 @@ export default function About() {
     <>
       <Head>
         <title>About Droptune</title>
-        <link rel="preload" href="/noisegradient.svg" as="image" />
-        <link rel="preload" href="/lpmainimg.png" as="image" />
-        <link rel="preload" href="/lpmainimg_sp.png" as="image" />
+        <link
+          rel="preload"
+          href={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient.svg`}
+          as="image"
+        />
+        <link
+          rel="preload"
+          href={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/lpmainimg.png`}
+          as="image"
+        />
+        <link
+          rel="preload"
+          href={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/lpmainimg_sp.png`}
+          as="image"
+        />
       </Head>
       <div className="navbar bg-baseNav border-b border-stone-800">
         <div className="max-w-xl mx-auto w-full ">
@@ -193,7 +205,7 @@ export default function About() {
         <section
           className="w-full py-20 px-4 flex flex-col items-center"
           style={{
-            backgroundImage: "url('/noisegradient.svg')",
+            backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient.svg)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center bottom',
           }}
