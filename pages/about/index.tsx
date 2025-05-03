@@ -201,6 +201,17 @@ export default function About() {
               音楽を作っていると、「これだ！」と感じるフレーズに出会える瞬間があります。
             </p>
 
+            <div className="w-full flex justify-center mb-8">
+              <Image
+                src="/lp_from_developer01.webp"
+                alt="開発者からのメッセージ"
+                width={800}
+                height={450}
+                className="rounded-lg max-w-full h-auto sm:max-w-[70%]"
+                priority
+              />
+            </div>
+
             <p className="mb-6">
               求めていた音にたどり着いたと同時に、まったく新しい何かに出会ったような不思議な感覚です。
               決して頻繁にあるわけではないけれど、その感覚を求めて日々試行錯誤を続けています。
@@ -211,18 +222,36 @@ export default function About() {
                 そんな断片こそ、多くの人に気軽に聴いてもらえたら。
               </span>
               <br />
-              っと自由で楽しい音楽体験が広がると思い、このサービスを作りました。
+              もっと自由で楽しい音楽体験が広がると思い、このサービスを作りました。
             </p>
+
+            <div className="w-full flex justify-center mb-8">
+              <Image
+                src="/lp_from_developer02.webp"
+                alt="開発者からのメッセージ"
+                width={800}
+                height={450}
+                className="rounded-lg max-w-full h-auto sm:max-w-[70%]"
+                priority
+              />
+            </div>
 
             <p className="mb-6">
               もちろん、音楽はループだけで完結しません。
-              ブレイクやドロップによって感情が動く。その構造美こそが本質です。
+              ブレイクやドロップの構造、計算された抑揚によって感情が動く。その展開の美しさこそが本質です。
+            </p>
+
+            <p className="mb-6">
               でも、短時間コンテンツが当たり前になった今、音楽の入り口として「フレーズそのものの快楽」にフォーカスするのも、ひとつの形だと思っています。
+            </p>
+
+            <p className="mb-6">
+              <span className="text-4xl flex justify-center">🥁 🎹 🎸</span>
             </p>
 
             <p className="">
               <span className="font-bold">
-                この場が、あなたのひらめきをシェアする場所になれば。
+                Droptuneが、あなたのひらめきをシェアする場所になれば。
                 そして、それが誰かの心を動かすきっかけになれば。
               </span>
               <br />
