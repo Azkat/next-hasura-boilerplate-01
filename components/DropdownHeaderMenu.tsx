@@ -9,6 +9,7 @@ import firebase from '../firebaseConfig'
 import { unSubMeta } from '../hooks/useUserChanged'
 import Cookie from 'universal-cookie'
 import { Store } from '../reducer/reducer'
+import { DocumentTextIcon } from '@heroicons/react/solid'
 
 const cookie = new Cookie()
 
@@ -97,6 +98,13 @@ function DropdownHeaderMenu(props) {
                     )
                   }
                 })()}
+
+                <li>
+                  <Link href="/about">
+                    <DocumentTextIcon className="h-8 w-8  text-gray-100 opacity-80 cursor-pointer" />
+                    About Droptune
+                  </Link>
+                </li>
 
                 <li>
                   <a className="text-gray-500">
