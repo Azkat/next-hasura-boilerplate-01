@@ -15,7 +15,7 @@ function HeroPc() {
         <div
           style={{
             width: '100%',
-            backgroundImage: "url('/noisegradient.svg')",
+            backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient.svg)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center bottom',
             borderRadius: '1.5rem',
@@ -45,7 +45,7 @@ function HeroPc() {
             </Link>
           </div>
           <Image
-            src="/lpmainimg.png"
+            src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/lpmainimg.png`}
             alt="Droptune LPメインイメージ"
             width={1600}
             height={600}
@@ -69,7 +69,7 @@ function HeroSp() {
       <div
         className="py-10 flex flex-col items-center justify-center"
         style={{
-          backgroundImage: "url('/noisegradient.svg')",
+          backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/noisegradient.svg)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center bottom',
           padding: '8px',
@@ -81,7 +81,7 @@ function HeroSp() {
           短くてもずっと聞いていたくなる、気持ちいいフレーズを投稿してリスナーを楽しませましょう！
         </p>
         <Image
-          src="/lpmainimg_sp.png"
+          src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}assets/lpmainimg_sp.png`}
           alt="Droptune SPイメージ"
           width={400}
           height={200}
