@@ -192,7 +192,7 @@ export default function About() {
         </section>*/}
 
         {/* イメージセクション */}
-        <section className="w-full py-20 px-4 flex flex-col items-center bg-[#181a20]  ">
+        <section className="w-full sm:py-16 py-10 px-4 flex flex-col items-center bg-[#181a20]  ">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-8">
             開発者より
           </h2>
