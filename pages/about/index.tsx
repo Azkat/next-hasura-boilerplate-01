@@ -15,17 +15,16 @@ function HeroPc() {
         <div
           style={{
             width: '100%',
-            backgroundImage:
-              'linear-gradient(120deg, rgba(255, 84, 54, 0.47), rgba(255,255,255,0)), ' +
-              'linear-gradient(185deg, rgba(69, 54, 255, 0.8), rgba(255,255,255,0)), ' +
-              'linear-gradient(340deg, rgba(0, 153, 26, 0.8), rgba(255,255,255,0))',
+            backgroundImage: "url('/noisegradient.svg')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center bottom',
             borderRadius: '1.5rem',
             padding: '8px',
             boxShadow: '0 10px 32px 0 rgba(0,0,0,0.25)',
           }}
           className="w-full max-w-[1200px] mx-auto flex flex-col items-center justify-center py-12 relative overflow-hidden"
         >
-          <p className="text-xl md:text-xl text-center text-white max-w-5xl mb-6 mx-auto leading-relaxed font-light tracking-wide antialiased">
+          <p className="text-xl md:text-xl text-center text-white max-w-5xl mb-6 mx-auto leading-relaxed font-normal tracking-wide antialiased drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
             Droptuneなら、サクッとできた音楽のループがそのまま作品になります。
             <br />
             短くてもずっと聞いていたくなる、気持ちいいフレーズを投稿してリスナーを楽しませましょう！
@@ -70,13 +69,12 @@ function HeroSp() {
       <div
         className="py-10 flex flex-col items-center justify-center"
         style={{
-          backgroundImage:
-            'linear-gradient(120deg, rgba(255, 84, 54, 0.47), rgba(255,255,255,0)), ' +
-            'linear-gradient(185deg, rgba(69, 54, 255, 0.8), rgba(255,255,255,0)), ' +
-            'linear-gradient(340deg, rgba(0, 153, 26, 0.8), rgba(255,255,255,0))',
+          backgroundImage: "url('/noisegradient.svg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center bottom',
         }}
       >
-        <p className="text-base text-center text-white mb-8 px-4 font-light tracking-wide antialiased leading-normal">
+        <p className="text-base text-center text-white mb-8 px-4 font-light tracking-wide antialiased leading-tight">
           Droptuneなら、サクッとできた音楽のループがそのまま作品になります。
           短くてもずっと聞いていたくなる、気持ちいいフレーズを投稿してリスナーを楽しませましょう！
         </p>
@@ -189,10 +187,9 @@ export default function About() {
         <section
           className="w-full py-20 px-4 flex flex-col items-center"
           style={{
-            backgroundImage:
-              'linear-gradient(120deg, rgba(255, 84, 54, 0.47), rgba(255,255,255,0)), ' +
-              'linear-gradient(185deg, rgba(69, 54, 255, 0.8), rgba(255,255,255,0)), ' +
-              'linear-gradient(340deg, rgba(0, 153, 26, 0.8), rgba(255,255,255,0))',
+            backgroundImage: "url('/noisegradient.svg')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center bottom',
           }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-6">
