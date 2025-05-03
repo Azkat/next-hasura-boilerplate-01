@@ -11,25 +11,6 @@ function HeroPc() {
           ビートに没入する時間
         </span>
       </h1>
-      <p className="text-xl md:text-xl text-center text-gray-300 max-w-5xl mb-12 mx-auto leading-relaxed font-light tracking-wide antialiased">
-        Droptuneなら、サクッとできた音楽のループがそのまま作品になります。
-        <br />
-        短くてもずっと聞いていたくなる、気持ちいいフレーズを投稿してリスナーを楽しませましょう！
-      </p>
-      <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
-        <Link
-          href="/"
-          className="px-10 py-4 bg-white text-[#121317] font-bold rounded-full text-xl shadow-lg border border-white hover:bg-gray-100 transition h-14 flex items-center justify-center"
-        >
-          はじめる
-        </Link>
-        <Link
-          href="/login"
-          className="px-10 py-4 bg-transparent text-white font-medium rounded-full text-xl border-2 border-white hover:bg-white/10 transition h-14 flex items-center justify-center"
-        >
-          ログイン
-        </Link>
-      </div>
       <div className="w-full flex justify-center">
         <div
           style={{
@@ -42,8 +23,28 @@ function HeroPc() {
             padding: '8px',
             boxShadow: '0 10px 32px 0 rgba(0,0,0,0.25)',
           }}
-          className="w-full max-w-[1200px] mx-auto flex items-center justify-center py-16 relative overflow-hidden"
+          className="w-full max-w-[1200px] mx-auto flex flex-col items-center justify-center py-12 relative overflow-hidden"
         >
+          <p className="text-xl md:text-xl text-center text-white max-w-5xl mb-6 mx-auto leading-relaxed font-light tracking-wide antialiased">
+            Droptuneなら、サクッとできた音楽のループがそのまま作品になります。
+            <br />
+            短くてもずっと聞いていたくなる、気持ちいいフレーズを投稿してリスナーを楽しませましょう！
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
+            <Link
+              href="/"
+              className="px-10 py-4 bg-white text-[#121317] font-bold rounded-full text-xl shadow-lg border border-white hover:bg-gray-100 transition h-14 flex items-center justify-center"
+            >
+              はじめる
+            </Link>
+            <Link
+              href="/login"
+              className="px-10 py-4 bg-transparent text-white font-medium rounded-full text-xl border-2 border-white hover:bg-white/10 transition h-14 flex items-center justify-center"
+            >
+              ログイン
+            </Link>
+          </div>
           <Image
             src="/lpmainimg.png"
             alt="Droptune LPメインイメージ"
@@ -185,7 +186,15 @@ export default function About() {
         </section>
 
         {/* CTAセクション */}
-        <section className="w-full py-20 px-4 flex flex-col items-center bg-gradient-to-r from-emerald-700/80 via-blue-700/80 to-purple-700/80">
+        <section
+          className="w-full py-20 px-4 flex flex-col items-center"
+          style={{
+            backgroundImage:
+              'linear-gradient(120deg, rgba(255, 84, 54, 0.47), rgba(255,255,255,0)), ' +
+              'linear-gradient(185deg, rgba(69, 54, 255, 0.8), rgba(255,255,255,0)), ' +
+              'linear-gradient(340deg, rgba(0, 153, 26, 0.8), rgba(255,255,255,0))',
+          }}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-6">
             今すぐ体験しよう
           </h2>
